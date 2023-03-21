@@ -29,8 +29,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ✈️ O objetivo desse projeto é servir como base para outros projetos que for utilizar o react native com o tailwind ccs já configurado. Essas configurações podem ser alteradas de acordo com a necessidade do projeto como padrões de fontes, cores e plugins.
 
-🔗 Link do projeto online na vercel [plataforma do evento](https://nlw-ignite-lab-event-platform.vercel.app/)
-
 ## 📝 Licença
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.

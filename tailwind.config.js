@@ -8,10 +8,11 @@ module.exports = {
         background: '#09090a',
       },
       fontFamily: {
-      /*   regular: 'Inter_400Regular',
-        semibold: 'Inter_600SemiBold',
-        bold: 'Inter_700Bold',
-        extrabold: 'Inter_800ExtraBold', */
+        ArchivoRegular:['Archivo_400Regular'],
+        ArchivoSemiBold: ['Archivo_600SemiBold'],
+        ArchivoBold:['Archivo_700Bold'],
+        PoppinsRegular: ['Poppins_400Regular'],
+        PoppinsSemiBold: ['Poppins_600SemiBold'],
       },
     },
   },

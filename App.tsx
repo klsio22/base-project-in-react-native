@@ -1,26 +1,29 @@
 import { StatusBar } from 'react-native';
 import { Routes } from './src/routes';
 
-/* import {
+import {
+  Archivo_400Regular,
+  Archivo_600SemiBold,
+  Archivo_700Bold,
   useFonts,
-  Inter_400Regular,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-} from '@expo-google-fonts/inter';
+} from '@expo-google-fonts/archivo';
+import {
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+} from '@expo-google-fonts/poppins';
 
-import { Loading } from './src/components/Loading'; */
+import { Loading } from './src/components/Loading';
 
 export default function App() {
-  /*   const [fontsLoaded] = useFonts({
-    Inter_400Regular,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
+  const [fontsLoaded] = useFonts({
+    Archivo_400Regular,
+    Archivo_600SemiBold,
+    Archivo_700Bold,
+    Poppins_400Regular,
+    Poppins_600SemiBold,
   });
 
   if (!fontsLoaded) return <Loading />;
- */
 
   /* https://docs.expo.dev/guides/using-custom-fonts/ */
 

@@ -1,5 +1,5 @@
 <h1 align="center">
-  Base Project in React Native
+  SkillShare
 </h1>
 
 <p align="center">
@@ -27,9 +27,11 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Projeto
 
-✈️ O objetivo desse projeto é servir como base para outros projetos que for utilizar o react native com o tailwind ccs já configurado. Essas configurações podem ser alteradas de acordo com a necessidade do projeto como padrões de fontes, cores e plugins.
+✈️ Ofertar uma alternativa de baixo custo para auxiliar alunos que estão enfrentando dificuldade em algumas disciplinas ou conteúdos do seu curso e uma possibilidade de gerar uma pequena renda para outros acadêmicos mais avançados no curso, com maior entendimento dessas disciplinas.
 
-🔗 Link do projeto online na vercel [plataforma do evento](https://nlw-ignite-lab-event-platform.vercel.app/)
+Com o valor da hora/aula reduzido em relação ao mercado, fica de fácil acesso à informação para uns e auxílio financeiro para outros
+
+[Para mais informações do projeto.](https://mountainous-texture-56b.notion.site/Skillshare-beda0aefaf0542b09ee11cce1e7920dc)
 
 ## 📝 Licença
 

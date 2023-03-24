@@ -3,6 +3,7 @@ import { Routes } from './src/routes';
 
 import {
   Archivo_400Regular,
+  Archivo_500Medium,
   Archivo_600SemiBold,
   Archivo_700Bold,
   useFonts,
@@ -17,6 +18,7 @@ import { Loading } from './src/components/Loading';
 export default function App() {
   const [fontsLoaded] = useFonts({
     Archivo_400Regular,
+    Archivo_500Medium,
     Archivo_600SemiBold,
     Archivo_700Bold,
     Poppins_400Regular,

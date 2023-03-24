@@ -11,10 +11,10 @@ export function Login() {
       <TouchableOpacity
         activeOpacity={0.7}
         className='flex-row h-11 px-4 border border-blue-600 rounded-lg items-center'
-        onPress={() => navigate('onboardingPageTwo')}
+        onPress={() => navigate('student')}
       >
         <Text className='text-white ml-3 font-PoppinsRegular text-base'>
-          Ir para home
+          Ir pagina do estudante
         </Text>
       </TouchableOpacity>
     </View>

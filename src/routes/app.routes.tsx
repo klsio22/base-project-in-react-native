@@ -6,6 +6,7 @@ import { OnboardingPageOne } from '../screens/OnboardingPageOne';
 import { OnboardingPageTwo } from '../screens/OnboardingPageTwo';
 import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
+import { Student } from '../screens/Student';
 
 export function AppRoutes() {
   return (
@@ -14,6 +15,7 @@ export function AppRoutes() {
       <Screen name='onboardingPageTwo' component={OnboardingPageTwo} />
       <Screen name='home' component={Home} />
       <Screen name='login' component={Login} />
+      <Screen name='student' component={Student} />
     </Navigator>
   );
 }

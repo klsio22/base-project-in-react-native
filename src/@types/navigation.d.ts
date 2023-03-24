@@ -5,6 +5,7 @@ export declare global {
       login: undefined;
       onboardingPageOne: undefined;
       onboardingPageTwo: undefined;
+      student: undefined;
     }
   }
 }

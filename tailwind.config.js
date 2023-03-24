@@ -12,6 +12,7 @@ module.exports = {
         ArchivoMedium: ['Archivo_500Medium'],
         ArchivoSemiBold: ['Archivo_600SemiBold'],
         ArchivoBold: ['Archivo_700Bold'],
+        PoppinsMedium:['Poppins_500Medium'],
         PoppinsRegular: ['Poppins_400Regular'],
         PoppinsSemiBold: ['Poppins_600SemiBold'],
       },

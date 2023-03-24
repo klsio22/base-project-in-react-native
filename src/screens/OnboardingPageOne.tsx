@@ -1,26 +1,43 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import BackgroundBlue from '../assets/svg/background-blue.svg';
+
+import NextScreen from '../assets/svg/next-screen.svg';
+import PageOne from '../assets/svg/page-one.svg';
 
 export function OnboardingPageOne() {
   const { navigate } = useNavigation();
 
   return (
-    <View className='flex items-start justify-center h-full flex-1 bg-white px-8 pt-14 '>
-      <Text className='text-blue-200 m-3 font-ArchivoMedium text-[40px]'>
-        01.
-      </Text>
+    <View className='flex items-center justify-start h-full w-full  bg-white'>
+      <ScrollView >
+        <View className='bg-sky-500'>
+          <BackgroundBlue width={310} />
+        </View>
+        <View className='bg-white mx-4'>
+          <View className='flex items-start justify-start px-2 my-16'>
+            <Text className='text-blue-200 font-ArchivoMedium text-[40px]'>
+              01.
+            </Text>
 
-      <Text className='text-stone-600 m-3 font-ArchivoMedium text-[40px]'>
-        Encontre vários professores para ensinar você
-      </Text>
+            <Text className='text-start text-stone-600 w-60 font-PoppinsMedium text-2xl '>
+              Encontre vários professores para ensinar você
+            </Text>
+          </View>
 
-      <TouchableOpacity
-        activeOpacity={0.7}
-        className='flex-row h-11 px-4 items-center'
-        onPress={() => navigate('onboardingPageTwo')}
-      >
-        <Text>Ir para o onboarding 2</Text>
-      </TouchableOpacity>
+          <View className='flex-row h-11 my-2 mb-10 items-center justify-between'>
+            <PageOne className='flex-1' />
+
+            <TouchableOpacity
+              activeOpacity={0.7}
+              className=''
+              onPress={() => navigate('onboardingPageTwo')}
+            >
+              <NextScreen />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }

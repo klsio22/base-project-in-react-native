@@ -25,6 +25,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - Tailwind css
 
+- Firebase
+
 ## 💻 Projeto
 
 ✈️ Ofertar uma alternativa de baixo custo para auxiliar alunos que estão enfrentando dificuldade em algumas disciplinas ou conteúdos do seu curso e uma possibilidade de gerar uma pequena renda para outros acadêmicos mais avançados no curso, com maior entendimento dessas disciplinas.

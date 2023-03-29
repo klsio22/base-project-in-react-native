@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 
 export function Student() {
   const { navigate } = useNavigation();

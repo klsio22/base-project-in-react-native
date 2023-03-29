@@ -1,30 +1,49 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+import BackgroundRed from '../assets/svg/background-red.svg';
+import NextScreen from '../assets/svg/next-screen.svg';
+import PageTwo from '../assets/svg/page-two.svg';
 
 export function OnboardingPageTwo() {
   const { navigate } = useNavigation();
 
   return (
-    <View className='flex items-start justify-center h-full flex-1 bg-white px-8 pt-14 '>
-      <Text className='text-blue-200 m-3 font-ArchivoMedium text-[40px]'>
-        02.
-      </Text>
+    <View className='flex items-center justify-start h-full w-full bg-white'>
+      <ScrollView>
+        <View className='bg-[#F27C7C]'>
+          <BackgroundRed width={310} />
+        </View>
+        <View className='bg-white mx-5'>
+          <View className='flex items-start justify-start my-16'>
+            <Text className='text-blue-200 font-ArchivoMedium text-[40px]'>
+              02.
+            </Text>
 
-      <Text className='text-stone-600 m-3 font-ArchivoMedium text-[40px]'>
-        Ou dê aulas sobre o que você mais conhece
-      </Text>
+            <Text className='text-start text-stone-600 w-60 font-PoppinsMedium text-2xl '>
+              Ou dê aulas sobre o que você mais conhece
+            </Text>
+          </View>
 
-      <View>
-        <View className=''></View>
+          <View className='flex-row h-11 my-2 mb-10 items-center justify-between'>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              className=''
+              onPress={() => navigate('onboardingPageOne')}
+            >
+              <PageTwo className='flex-1' />
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          activeOpacity={0.7}
-          className='flex-row h-11 px-4 items-center'
-          onPress={() => navigate('home')}
-        >
-          <Text>Ir para home</Text>
-        </TouchableOpacity>
-      </View>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              className=''
+              onPress={() => navigate('home')}
+            >
+              <NextScreen />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }

@@ -6,22 +6,18 @@ export function Student() {
   const { navigate } = useNavigation();
 
   return (
-    <View className='flex items-start justify-center h-full flex-1 bg-white px-8 pt-14 '>
-      <Text className='text-blue-200 m-3 font-ArchivoMedium text-[40px]'>
-        01.
-      </Text>
+    <View className='flex items-center justify-center h-full flex-1 bg-slate-700 px-8 pt-14 '>
+    <Text className='text-blue-200 m-3 font-PoppinsSemiBold'>Pagina do estudante</Text>
 
-      <Text className='text-stone-600 m-3 font-ArchivoMedium text-[40px]'>
-        Encontre vários professores para ensinar você
+    <TouchableOpacity
+      activeOpacity={0.7}
+      className='flex-row h-11 px-4 border border-blue-600 rounded-lg items-center'
+      onPress={() => navigate('onboardingPageOne')}
+    >
+      <Text className='text-white ml-3 font-PoppinsRegular text-base'>
+       Voltar para inicio
       </Text>
-
-      <TouchableOpacity
-        activeOpacity={0.7}
-        className='flex-row h-11 px-4 items-center'
-        onPress={() => navigate('onboardingPageTwo')}
-      >
-        <Text>Ir para o onboarding 2</Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
+  </View>
   );
 }

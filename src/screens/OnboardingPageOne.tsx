@@ -1,7 +1,7 @@
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import BackgroundBlue from '../assets/svg/background-blue.svg';
 
+import BackgroundBlue from '../assets/svg/background-blue.svg';
 import NextScreen from '../assets/svg/next-screen.svg';
 import PageOne from '../assets/svg/page-one.svg';
 
@@ -9,13 +9,13 @@ export function OnboardingPageOne() {
   const { navigate } = useNavigation();
 
   return (
-    <View className='flex items-center justify-start h-full w-full  bg-white'>
-      <ScrollView >
+    <View className='flex items-center justify-start h-full w-full bg-white'>
+      <ScrollView>
         <View className='bg-sky-500'>
-          <BackgroundBlue width={310} />
+          <BackgroundBlue width='310' />
         </View>
-        <View className='bg-white mx-4'>
-          <View className='flex items-start justify-start px-2 my-16'>
+        <View className='bg-white mx-5'>
+          <View className='flex items-start justify-start my-16'>
             <Text className='text-blue-200 font-ArchivoMedium text-[40px]'>
               01.
             </Text>
@@ -25,7 +25,7 @@ export function OnboardingPageOne() {
             </Text>
           </View>
 
-          <View className='flex-row h-11 my-2 mb-10 items-center justify-between'>
+          <View className='flex-row h-11 my-2 mb-10  items-center justify-between'>
             <PageOne className='flex-1' />
 
             <TouchableOpacity

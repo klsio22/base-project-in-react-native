@@ -1,5 +1,6 @@
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Heart } from 'phosphor-react-native';
 
 import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
@@ -17,10 +18,10 @@ export function Home() {
         </View>
 
         <View className='mx-4'>
-          <Text className='text-white my-4 w-52 text-xl'>
-            <Text className=''>Seja bem-vindo.</Text>
+          <Text className='text-white my-4 w-52 text-xl leading-8'>
+            <Text className=''>Seja bem-vindo !</Text>
             {'\n'}
-            <Text className='font-ArchivoBold '>O que deseja fazer?</Text>
+            <Text className='font-ArchivoBold '>O que deseja fazer ?</Text>
           </Text>
 
           <View className='flex-row justify-between h-32 font-PoppinsSemiBold text-xl '>
@@ -49,7 +50,10 @@ export function Home() {
             </TouchableOpacity>
           </View>
 
-          <Text className='my-8 text-white'>Total de 285 compartiladores {'\n'} de conhecimento</Text>
+          <Text className='my-8 text-white leading-5'>
+            <Text>Total de 285 compartiladores {'\n'} de conhecimento</Text>{' '}
+            <Heart color='#ffffff' weight='fill' size={16} />
+          </Text>
         </View>
       </ScrollView>
     </View>

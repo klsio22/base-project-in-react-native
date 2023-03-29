@@ -14,8 +14,8 @@ export function OnboardingPageOne() {
         <View className='bg-sky-500'>
           <BackgroundBlue width='310' />
         </View>
-        <View className='bg-white mx-5'>
-          <View className='flex items-start justify-start my-16'>
+        <View className='bg-white mx-5 my-10'>
+          <View className='flex items-start justify-start mb-10 '>
             <Text className='text-blue-200 font-ArchivoMedium text-[40px]'>
               01.
             </Text>
@@ -25,7 +25,7 @@ export function OnboardingPageOne() {
             </Text>
           </View>
 
-          <View className='flex-row h-11 my-2 mb-10  items-center justify-between'>
+          <View className='flex-row mt-2 items-center justify-between'>
             <PageOne className='flex-1' />
 
             <TouchableOpacity

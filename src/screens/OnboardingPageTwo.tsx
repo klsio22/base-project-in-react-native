@@ -14,8 +14,8 @@ export function OnboardingPageTwo() {
         <View className='bg-[#F27C7C]'>
           <BackgroundRed width={310} />
         </View>
-        <View className='bg-white mx-5'>
-          <View className='flex items-start justify-start my-16'>
+        <View className='bg-white mx-5 my-10'>
+          <View className='flex items-start justify-start mb-10 '>
             <Text className='text-blue-200 font-ArchivoMedium text-[40px]'>
               02.
             </Text>
@@ -25,7 +25,7 @@ export function OnboardingPageTwo() {
             </Text>
           </View>
 
-          <View className='flex-row h-11 my-2 mb-10 items-center justify-between'>
+          <View className='flex-row h-11 mt-2 items-center justify-between'>
             <TouchableOpacity
               activeOpacity={0.7}
               className=''

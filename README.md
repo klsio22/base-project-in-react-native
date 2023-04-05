@@ -5,6 +5,7 @@
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-licença">Licença</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-licença">Executar</a>
 </p>
@@ -35,6 +36,10 @@ Com o valor da hora/aula reduzido em relação ao mercado, fica de fácil acesso
 
 [Para mais informações do projeto.](https://mountainous-texture-56b.notion.site/Skillshare-beda0aefaf0542b09ee11cce1e7920dc)
 
+## 🔖 Layout
+
+Você pode visualizar o layout do projeto através [desse link](https://www.figma.com/file/tiol0fFlR3k5XXlND3G525/Skill-Share-(Copy)?node-id=0%3A1&t=vUGTlf1tjbYtWrZX-1). É necessário ter conta no [Figma](https://figma.com) para acessá-lo.
+
 ## 📝 Licença
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
@@ -49,6 +54,6 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 
 - Para executar o projeto ter o expo instalado e configurado na máquina caso não tenha tem um tutorial na RocketSeat como instalar e configurar o expo https://react-native.rocketseat.dev/
 
-- execute o expo `npx expo start`
+- execute o expo `npx expo start` ou `yarn expo start`
 
 A aplicação pode ser acessada em [`localhost:3000`](http://localhost:3000) no front-end.

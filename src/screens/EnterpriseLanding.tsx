@@ -1,8 +1,8 @@
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react'
-import BackgroundEnterprise from '../assets/svg/Group 11.svg';
 import BackgroundBlue from '../assets/svg/background-blue.svg';
+import { Linking } from 'react-native';
 
 export function EnterpriseLanding() {
   const { navigate } = useNavigation();

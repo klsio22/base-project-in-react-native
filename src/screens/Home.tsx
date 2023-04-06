@@ -49,11 +49,16 @@ export function Home() {
               </Text>
             </TouchableOpacity>
           </View>
-
-          <Text className='my-8 text-white leading-5'>
+          <TouchableOpacity onPress={() => navigate('enterpriseLanding')}>
+            <Text className='my-5 text-white leading-4 font-bold'>
+              <Text>Seja parceiro SkillShare</Text>
+            </Text>
+          </TouchableOpacity>
+          
+          {/* <Text className='my-4 text-white leading-5'>
             <Text>Total de 285 compartiladores {'\n'} de conhecimento</Text>{' '}
             <Heart color='#ffffff' weight='fill' size={16} />
-          </Text>
+          </Text> */}
         </View>
       </ScrollView>
     </View>

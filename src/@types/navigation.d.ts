@@ -6,6 +6,7 @@ export declare global {
       onboardingPageOne: undefined;
       onboardingPageTwo: undefined;
       student: undefined;
+      professor: undefined;
     }
   }
 }

@@ -31,6 +31,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@babel/core@^7.13.16", "@babel/core@^7.16.0", "@babel/core@^7.20.0":
 =======
 "@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.12.0", "@babel/core@^7.13.0", "@babel/core@^7.13.16", "@babel/core@^7.16.0", "@babel/core@^7.19.6", "@babel/core@^7.20.0", "@babel/core@^7.4.0-0":
@@ -38,6 +39,9 @@
 =======
 "@babel/core@^7.13.16", "@babel/core@^7.16.0", "@babel/core@^7.19.6", "@babel/core@^7.20.0":
 >>>>>>> origin/feature/lander-skillshare
+=======
+"@babel/core@^7.13.16", "@babel/core@^7.16.0", "@babel/core@^7.19.6", "@babel/core@^7.20.0":
+>>>>>>> feature/pablo-skillshare
   version "7.21.0"
   resolved "https://registry.npmjs.org/@babel/core/-/core-7.21.0.tgz"
   integrity sha512-PuxUbxcW6ZYe656yL3EAhpy7qXKq0DmYsrJLpbB8XrsCP9Nm+XCg9XFMb5vIDliPD7+U/+M+QJlH17XOcB7eXA==
@@ -2004,6 +2008,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@react-native-community/cli-platform-android@10.2.0", "@react-native-community/cli-platform-android@^10.2.0":
 =======
 "@react-native-community/cli-platform-android@^10.2.0", "@react-native-community/cli-platform-android@10.2.0":
@@ -2011,6 +2016,9 @@
 =======
 "@react-native-community/cli-platform-android@10.2.0", "@react-native-community/cli-platform-android@^10.2.0":
 >>>>>>> origin/feature/lander-skillshare
+=======
+"@react-native-community/cli-platform-android@10.2.0", "@react-native-community/cli-platform-android@^10.2.0":
+>>>>>>> feature/pablo-skillshare
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-10.2.0.tgz#0bc689270a5f1d9aaf9e723181d43ca4dbfffdef"
   integrity sha512-CBenYwGxwFdObZTn1lgxWtMGA5ms2G/ALQhkS+XTAD7KHDrCxFF9yT/fnAjFZKM6vX/1TqGI1RflruXih3kAhw==
@@ -2023,11 +2031,18 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "@react-native-community/cli-platform-ios@^10.2.1":
   version "10.2.1"
   resolved "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.1.tgz"
   integrity sha512-hz4zu4Y6eyj7D0lnZx8Mf2c2si8y+zh/zUTgCTaPPLzQD8jSZNNBtUUiA1cARm2razpe8marCZ1QbTMAGbf3mg==
+=======
+"@react-native-community/cli-platform-ios@10.2.0":
+  version "10.2.0"
+  resolved "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.0.tgz"
+  integrity sha512-hIPK3iL/mL+0ChXmQ9uqqzNOKA48H+TAzg+hrxQLll/6dNMxDeK9/wZpktcsh8w+CyhqzKqVernGcQs7tPeKGw==
+>>>>>>> feature/pablo-skillshare
   dependencies:
     "@react-native-community/cli-tools" "^10.1.1"
     chalk "^4.1.2"
@@ -2036,6 +2051,7 @@
     glob "^7.1.3"
     ora "^5.4.1"
 
+<<<<<<< HEAD
 >>>>>>> feature/klesio-skillshare
 =======
 >>>>>>> origin/feature/lander-skillshare
@@ -2043,6 +2059,12 @@
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.0.tgz#be21c0e3bbf17358d540cc23e5556bf679f6322e"
   integrity sha512-hIPK3iL/mL+0ChXmQ9uqqzNOKA48H+TAzg+hrxQLll/6dNMxDeK9/wZpktcsh8w+CyhqzKqVernGcQs7tPeKGw==
+=======
+"@react-native-community/cli-platform-ios@^10.2.1":
+  version "10.2.1"
+  resolved "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.1.tgz"
+  integrity sha512-hz4zu4Y6eyj7D0lnZx8Mf2c2si8y+zh/zUTgCTaPPLzQD8jSZNNBtUUiA1cARm2razpe8marCZ1QbTMAGbf3mg==
+>>>>>>> feature/pablo-skillshare
   dependencies:
     "@react-native-community/cli-tools" "^10.1.1"
     chalk "^4.1.2"
@@ -2320,10 +2342,14 @@
     "@svgr/babel-plugin-transform-svg-component" "^6.5.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@svgr/core@*", "@svgr/core@^6.0.0", "@svgr/core@^6.1.2":
 =======
 "@svgr/core@^6.1.2":
 >>>>>>> origin/feature/lander-skillshare
+=======
+"@svgr/core@^6.1.2":
+>>>>>>> feature/pablo-skillshare
   version "6.5.1"
   resolved "https://registry.npmjs.org/@svgr/core/-/core-6.5.1.tgz"
   integrity sha512-/xdLSWxK5QkqG524ONSjvg3V/FkNyCv538OIBdQqPNaAta3AsXj/Bd2FbvR87yMbXO2hFSWiAe/Q6IkVPDw+mw==
@@ -4005,11 +4031,15 @@ cosmiconfig@^7.0.1:
     yaml "^1.10.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 cosmiconfig@^8.0.0, cosmiconfig@>=7:
 >>>>>>> feature/klesio-skillshare
 =======
 cosmiconfig@^8.0.0:
 >>>>>>> origin/feature/lander-skillshare
+=======
+cosmiconfig@^8.0.0:
+>>>>>>> feature/pablo-skillshare
   version "8.1.3"
   resolved "https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-8.1.3.tgz"
   integrity sha512-/UkO2JKI18b5jVMJUp0lvKFMpa/Gye+ZgZjKD+DGEN9y7NRcf/nK1A0sp67ONmKtnDCNMS44E6jrk0Yc3bDuUw==
@@ -4587,6 +4617,7 @@ entities@^2.0.0:
   integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 entities@^4.2.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/entities/-/entities-4.4.0.tgz"
@@ -4596,6 +4627,9 @@ entities@^4.4.0:
 =======
 entities@^4.2.0, entities@^4.4.0:
 >>>>>>> origin/feature/lander-skillshare
+=======
+entities@^4.2.0, entities@^4.4.0:
+>>>>>>> feature/pablo-skillshare
   version "4.4.0"
   resolved "https://registry.npmjs.org/entities/-/entities-4.4.0.tgz"
   integrity sha512-oYp7156SP8LkeGD0GF85ad1X9Ai79WtRsZ2gxJqtBuzH+98YUV6jkHEKlZkMbcrjJjIVJNIDP/3WL9wQkoPbWA==
@@ -8626,6 +8660,7 @@ react-native-safe-area-context@^4.5.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 react-native-screens@^3.20.0:
 =======
 react-native-screens@^3.20.0, "react-native-screens@>= 3.0.0":
@@ -8633,6 +8668,9 @@ react-native-screens@^3.20.0, "react-native-screens@>= 3.0.0":
 =======
 react-native-screens@^3.20.0:
 >>>>>>> origin/feature/lander-skillshare
+=======
+react-native-screens@^3.20.0:
+>>>>>>> feature/pablo-skillshare
   version "3.20.0"
   resolved "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.20.0.tgz"
   integrity sha512-joWUKWAVHxymP3mL9gYApFHAsbd9L6ZcmpoZa6Sl3W/82bvvNVMqcfP7MeNqVCg73qZ8yL4fW+J/syusHleUgg==
@@ -8650,10 +8688,14 @@ react-native-svg-transformer@^1.0.0:
     path-dirname "^1.0.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 react-native-svg@*, react-native-svg@>=12.0.0, react-native-svg@13.4.0:
 =======
 react-native-svg@13.4.0:
 >>>>>>> origin/feature/lander-skillshare
+=======
+react-native-svg@13.4.0:
+>>>>>>> feature/pablo-skillshare
   version "13.4.0"
   resolved "https://registry.npmjs.org/react-native-svg/-/react-native-svg-13.4.0.tgz"
   integrity sha512-B3TwK+H0+JuRhYPzF21AgqMt4fjhCwDZ9QUtwNstT5XcslJBXC0FoTkdZo8IEb1Sv4suSqhZwlAY6lwOv3tHag==
@@ -8676,11 +8718,15 @@ react-native-web@~0.18.10:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 react-native@0.71.4:
   version "0.71.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.71.4.tgz#f03f600efe68f745d19454ab17f9c1a9ef304790"
 =======
 react-native@*, react-native@>=0.59.0, react-native@0.71.4:
+=======
+react-native@0.71.4:
+>>>>>>> feature/pablo-skillshare
   version "0.71.4"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.71.4.tgz"
 >>>>>>> feature/klesio-skillshare
@@ -8773,10 +8819,14 @@ read-pkg@^5.2.0:
     type-fest "^0.6.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.6:
 =======
 readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.6, readable-stream@^3.4.0:
 >>>>>>> origin/feature/lander-skillshare
+=======
+readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.6, readable-stream@^3.4.0:
+>>>>>>> feature/pablo-skillshare
   version "3.6.2"
   resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.2.tgz"
   integrity sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==
@@ -8799,6 +8849,7 @@ readable-stream@^2.0.1, readable-stream@~2.3.6:
     util-deprecate "~1.0.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 readable-stream@^3.4.0:
   version "3.6.2"
   resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.2.tgz"
@@ -8810,6 +8861,8 @@ readable-stream@^3.4.0:
 
 =======
 >>>>>>> origin/feature/lander-skillshare
+=======
+>>>>>>> feature/pablo-skillshare
 readdirp@~3.6.0:
   version "3.6.0"
   resolved "https://registry.npmjs.org/readdirp/-/readdirp-3.6.0.tgz"

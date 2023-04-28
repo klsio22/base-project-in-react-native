@@ -8,6 +8,7 @@ import { Home } from '../screens/Home';
 import { Student } from '../screens/Student';
 import { ProfessorLanding } from '../screens/ProfessorLanding';
 import { EnterpriseLanding } from '../screens/EnterpriseLanding';
+import { Login } from '../screens/Login';
 
 export function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ export function AppRoutes() {
       <Screen name='enterpriseLanding' component={EnterpriseLanding} />
       <Screen name='home' component={Home} />
       <Screen name='student' component={Student} />
+      <Screen name='login' component={Login} />
       <Screen name='professor' component={ProfessorLanding} />
     </Navigator>
   );

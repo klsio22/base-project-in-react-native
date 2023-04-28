@@ -12,7 +12,7 @@ export function ProfessorLanding() {
 
   return (
     <View className='flex items-center justify-center  h-full w-full bg-sky-600 '>
-      <View className='flex-column items-start justify-center  h-full w-90 ml-0 bg-[url("../../assets/background-splash.svg")] bg-cover bg-center'>
+      <View className='flex-column items-start justify-center h-full w-90 ml-0 bg-[url("../../assets/background-splash.svg")] bg-cover bg-center'>
         <Text className='text-white my-40 leading-8 w-full h-80'>
           <Text className='font-ArchivoBold  text-4xl'>Quer ser</Text>
           {'\n'}

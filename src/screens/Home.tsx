@@ -14,11 +14,23 @@ import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 
 import ToStudy from '../assets/svg/to-study.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import firebaseConfig from './config/firebaseConfig-skillShare';
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+
+import { collection, getDocs } from 'firebase/firestore';
 
 export function Home() {
   const { navigate } = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  console.log(analytics);
+
+
   return (
     <View className='flex items-center justify-center  h-full  bg-sky-500 '>
       <ScrollView className='mt-20 '>
@@ -45,7 +57,6 @@ export function Home() {
             >
               <View className='flex items-center justify-start h-screen mt-20'>
                 <View className=' flex bg-white w-56 h-48 rounded-lg '>
-
                   <View className='flex-row justify-end items-end mt-3 mr-3'>
                     <TouchableOpacity
                       onPress={() => setModalVisible(!modalVisible)}

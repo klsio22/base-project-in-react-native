@@ -1,14 +1,11 @@
 import { Button, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Heart } from 'phosphor-react-native';
-
-import BannerHome from '../assets/svg/banner-home.svg';
-import ToWatch from '../assets/svg/to-watch.svg';
-
-import ToStudy from '../assets/svg/to-study.svg';
+import {useApp } from '../contexts/AppContext';
+import { useContext } from 'react';
 
 export function ProfessorLanding() {
   const { navigate } = useNavigation();
+  const {token, setToken} = useApp();
 
   return (
     <View className='flex items-center justify-center  h-full w-full bg-sky-600 '>
@@ -27,7 +24,7 @@ export function ProfessorLanding() {
           </Text>
           {'\n'}
           <Text className='font-Archivo '>
-            na nossa plataforma web.
+            na nossa plataforma web. {token}
           </Text>
         </Text>
         <TouchableOpacity
@@ -35,7 +32,7 @@ export function ProfessorLanding() {
           className='flex-row h-15 w-80 bg-red-600 justify-center items-center p-4 rounded-lg gap-3'
           onPress={() => navigate('home')}
         >
-          <Text className='text-white font-PoppinsRegular text-base'>
+          <Text className='text-white text-semibold font-PoppinsRegular text-base'>
             Tudo bem
           </Text>
         </TouchableOpacity>

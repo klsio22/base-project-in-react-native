@@ -8,7 +8,7 @@ module.exports = {
         background: '#09090a',
       },
       fontFamily: {
-        ArchivoRegular: ['Archivo_400Regular'],
+        ArchivoRegular: 'Archivo_400Regular',
         ArchivoMedium: ['Archivo_500Medium'],
         ArchivoSemiBold: ['Archivo_600SemiBold'],
         ArchivoBold: ['Archivo_700Bold'],

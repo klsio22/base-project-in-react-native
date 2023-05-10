@@ -14,22 +14,40 @@ import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 
 import ToStudy from '../assets/svg/to-study.svg';
-import { useEffect, useState } from 'react';
-import firebaseConfig from './config/firebaseConfig-skillShare';
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+import { useState } from 'react';
 
-import { collection, getDocs } from 'firebase/firestore';
+import useDocument, { Email } from '../hooks/useDocument';
+
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import firebaseConfig from './config/firebaseConfig-skillShare';
 
 export function Home() {
+  initializeApp(firebaseConfig);
   const { navigate } = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [email, setEmail] = useState('');
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  console.log(analytics);
+  const { upsert } = useDocument<Email>('email', 'A9wizeCoMU9EvvJuh9yk');
 
+  const handleSaveEmail = async () => {
+    const newEmail: Email = {
+      address: email, // Substitua pelo endereço de e-mail que deseja salvar
+    };
+
+    try {
+      await upsert(newEmail);
+      console.log('E-mail salvo com sucesso!');
+    } catch (error) {
+      console.error('Erro ao salvar o e-mail:', error);
+    }
+  };
 
   return (
     <View className='flex items-center justify-center  h-full  bg-sky-500 '>
@@ -73,10 +91,11 @@ export function Home() {
                       <EnvelopeSimple size={20} />
                       <TextInput
                         placeholder='Digite seu e-mail'
-                        className='  '
+                        value={email}
+                        onChangeText={setEmail}
                       ></TextInput>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleSaveEmail}>
                       <Text className='border rounded-lg px-10 py-2'>
                         Cadastrar
                       </Text>

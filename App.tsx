@@ -15,6 +15,8 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import { Loading } from './src/components/Loading';
+import { initializeApp } from 'firebase/app';
+import firebaseConfig from './src/screens/config/firebaseConfig-skillShare';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -29,7 +31,7 @@ export default function App() {
 
   if (!fontsLoaded) return <Loading />;
 
-  /* https://docs.expo.dev/guides/using-custom-fonts/ */
+  initializeApp(firebaseConfig);
 
   return (
     <>

@@ -12,19 +12,12 @@ import { EnvelopeSimple, XCircle } from 'phosphor-react-native';
 
 import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
-
 import ToStudy from '../assets/svg/to-study.svg';
 import { useState } from 'react';
-
 import useDocument, { Email } from '../hooks/useDocument';
-
 import { validate } from 'email-validator';
 
-import { initializeApp } from 'firebase/app';
-import firebaseConfig from './config/firebaseConfig-skillShare';
-
 export function Home() {
-  initializeApp(firebaseConfig);
   const { navigate } = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState(false);
@@ -33,9 +26,13 @@ export function Home() {
   const { upsert } = useDocument<Email>('emails', 'A9wizeCoMU9EvvJuh9yk');
 
   const handleSaveEmail = async () => {
-    // Verifique se o e-mail é válido antes de salvar
+    const errorSing = () => {
+      setError(!error);
+    };
+
     if (!validate(email)) {
-      setError(true); // Defina o erro de validação
+      setEmail('');
+      errorSing();
       return;
     }
 
@@ -47,11 +44,11 @@ export function Home() {
       try {
         await upsert(newEmail);
         console.log('E-mail salvo com sucesso!');
-        setError(false);
+        errorSing();
         setModalVisible(!modalVisible);
-      } catch (error) {
-        //console.error('Erro ao salvar o e-mail:', error);
-        setError(true);
+        navigate('student');
+      } catch (erro) {
+        errorSing();
       }
     } catch (error) {
       console.error('Erro ao salvar o e-mail:', error);
@@ -83,8 +80,8 @@ export function Home() {
               }}
             >
               <View className='flex items-center justify-start h-screen mt-20'>
-                <View className=' flex bg-white w-56 h-48 rounded-lg '>
-                  <View className='flex-row justify-end items-end mt-3 mr-3'>
+                <View className=' flex bg-white w-60 h-52 rounded-lg '>
+                  <View className='flex-row justify-end items-end mt-2 mr-3'>
                     <TouchableOpacity
                       onPress={() => setModalVisible(!modalVisible)}
                       className=''
@@ -112,8 +109,9 @@ export function Home() {
                     </TouchableOpacity>
 
                     {error && (
-                      <Text className='text-[#EF3333]'>
-                        Email existe já ou é invalido
+                      <Text className='text-[#EF3333] text-base text-center font-medium'>
+                        Ocorreu um erro ao cadastrar email, verifique se já
+                        existe ou é valido
                       </Text>
                     )}
                   </View>
@@ -154,7 +152,4 @@ export function Home() {
       </ScrollView>
     </View>
   );
-}
-function isValidEmail(email: string) {
-  throw new Error('Function not implemented.');
 }

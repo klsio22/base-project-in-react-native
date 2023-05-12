@@ -4,6 +4,7 @@ import {
   getFirestore,
   onSnapshot,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
@@ -34,8 +35,24 @@ export default function useDocument<T extends { [x: string]: any }>(
    * @returns Id of the created document.
    */
   const upsert = async (newVal: T) => {
-    await setDoc(docRef, newVal);
-    return docRef.id;
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      // O documento já existe, verifique se o e-mail já foi cadastrado
+      const existingEmails = docSnap.data()?.emails || [];
+
+      if (existingEmails.includes(newVal.address)) {
+        // O e-mail já existe no array, não faça nada
+        throw new Error();
+      } else {
+        // Adicione o novo e-mail ao array existente
+        const updatedEmails = [...existingEmails, newVal.address];
+        await updateDoc(docRef, { emails: updatedEmails });
+      }
+    } else {
+      // O documento não existe, então crie-o com o novo e-mail
+      await setDoc(docRef, { emails: [newVal.address] });
+    }
   };
 
   /**

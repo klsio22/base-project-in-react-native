@@ -22,6 +22,7 @@
     "@react-native-firebase/app": "^17.4.3",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
+    "email-validator": "^2.0.4",
     "expo": "~48.0.4",
     "expo-app-loading": "^2.1.1",
     "expo-font": "~11.1.1",

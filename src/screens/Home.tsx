@@ -18,13 +18,8 @@ import { useState } from 'react';
 
 import useDocument, { Email } from '../hooks/useDocument';
 
-import {
-  addDoc,
-  collection,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
+import { validate } from 'email-validator';
+
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './config/firebaseConfig-skillShare';
 
@@ -32,18 +27,32 @@ export function Home() {
   initializeApp(firebaseConfig);
   const { navigate } = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [error, setError] = useState(false);
   const [email, setEmail] = useState('');
 
-  const { upsert } = useDocument<Email>('email', 'A9wizeCoMU9EvvJuh9yk');
+  const { upsert } = useDocument<Email>('emails', 'A9wizeCoMU9EvvJuh9yk');
 
   const handleSaveEmail = async () => {
-    const newEmail: Email = {
-      address: email, // Substitua pelo endereço de e-mail que deseja salvar
-    };
+    // Verifique se o e-mail é válido antes de salvar
+    if (!validate(email)) {
+      setError(true); // Defina o erro de validação
+      return;
+    }
 
     try {
-      await upsert(newEmail);
-      console.log('E-mail salvo com sucesso!');
+      const newEmail: Email = {
+        address: email,
+      };
+
+      try {
+        await upsert(newEmail);
+        console.log('E-mail salvo com sucesso!');
+        setError(false);
+        setModalVisible(!modalVisible);
+      } catch (error) {
+        //console.error('Erro ao salvar o e-mail:', error);
+        setError(true);
+      }
     } catch (error) {
       console.error('Erro ao salvar o e-mail:', error);
     }
@@ -95,11 +104,18 @@ export function Home() {
                         onChangeText={setEmail}
                       ></TextInput>
                     </View>
+
                     <TouchableOpacity onPress={handleSaveEmail}>
                       <Text className='border rounded-lg px-10 py-2'>
                         Cadastrar
                       </Text>
                     </TouchableOpacity>
+
+                    {error && (
+                      <Text className='text-[#EF3333]'>
+                        Email existe já ou é invalido
+                      </Text>
+                    )}
                   </View>
                 </View>
               </View>
@@ -138,4 +154,7 @@ export function Home() {
       </ScrollView>
     </View>
   );
+}
+function isValidEmail(email: string) {
+  throw new Error('Function not implemented.');
 }

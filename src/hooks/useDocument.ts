@@ -30,7 +30,7 @@ export default function useDocument<T extends { [x: string]: any }>(
   const [data, setData] = useState<T>();
 
   const collectionRef = collection(db, collectionName);
-  const docRef = doc(collectionRef); // Criando um novo documento sem especificar um ID
+  const docRef = doc(collectionRef);
 
   const register = async (email: string, password: string) => {
     try {
@@ -45,7 +45,8 @@ export default function useDocument<T extends { [x: string]: any }>(
         id: uid,
         email,
       };
-      await setDoc(docRef, data);
+      const newDocRef = doc(collectionRef); // Criando um novo documento sem especificar um ID
+      await setDoc(newDocRef, data);
       // ...
     } catch (error) {
       // Handle error

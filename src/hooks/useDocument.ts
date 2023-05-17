@@ -1,4 +1,6 @@
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import {
+  collection,
   doc,
   getDoc,
   getFirestore,
@@ -8,50 +10,45 @@ import {
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
-export type Email = {
+export type User = {
   id?: string;
-  address: string;
+  email: string;
+  password: string;
 };
 
 /**
  * Hook to access and manage a firestore document.
- * @param collectionName Collection name in plural (e.g. 'emails'). Can also be a path to subcollection.
+ * @param collectionName Collection name in plural (e.g. 'users'). Can also be a path to subcollection.
  * @returns
  */
 export default function useDocument<T extends { [x: string]: any }>(
   collectionName: string,
-  id: string,
   realtime: boolean = true
 ) {
   const db = getFirestore();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<T>();
 
-  const docRef = doc(db, collectionName, id);
+  const collectionRef = collection(db, collectionName);
+  const docRef = doc(collectionRef); // Criando um novo documento sem especificar um ID
 
-  /**
-   * Create or update a document in the given collection.
-   * @param newVal A new record of collection type. Entire content will be overwritten!
-   * @returns Id of the created document.
-   */
-  const upsert = async (newVal: T) => {
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      // O documento já existe, verifique se o e-mail já foi cadastrado
-      const existingEmails = docSnap.data()?.emails || [];
-
-      if (existingEmails.includes(newVal.address)) {
-        // O e-mail já existe no array, não faça nada
-        throw new Error();
-      } else {
-        // Adicione o novo e-mail ao array existente
-        const updatedEmails = [...existingEmails, newVal.address];
-        await updateDoc(docRef, { emails: updatedEmails });
-      }
-    } else {
-      // O documento não existe, então crie-o com o novo e-mail
-      await setDoc(docRef, { emails: [newVal.address] });
+  const register = async (email: string, password: string) => {
+    try {
+      const auth = getAuth();
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const uid = response.user.uid;
+      const data = {
+        id: uid,
+        email,
+      };
+      await setDoc(docRef, data);
+      // ...
+    } catch (error) {
+      // Handle error
     }
   };
 
@@ -83,5 +80,5 @@ export default function useDocument<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data, loading, upsert, refresh };
+  return { data, loading, refresh, register };
 }

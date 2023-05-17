@@ -8,47 +8,45 @@ import {
   View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { EnvelopeSimple, XCircle } from 'phosphor-react-native';
+import { EnvelopeSimple, Lock, XCircle } from 'phosphor-react-native';
 
 import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 import ToStudy from '../assets/svg/to-study.svg';
 import { useState } from 'react';
-import useDocument, { Email } from '../hooks/useDocument';
+import useDocument, { User } from '../hooks/useDocument';
 import { validate } from 'email-validator';
 
 export function Home() {
   const { navigate } = useNavigation();
+
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState(false);
   const [email, setEmail] = useState('');
-
-  const { upsert } = useDocument<Email>('emails', 'A9wizeCoMU9EvvJuh9yk');
+  const [password, setPassword] = useState('');
+  
+  const { register } = useDocument<User>('users');
 
   const handleSaveEmail = async () => {
-    const errorSing = () => {
+    const errorSingIn = () => {
       setError(!error);
     };
 
     if (!validate(email)) {
       setEmail('');
-      errorSing();
+      errorSingIn();
       return;
     }
 
     try {
-      const newEmail: Email = {
-        address: email,
-      };
-
       try {
-        await upsert(newEmail);
+        await register(email, password);
         console.log('E-mail salvo com sucesso!');
-        errorSing();
+        errorSingIn();
         setModalVisible(!modalVisible);
         navigate('student');
       } catch (erro) {
-        errorSing();
+        errorSingIn();
       }
     } catch (error) {
       console.error('Erro ao salvar o e-mail:', error);
@@ -100,6 +98,19 @@ export function Home() {
                         value={email}
                         onChangeText={setEmail}
                       ></TextInput>
+                    </View>
+
+                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48'>
+                      <Lock size={20} />
+
+                      <TextInput
+                        secureTextEntry
+                        placeholder='Password'
+                        onChangeText={(text) => setPassword(text)}
+                        value={password}
+                        underlineColorAndroid='transparent'
+                        autoCapitalize='none'
+                      />
                     </View>
 
                     <TouchableOpacity onPress={handleSaveEmail}>

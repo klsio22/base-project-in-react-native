@@ -1,41 +1,52 @@
 import { Button, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {useApp } from '../contexts/AppContext';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
+import BackgroundRed from '../assets/svg/background-red.svg';
+import NextScreen from '../assets/svg/next-screen.svg';
+import BlueHeart from '../assets/svg/blue-heart.svg';
 
 export function ProfessorLanding() {
   const { navigate } = useNavigation();
   const {token, setToken} = useApp();
 
   return (
-    <View className='flex items-center justify-center  h-full w-full bg-sky-600 '>
-      <View className='flex-column items-start justify-center  h-full w-90 ml-0 bg-[url("../../assets/background-splash.svg")] bg-cover bg-center'>
-        <Text className='text-white my-40 leading-8 w-full h-80'>
-          <Text className='font-ArchivoBold  text-4xl'>Quer ser</Text>
-          {'\n'}
-          <Text className='font-ArchivoBold text-4xl mb-5'>um Skiller ?</Text>
-          {'\n'}
-          <Text className='font-Archivo '>
-            Para começar, você precisa
+    <View className='flex items-center justify-start  h-full w-full bg-white'>
+      <View className='flex-column items-center justify-center h-1/2 w-full bg-red-400'>       
+      <View className='bg-red-400'>
+          <BackgroundRed width={500} />
+        </View>
+      </View>
+      <View className='flex items-center justify-between h-1/2 w-full bg-white'>
+        <Text className='text-[#57534E] my-10 p-4 w-full h-auto'>
+          <Text className='font-ArchivoBold  text-4xl'>
+          Venha fazer parte dos 
           </Text>
           {'\n'}
-          <Text className='font-Archivo '>
-            se cadastrar como professor
-          </Text>
+          <Text className='font-ArchivoBold text-4xl '>Skillers desse Brasil </Text>
           {'\n'}
-          <Text className='font-Archivo '>
-            na nossa plataforma web. {token}
-          </Text>
+          <Text className='font-ArchivoBold text-4xl '>
+          a fora!
+          </Text>          
+        </Text>
+        <View className='flex flex-row items-center p-4 justify-between w-full bg-white'>
+        <Text className='font-Archivo text-red-500'>
+        <Text>
+            Total de 256 compartilhadores 
+        </Text>
+            {'\n'} 
+        <Text>
+        de conhecimento <BlueHeart />
+        </Text>
         </Text>
         <TouchableOpacity
-          activeOpacity={0.7}
-          className='flex-row h-15 w-80 bg-red-600 justify-center items-center p-4 rounded-lg gap-3'
-          onPress={() => navigate('home')}
-        >
-          <Text className='text-white text-semibold font-PoppinsRegular text-base'>
-            Tudo bem
-          </Text>
-        </TouchableOpacity>
+              activeOpacity={0.7}
+              className=''
+              onPress={() => navigate('onboardingPageOne')}
+            >
+              <NextScreen className='flex-1' />
+            </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

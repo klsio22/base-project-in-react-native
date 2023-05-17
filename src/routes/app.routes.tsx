@@ -7,6 +7,8 @@ import { OnboardingPageTwo } from '../screens/OnboardingPageTwo';
 import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
 import { Student } from '../screens/Student';
+import { EnterpriseLanding } from '../screens/EnterpriseLanding';
+import { ProfessorLanding } from '../screens/ProfessorLanding';
 
 export function AppRoutes() {
   return (

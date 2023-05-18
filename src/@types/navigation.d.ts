@@ -8,6 +8,7 @@ export declare global {
       enterpriseLanding: undefined;
       student: undefined;
       createSkiller: undefined;
+      professor: undefined;
     }
   }
 }

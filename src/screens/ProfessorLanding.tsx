@@ -42,7 +42,7 @@ export function ProfessorLanding() {
         <TouchableOpacity
               activeOpacity={0.7}
               className=''
-              onPress={() => navigate('onboardingPageOne')}
+              onPress={() => navigate('skiller')}
             >
               <NextScreen className='flex-1' />
             </TouchableOpacity>

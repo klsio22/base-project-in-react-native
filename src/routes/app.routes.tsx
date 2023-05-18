@@ -8,6 +8,7 @@ import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
 import { Student } from '../screens/Student';
 import { EnterpriseLanding } from "../screens/EnterpriseLanding";
+import { CreateSkiller } from "../screens/CreateSkiller";
 
 export function AppRoutes() {
   return (
@@ -18,6 +19,7 @@ export function AppRoutes() {
       <Screen name='home' component={Home} />
       <Screen name='login' component={Login} />
       <Screen name='student' component={Student} />
+      <Screen name='createSkiller' component={CreateSkiller} />
     </Navigator>
   );
 }

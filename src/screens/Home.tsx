@@ -11,8 +11,8 @@ export function Home() {
   const { navigate } = useNavigation();
 
   return (
-    <View className='flex items-center justify-center  h-full  bg-sky-500 '>
-      <ScrollView className='mt-20 '>
+    <View className='flex items-center justify-center  h-full bg-sky-500'>
+      <View className='mt-20 '>
         <View className='flex justify-center items-center mx-auto'>
           <BannerHome width={280} />
         </View>
@@ -40,7 +40,7 @@ export function Home() {
             <TouchableOpacity
               activeOpacity={0.7}
               className='flex w-28 justify-between items-start p-4 rounded-lg bg-[#F27C7C] '
-              onPress={() => navigate('createSkiller')}
+              onPress={() => navigate('professor')}
             >
               <ToWatch />
 
@@ -60,7 +60,7 @@ export function Home() {
             <Heart color='#ffffff' weight='fill' size={16} />
           </Text> */}
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }

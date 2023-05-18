@@ -7,9 +7,11 @@ import { OnboardingPageTwo } from '../screens/OnboardingPageTwo';
 import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
 import { Student } from '../screens/Student';
-import { ProfessorLanding } from '../screens/ProfessorLanding';
+<<<<<<<<< Temporary merge branch 1
 import { EnterpriseLanding } from "../screens/EnterpriseLanding";
-import { CreateSkiller } from "../screens/CreateSkiller";
+=========
+import { ProfessorLanding } from '../screens/ProfessorLanding';
+>>>>>>>>> Temporary merge branch 2
 
 export function AppRoutes() {
   return (

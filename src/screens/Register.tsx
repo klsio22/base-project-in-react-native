@@ -2,18 +2,50 @@ import { useNavigation } from '@react-navigation/native';
 import { EnvelopeSimple, XCircle, Lock } from 'phosphor-react-native';
 import { useState } from 'react';
 import {
+  Modal,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import useDocument, { User } from '../hooks/useDocument';
+import { validate } from 'email-validator';
 
 export function Register() {
   const { navigate } = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const { register, getUsers } = useDocument<User>('users');
+
+  const errorSingUp = () => {
+    setError(!error);
+    setModalVisible(!modalVisible);
+  };
+
+  const handleSaveEmail = async () => {
+    console.log(getUsers());
+    if (!validate(email)) {
+      setEmail('');
+      errorSingUp();
+      return;
+    }
+
+    try {
+      try {
+        await register(email, password);
+        console.log('E-mail salvo com sucesso!');
+        navigate('student');
+      } catch (erro) {
+        errorSingUp();
+      }
+    } catch (error) {
+      console.error('Erro ao salvar o e-mail:', error);
+    }
+  };
 
   return (
     <View className='items-center justify-center h-full bg-sky-500'>
@@ -59,7 +91,10 @@ export function Register() {
               </View>
             </View>
 
-            <TouchableOpacity className='items-center rounded-sm justify-center w-full h-10 bg-blue-200'>
+            <TouchableOpacity
+              className='items-center rounded-sm justify-center w-full h-10 bg-blue-200'
+              onPress={handleSaveEmail}
+            >
               <Text className='text-stone-800 font-ArchivoSemiBold'>
                 Cadastrar
               </Text>
@@ -76,10 +111,32 @@ export function Register() {
             </TouchableOpacity>
 
             {error && (
-              <Text className='text-[#EF3333] text-base text-center font-medium'>
-                Ocorreu um erro ao cadastrar email, verifique se já existe ou é
-                valido
-              </Text>
+              <Modal
+                animationType='fade'
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(!modalVisible)}
+              >
+                <View className='absolute top-1/4 left-[20%] w-48 h-40 p-1 rounded-md bg-white '>
+                  <View className='flex-row justify-end items-end  '>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setModalVisible(!modalVisible);
+                        setError(!error);
+                      }}
+                      className=''
+                    >
+                      <Text className=''>
+                        <XCircle size={24} />
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Text className='text-red-500 border-light-100 text-lg text-center mt-5 font-PoppinsMedium'>
+                    Ocorreu um erro ao cadastrar seu e-mail, já existe ou não é
+                    válido.
+                  </Text>
+                </View>
+              </Modal>
             )}
           </View>
         </View>

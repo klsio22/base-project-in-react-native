@@ -1,12 +1,16 @@
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import {
+  DocumentData,
+  QuerySnapshot,
   collection,
   doc,
   getDoc,
+  getDocs,
   getFirestore,
   onSnapshot,
+  query,
   setDoc,
-  updateDoc,
+  where,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
@@ -30,7 +34,22 @@ export default function useDocument<T extends { [x: string]: any }>(
   const [data, setData] = useState<T>();
 
   const collectionRef = collection(db, collectionName);
-  const docRef = doc(collectionRef);
+
+  const searchEmail = async (email: string) => {
+    const queryRef = query(collectionRef, where('email', '==', email));
+    const querySnapshot = await getDocs(queryRef);
+    return !querySnapshot.empty && querySnapshot.docs.length > 0;
+  };
+
+  const getUsers = async () => {
+    const querySnapshot = await getDocs(collectionRef);
+    const users: { [key: string]: DocumentData } = {};
+    querySnapshot.forEach((doc) => {
+      users[doc.id] = doc.data();
+    });
+    return users;
+  };
+
 
   const register = async (email: string, password: string) => {
     try {
@@ -40,12 +59,14 @@ export default function useDocument<T extends { [x: string]: any }>(
         email,
         password
       );
+
       const uid = response.user.uid;
       const data = {
         id: uid,
         email,
       };
-      const newDocRef = doc(collectionRef); // Criando um novo documento sem especificar um ID
+
+      const newDocRef = doc(collectionRef, uid);
       await setDoc(newDocRef, data);
       // ...
     } catch (error) {
@@ -59,7 +80,7 @@ export default function useDocument<T extends { [x: string]: any }>(
    */
   const refresh = async () => {
     setLoading(true);
-    const docSnap = await getDoc(docRef);
+    const docSnap = await getDoc(doc(collectionRef));
     const data = docSnap.data() as T;
     setData(data);
     setLoading(false);
@@ -71,7 +92,7 @@ export default function useDocument<T extends { [x: string]: any }>(
     refresh();
 
     const unsub = realtime
-      ? onSnapshot(docRef, (docSnap) => {
+      ? onSnapshot(doc(collectionRef), (docSnap) => {
           const data = docSnap.data() as T;
           setData(data);
         })
@@ -81,5 +102,5 @@ export default function useDocument<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data, loading, refresh, register };
+  return { data, loading, refresh, register, getUsers };
 }

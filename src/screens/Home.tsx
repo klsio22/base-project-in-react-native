@@ -24,7 +24,7 @@ export function Home() {
   const [error, setError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const { register } = useDocument<User>('users');
 
   const handleSaveEmail = async () => {
@@ -54,7 +54,7 @@ export function Home() {
   };
 
   return (
-    <View className='flex items-center justify-center  h-full  bg-sky-500 '>
+    <View className='flex items-center justify-center h-full  bg-sky-500 '>
       <ScrollView className='mt-20 '>
         <View className='flex justify-center items-center mx-auto'>
           <BannerHome width={280} />
@@ -77,8 +77,8 @@ export function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View className='flex items-center justify-start h-screen mt-20'>
-                <View className=' flex bg-white w-60 h-52 rounded-lg '>
+              <View className='flex items-center justify-start h-screen mt-14'>
+                <View className=' flex bg-white w-60 h-64 rounded-lg '>
                   <View className='flex-row justify-end items-end mt-2 mr-3'>
                     <TouchableOpacity
                       onPress={() => setModalVisible(!modalVisible)}
@@ -90,13 +90,14 @@ export function Home() {
                     </TouchableOpacity>
                   </View>
 
-                  <View className='flex justify-center items-center gap-5 mt-1'>
+                  <View className='flex justify-center items-center gap-4 mt-1'>
                     <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48'>
                       <EnvelopeSimple size={20} />
                       <TextInput
                         placeholder='Digite seu e-mail'
                         value={email}
                         onChangeText={setEmail}
+                        className='w-full'
                       ></TextInput>
                     </View>
 
@@ -105,26 +106,38 @@ export function Home() {
 
                       <TextInput
                         secureTextEntry
-                        placeholder='Password'
+                        placeholder='*****************'
                         onChangeText={(text) => setPassword(text)}
                         value={password}
                         underlineColorAndroid='transparent'
                         autoCapitalize='none'
+                        className='w-full'
                       />
                     </View>
 
-                    <TouchableOpacity onPress={handleSaveEmail}>
-                      <Text className='border rounded-lg px-10 py-2'>
-                        Cadastrar
-                      </Text>
+                    <TouchableOpacity
+                      onPress={handleSaveEmail}
+                      className='w-48 h-7 border rounded-md items-center justify-center'
+                    >
+                      <Text className=' '>Entrar</Text>
                     </TouchableOpacity>
 
                     {error && (
                       <Text className='text-[#EF3333] text-base text-center font-medium'>
-                        Ocorreu um erro ao cadastrar email, verifique se já
-                        existe ou é valido
+                        Email ou senha está incorreto!
                       </Text>
                     )}
+
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigate('register');
+                        setModalVisible(!modalVisible);
+                      }}
+                    >
+                      <Text className='text-sky-500 font-ArchivoBold'>
+                        Não Possui conta ? Crie uma agora!
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
@@ -133,7 +146,7 @@ export function Home() {
             <TouchableOpacity
               activeOpacity={0.7}
               className='flex w-28 justify-between items-start p-4 rounded-lg bg-sky-200 '
-              onPress={() => setModalVisible(true)}
+              onPress={() => setModalVisible(!modalVisible)}
             >
               <ToStudy />
 
@@ -148,7 +161,6 @@ export function Home() {
               onPress={() => navigate('professor')}
             >
               <ToWatch />
-
               <Text className='font-semibold text-xl font-ArchivoSemiBold text-white'>
                 Dar aulas
               </Text>

@@ -16,10 +16,11 @@ export function Register() {
   const { navigate } = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const [error, setError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { register, getUsers } = useDocument<User>('users');
+  const { register, searchEmail } = useDocument<User>('users');
 
   const errorSingUp = () => {
     setError(!error);
@@ -27,9 +28,15 @@ export function Register() {
   };
 
   const handleSaveEmail = async () => {
-    console.log(getUsers());
-    if (!validate(email)) {
-      setEmail('');
+    const existEmail = await searchEmail(email);
+
+    console.log(existEmail);
+    if (!validate(email) && !existEmail) {
+      errorSingUp();
+      return;
+    }
+
+    if (password == '') {
       errorSingUp();
       return;
     }

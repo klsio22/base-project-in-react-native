@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import BackgroundBlue from '../assets/svg/background-blue.svg';
 import NextScreen from '../assets/svg/next-screen.svg';
 import PageOne from '../assets/svg/page-one.svg';
+import React from 'react';
 
 export function OnboardingPageOne() {
   const { navigate } = useNavigation();

@@ -39,7 +39,7 @@ export default function useAuth<T extends { [x: string]: any }>(
           'Acesso temporariamente desabilitado devido a muitas tentativas de login falhadas. Tente novamente mais tarde ou redefina sua senha.'
         );
       } else {
-        throw error;
+        throw new Error('Email ou usuário não existe cadastrado');
       }
     }
   };

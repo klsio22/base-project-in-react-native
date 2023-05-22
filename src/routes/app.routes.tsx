@@ -9,14 +9,42 @@ import { Student } from '../screens/Student';
 import { ProfessorLanding } from '../screens/ProfessorLanding';
 import { EnterpriseLanding } from '../screens/EnterpriseLanding';
 import { Register } from '../screens/Register';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import { Loading } from '../components/Loading';
 
 export function AppRoutes() {
+  const [initialRoute, setInitialRoute] = useState('');
+
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      try {
+        const onboardingCompleted = await AsyncStorage.getItem(
+          'onboardingCompleted'
+        );
+        if (onboardingCompleted === 'true') {
+          setInitialRoute('home');
+        } else {
+          setInitialRoute('onboardingPageOne');
+        }
+      } catch (e) {
+        console.log('error loading onboarding');
+      }
+    };
+    checkOnboardingStatus();
+  }, []);
+
+  if (initialRoute === '') return <Loading />;
+
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
+    <Navigator
+      initialRouteName={initialRoute}
+      screenOptions={{ headerShown: false }}
+    >
       <Screen name='onboardingPageOne' component={OnboardingPageOne} />
       <Screen name='onboardingPageTwo' component={OnboardingPageTwo} />
-      <Screen name='enterpriseLanding' component={EnterpriseLanding} />
       <Screen name='home' component={Home} />
+      <Screen name='enterpriseLanding' component={EnterpriseLanding} />
       <Screen name='student' component={Student} />
       <Screen name='register' component={Register} />
       <Screen name='professor' component={ProfessorLanding} />

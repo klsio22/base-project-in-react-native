@@ -4,9 +4,15 @@ import { useNavigation } from '@react-navigation/native';
 import BackgroundRed from '../assets/svg/background-red.svg';
 import NextScreen from '../assets/svg/next-screen.svg';
 import PageTwo from '../assets/svg/page-two.svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function OnboardingPageTwo() {
   const { navigate } = useNavigation();
+
+  const handleComplete = async () => {
+    await AsyncStorage.setItem('onboardingCompleted', 'true');
+    navigate('home');
+  };
 
   return (
     <View className='flex items-center justify-start h-full w-full bg-white'>
@@ -37,7 +43,7 @@ export function OnboardingPageTwo() {
             <TouchableOpacity
               activeOpacity={0.7}
               className=''
-              onPress={() => navigate('home')}
+              onPress={() => handleComplete()}
             >
               <NextScreen />
             </TouchableOpacity>

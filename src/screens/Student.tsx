@@ -12,7 +12,7 @@ export function Student() {
     <TouchableOpacity
       activeOpacity={0.7}
       className='flex-row h-11 px-4 border border-blue-600 rounded-lg items-center'
-      onPress={() => navigate('onboardingPageOne')}
+      onPress={() => navigate('home')}
     >
       <Text className='text-white ml-3 font-PoppinsRegular text-base'>
        Voltar para inicio

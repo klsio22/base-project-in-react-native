@@ -16,6 +16,7 @@ import ToStudy from '../assets/svg/to-study.svg';
 import { useState } from 'react';
 import useDocument, { User } from '../hooks/useDocument';
 import { validate } from 'email-validator';
+import useAuth from '../hooks/useAuth';
 
 export function Home() {
   const { navigate } = useNavigation();
@@ -25,31 +26,34 @@ export function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { register } = useDocument<User>('users');
+  const { login } = useAuth<User>('users');
 
-  const handleSaveEmail = async () => {
-    const errorSingIn = () => {
-      setError(!error);
-    };
-
-    if (!validate(email)) {
-      setEmail('');
-      errorSingIn();
-      return;
-    }
-
+  const handleLoginUser = async () => {
     try {
+      if (!validate(email)) {
+        setError(true);
+        return;
+      }
+
+      if (password == '') {
+        setError(true);
+        return;
+      }
+
       try {
-        await register(email, password);
-        console.log('E-mail salvo com sucesso!');
-        errorSingIn();
+        await login(email, password);
+        console.log('Login com sucesso');
         setModalVisible(!modalVisible);
+        setError(false);
+        setEmail('');
+        setPassword('');
         navigate('student');
-      } catch (erro) {
-        errorSingIn();
+      } catch (error) {
+        setError(true);
+        console.log('Email ou senhas estão incorretos',error);
       }
     } catch (error) {
-      console.error('Erro ao salvar o e-mail:', error);
+      console.error('Erro ao fazer login');
     }
   };
 
@@ -79,15 +83,16 @@ export function Home() {
             >
               <View className='flex items-center justify-start h-screen mt-14'>
                 <View className=' flex bg-white w-60 h-64 rounded-lg '>
-                  <View className='flex-row justify-end items-end mt-2 mr-3'>
-                    <TouchableOpacity
-                      onPress={() => setModalVisible(!modalVisible)}
-                      className=''
-                    >
-                      <Text className=''>
+                  <View className='mt-2 mr-3'>
+                    <View className='flex-row items-center justify-center'>
+                      <Text className='font-PoppinsMedium text-xl'>Login</Text>
+                      <TouchableOpacity
+                        className='absolute right-0'
+                        onPress={() => setModalVisible(!modalVisible)}
+                      >
                         <XCircle size={24} />
-                      </Text>
-                    </TouchableOpacity>
+                      </TouchableOpacity>
+                    </View>
                   </View>
 
                   <View className='flex justify-center items-center gap-4 mt-1'>
@@ -116,7 +121,7 @@ export function Home() {
                     </View>
 
                     <TouchableOpacity
-                      onPress={handleSaveEmail}
+                      onPress={handleLoginUser}
                       className='w-48 h-7 border rounded-md items-center justify-center'
                     >
                       <Text className=' '>Entrar</Text>
@@ -135,7 +140,7 @@ export function Home() {
                       }}
                     >
                       <Text className='text-sky-500 font-ArchivoBold'>
-                        Não Possui conta ? Crie uma agora!
+                        Não possui conta ? Crie uma agora!
                       </Text>
                     </TouchableOpacity>
                   </View>

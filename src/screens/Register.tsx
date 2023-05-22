@@ -28,20 +28,20 @@ export function Register() {
   };
 
   const handleSaveEmail = async () => {
-    const existEmail = await searchEmail(email);
-
-    console.log(existEmail);
-    if (!validate(email) && !existEmail) {
-      errorSingUp();
-      return;
-    }
-
-    if (password == '') {
-      errorSingUp();
-      return;
-    }
-
     try {
+      const existEmail = await searchEmail(email);
+
+      console.log(existEmail);
+      if (!validate(email) && !existEmail) {
+        errorSingUp();
+        return;
+      }
+
+      if (password == '') {
+        errorSingUp();
+        return;
+      }
+
       try {
         await register(email, password);
         console.log('E-mail salvo com sucesso!');

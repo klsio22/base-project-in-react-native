@@ -1,7 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import {
   DocumentData,
-  QuerySnapshot,
   collection,
   doc,
   getDoc,
@@ -38,24 +37,7 @@ export default function useDocument<T extends { [x: string]: any }>(
   const searchEmail = async (email: string) => {
     const queryRef = query(collectionRef, where('email', '==', email));
     const querySnapshot = await getDocs(queryRef);
-    let result = false;
-    querySnapshot.forEach((doc) => {
-      const data = doc.data() as User;
-      if (data.email !== '') {
-        result = true;
-      }
-    });
-    return result;
-  };
-
-  const getUsers = async () => {
-    const querySnapshot = await getDocs(collectionRef);
-    //console.log(querySnapshot);
-    const users: { [key: string]: DocumentData } = {};
-    querySnapshot.forEach((doc) => {
-      users[doc.id] = doc.data();
-    });
-    return users;
+    return !querySnapshot.empty;
   };
 
   const register = async (email: string, password: string) => {
@@ -109,5 +91,5 @@ export default function useDocument<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data, loading, refresh, register, getUsers, searchEmail };
+  return { data, loading, refresh, register, searchEmail };
 }

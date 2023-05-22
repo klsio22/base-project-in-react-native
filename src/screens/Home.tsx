@@ -14,7 +14,7 @@ import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 import ToStudy from '../assets/svg/to-study.svg';
 import { useState } from 'react';
-import useDocument, { User } from '../hooks/useDocument';
+import { User } from '../hooks/useDocument';
 import { validate } from 'email-validator';
 import useAuth from '../hooks/useAuth';
 
@@ -23,20 +23,29 @@ export function Home() {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const { login } = useAuth<User>('users');
 
+  const clearAll = () => {
+    setEmail('');
+    setPassword('');
+    setErrorMessage('');
+  };
+
   const handleLoginUser = async () => {
     try {
       if (!validate(email)) {
         setError(true);
+        setErrorMessage('Email ou senhas estão incorretos');
         return;
       }
 
       if (password == '') {
         setError(true);
+        setErrorMessage('Email ou senhas estão incorretos');
         return;
       }
 
@@ -45,15 +54,16 @@ export function Home() {
         console.log('Login com sucesso');
         setModalVisible(!modalVisible);
         setError(false);
-        setEmail('');
-        setPassword('');
+        clearAll();
         navigate('student');
-      } catch (error) {
+      } catch (error: any) {
         setError(true);
-        console.log('Email ou senhas estão incorretos',error);
+        console.log(error.message);
+        setErrorMessage(error.message);
       }
-    } catch (error) {
-      console.error('Erro ao fazer login');
+    } catch (error: any) {
+      console.log(error.message);
+      setErrorMessage(error.message);
     }
   };
 
@@ -81,22 +91,25 @@ export function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View className='flex items-center justify-start h-screen mt-14'>
-                <View className=' flex bg-white w-60 h-64 rounded-lg '>
+              <View className='flex items-center justify-start h-screen mt-6'>
+                <View className=' flex bg-white w-60 h-auto rounded-lg '>
                   <View className='mt-2 mr-3'>
                     <View className='flex-row items-center justify-center'>
                       <Text className='font-PoppinsMedium text-xl'>Login</Text>
                       <TouchableOpacity
                         className='absolute right-0'
-                        onPress={() => setModalVisible(!modalVisible)}
+                        onPress={() => {
+                          setModalVisible(!modalVisible);
+                          clearAll();
+                        }}
                       >
                         <XCircle size={24} />
                       </TouchableOpacity>
                     </View>
                   </View>
 
-                  <View className='flex justify-center items-center gap-4 mt-1'>
-                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48'>
+                  <View className='flex justify-center items-center gap-3 mt-1'>
+                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48 h-8'>
                       <EnvelopeSimple size={20} />
                       <TextInput
                         placeholder='Digite seu e-mail'
@@ -106,7 +119,7 @@ export function Home() {
                       ></TextInput>
                     </View>
 
-                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48'>
+                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48 h-8'>
                       <Lock size={20} />
 
                       <TextInput
@@ -122,14 +135,14 @@ export function Home() {
 
                     <TouchableOpacity
                       onPress={handleLoginUser}
-                      className='w-48 h-7 border rounded-md items-center justify-center'
+                      className='w-48 h-8 border rounded-md items-center justify-center'
                     >
                       <Text className=' '>Entrar</Text>
                     </TouchableOpacity>
 
                     {error && (
                       <Text className='text-[#EF3333] text-base text-center font-medium'>
-                        Email ou senha está incorreto!
+                        {errorMessage}
                       </Text>
                     )}
 
@@ -137,7 +150,9 @@ export function Home() {
                       onPress={() => {
                         navigate('register');
                         setModalVisible(!modalVisible);
+                        clearAll();
                       }}
+                      className='p-2'
                     >
                       <Text className='text-sky-500 font-ArchivoBold'>
                         Não possui conta ? Crie uma agora!

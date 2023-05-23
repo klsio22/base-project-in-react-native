@@ -3,6 +3,7 @@ export declare global {
     interface RootParamList {
       home: undefined;
       login: undefined;
+      register: undefined;
       onboardingPageOne: undefined;
       onboardingPageTwo: undefined;
       enterpriseLanding: undefined;

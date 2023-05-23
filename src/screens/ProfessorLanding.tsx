@@ -11,41 +11,43 @@ export function ProfessorLanding() {
   const { token, setToken } = useApp();
 
   return (
-    <View className='flex items-center justify-start  h-full w-full bg-white'>
-      <View className='flex-column items-center justify-center h-1/2 w-full bg-red-400'>
-        <View className='bg-red-400'>
-          <BackgroundRed width={500} />
+    <ScrollView>
+      <View className='flex items-center justify-start  h-full w-full bg-white'>
+        <View className='flex-column items-center justify-center h-1/2 w-full bg-red-400'>
+          <View className='bg-red-400'>
+            <BackgroundRed width={350} />
+          </View>
         </View>
-      </View>
-      <View className='flex items-center justify-between h-1/2 w-full bg-white'>
-        <Text className='text-[#57534E] my-10 p-4 w-full h-auto'>
-          <Text className='font-ArchivoBold  text-4xl'>
-            Venha fazer parte dos
-          </Text>
-          {'\n'}
-          <Text className='font-ArchivoBold text-4xl '>
-            Skillers desse Brasil{' '}
-          </Text>
-          {'\n'}
-          <Text className='font-ArchivoBold text-4xl '>a fora!</Text>
-        </Text>
-        <View className='flex flex-row items-center p-4 justify-between w-full bg-white'>
-          <Text className='font-Archivo text-red-500'>
-            <Text>Total de 256 compartilhadores</Text>
-            {'\n'}
-            <Text>
-              de conhecimento <BlueHeart />
+        <View className='flex items-center justify-between h-1/2 w-full bg-white'>
+          <Text className='text-[#57534E] my-10 p-4 w-full h-auto'>
+            <Text className='font-ArchivoBold  text-2xl'>
+              Venha fazer parte dos
             </Text>
+            {'\n'}
+            <Text className='font-ArchivoBold text-2xl '>
+              Skillers desse Brasil{' '}
+            </Text>
+            {'\n'}
+            <Text className='font-ArchivoBold text-2xl '>a fora!</Text>
           </Text>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            className=''
-            onPress={() => navigate('onboardingPageOne')}
-          >
-            <NextScreen className='flex-1' />
-          </TouchableOpacity>
+          <View className='flex flex-row items-center p-4 justify-between w-full'>
+            <Text className='font-Archivo text-base text-red-500'>
+              <Text>Total de 256 compartilhadores</Text>
+              {'\n'}
+              <Text>
+                de conhecimento <BlueHeart />
+              </Text>
+            </Text>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              className=''
+              onPress={() => navigate('home')}
+            >
+              <NextScreen className='flex-1' />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }

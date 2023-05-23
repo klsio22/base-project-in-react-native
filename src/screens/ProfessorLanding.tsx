@@ -1,14 +1,12 @@
 import { Button, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useApp } from '../contexts/AppContext';
-import React, { useContext } from 'react';
+import React from 'react';
 import BackgroundRed from '../assets/svg/background-red.svg';
 import NextScreen from '../assets/svg/next-screen.svg';
 import BlueHeart from '../assets/svg/blue-heart.svg';
 
 export function ProfessorLanding() {
   const { navigate } = useNavigation();
-  const { token, setToken } = useApp();
 
   return (
     <ScrollView>

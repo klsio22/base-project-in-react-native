@@ -32,7 +32,7 @@ export function Register() {
       const existEmail = await searchEmail(email);
 
       console.log(existEmail);
-      if (!validate(email) && existEmail) {
+      if (!validate(email) || existEmail) {
         errorSingUp();
         return;
       }

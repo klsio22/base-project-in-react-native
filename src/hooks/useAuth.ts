@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import {
+  Auth,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   User,
 } from 'firebase/auth';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Firebase authentication hook.
@@ -60,6 +63,33 @@ export default function useAuth<T extends { [x: string]: any }>(
       }
       setLoading(false);
     });
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        setUser(user);
+        AsyncStorage.setItem('user', JSON.stringify(user)).catch(console.error);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const restoreUser = async (): Promise<void> => {
+      try {
+        const storedUser = await AsyncStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (error) {
+        console.error('Erro ao restaurar usuário:', error);
+      }
+    };
+
+    restoreUser().catch(console.error);
   }, []);
 
   return { loading, user, login, logout };

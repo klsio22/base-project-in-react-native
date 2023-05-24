@@ -27,7 +27,11 @@ export function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login } = useAuth<User>('users');
+  const { login, user } = useAuth<User>('users');
+
+  const verifyLogin = () => {
+    user ? navigate('student') : setModalVisible(!modalVisible);
+  };
 
   const clearAll = () => {
     setEmail('');
@@ -66,6 +70,8 @@ export function Home() {
       setErrorMessage(error.message);
     }
   };
+
+  user ? console.log('logado') : console.log('não logado');
 
   return (
     <View className='flex items-center justify-center h-full  bg-sky-500 '>
@@ -134,7 +140,7 @@ export function Home() {
                     </View>
 
                     <TouchableOpacity
-                      onPress={handleLoginUser}
+                      onPress={() => handleLoginUser()}
                       className='w-48 h-8 border rounded-md items-center justify-center'
                     >
                       <Text className=' '>Entrar</Text>
@@ -166,10 +172,9 @@ export function Home() {
             <TouchableOpacity
               activeOpacity={0.7}
               className='flex w-28 justify-between items-start p-4 rounded-lg bg-sky-200 '
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => verifyLogin()}
             >
               <ToStudy />
-
               <Text className='font-semibold text-xl font-ArchivoSemiBold text-stone-600 '>
                 Estudar
               </Text>
@@ -195,4 +200,7 @@ export function Home() {
       </ScrollView>
     </View>
   );
+}
+function useEffect(arg0: () => void) {
+  throw new Error('Function not implemented.');
 }

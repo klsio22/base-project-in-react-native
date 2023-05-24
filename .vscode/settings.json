@@ -29,6 +29,7 @@
     "**/react/**/*.css": false
   },
   "cSpell.words": [
+    "Firestore",
     "vtex"
   ],
   "editor.tabSize": 3,

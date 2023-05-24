@@ -12,15 +12,15 @@ export const fetchDisciplines = async () => {
 
     const spans = root.querySelectorAll('span.mw-headline');
     spans.forEach((span) => {
-      const discipline = span.querySelector('a')?.text;
+      const discipline = span.querySelector('a')?.textContent;
       if (discipline) {
         disciplines.push(discipline);
       }
     });
 
-    console.log(disciplines);
     return disciplines;
   } catch (error) {
     console.error(error);
+    throw error; // Re-throw the error to handle it in the calling code
   }
 };

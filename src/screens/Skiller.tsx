@@ -18,14 +18,28 @@ export function Skiller() {
   const [zap, setZap] = useState('');
   const [biography, setBio] = useState('');
 
+  const [disciplines, setDisciplines] = useState<string[]>([]);
+
   function onChangedZap(text: string) {
     setZap(text.replace(/[^0-9]/g, ''));
   }
 
   useEffect(() => {
-    fetchDisciplines().catch(console.error);
+    const listTeacher = async () => {
+      try {
+        const fetchedDisciplines = await fetchDisciplines();
+        setDisciplines(fetchedDisciplines);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    listTeacher().catch(console.error);
   }, []);
 
+  useEffect(() => {
+    console.log(disciplines);
+  }, []);
   return (
     <ScrollView className='h-full bg-sky-400'>
       <View className='flex items-center justify-start h-full flex-1 p-4 '>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import {
-  Auth,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -52,6 +51,8 @@ export default function useAuth<T extends { [x: string]: any }>(
    */
   const logout = async () => {
     await signOut(getAuth());
+    setUser(null);
+    await AsyncStorage.removeItem('user');
   };
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import {
-  DocumentData,
   collection,
   doc,
   getDoc,
@@ -58,8 +57,12 @@ export default function useDocument<T extends { [x: string]: any }>(
       const newDocRef = doc(collectionRef, uid);
       await setDoc(newDocRef, data);
       // ...
+
+      // Criar coleção "favorite" dentro da coleção "users"
+      const favoriteCollectionRef = collection(newDocRef, 'favorite');
+      await setDoc(doc(favoriteCollectionRef), {});
     } catch (error) {
-      // Handle error
+      throw new Error('Ocorreu um erro ao fazer o cadastro');
     }
   };
 

@@ -201,6 +201,3 @@ export function Home() {
     </View>
   );
 }
-function useEffect(arg0: () => void) {
-  throw new Error('Function not implemented.');
-}

@@ -9,6 +9,9 @@ export declare global {
       enterpriseLanding: undefined;
       student: undefined;
       professor: undefined;
+      skiller: undefined;
+      professor: undefined;
+      skillers: undefined;
     }
   }
 }

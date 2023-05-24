@@ -16,12 +16,12 @@ export function OnboardingPageTwo() {
 
   return (
     <View className='flex items-center justify-start h-full w-full bg-white'>
-      <ScrollView>
-        <View className='bg-[#F27C7C]'>
-          <BackgroundRed width={310} />
+      <View className='w-full h-full flex item-center'>
+        <View className='bg-red-400 w-full flex item-center justify-center h-1/2'>
+          <BackgroundRed width='450' />
         </View>
-        <View className='bg-white mx-5 my-10'>
-          <View className='flex items-start justify-start mb-10 '>
+        <View className='bg-white h-1/2 p-4 flex item-center justify-between'>
+          <View className='flex items-start justify-start mb-10'>
             <Text className='text-blue-200 font-ArchivoMedium text-[40px]'>
               02.
             </Text>
@@ -31,14 +31,8 @@ export function OnboardingPageTwo() {
             </Text>
           </View>
 
-          <View className='flex-row h-11 mt-2 items-center justify-between'>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              className=''
-              onPress={() => navigate('onboardingPageOne')}
-            >
-              <PageTwo className='flex-1' />
-            </TouchableOpacity>
+          <View className='flex-row mt-2 items-center justify-between'>
+            <PageTwo className='flex-1' />
 
             <TouchableOpacity
               activeOpacity={0.7}
@@ -49,7 +43,7 @@ export function OnboardingPageTwo() {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }

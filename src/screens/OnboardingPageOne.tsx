@@ -10,13 +10,13 @@ export function OnboardingPageOne() {
   const { navigate } = useNavigation();
 
   return (
-    <View className='flex items-center justify-start h-full w-full bg-white'>
-      <ScrollView>
-        <View className='bg-sky-500'>
-          <BackgroundBlue width='310' />
+    <View className='flex items-center h-full w-full bg-white'>
+      <View className='w-full h-full flex item-center'>
+        <View className='bg-sky-500 w-full flex item-center justify-center h-1/2'>
+          <BackgroundBlue width='450' />
         </View>
-        <View className='bg-white mx-5 my-10'>
-          <View className='flex items-start justify-start mb-10 '>
+        <View className='bg-white h-1/2 p-4 flex item-center justify-between'>
+          <View className='flex items-start justify-start mb-10'>
             <Text className='text-blue-200 font-ArchivoMedium text-[40px]'>
               01.
             </Text>
@@ -38,7 +38,7 @@ export function OnboardingPageOne() {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }

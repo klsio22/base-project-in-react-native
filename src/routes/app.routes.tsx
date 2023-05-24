@@ -12,6 +12,8 @@ import { Register } from '../screens/Register';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { Loading } from '../components/Loading';
+import { Skiller } from '../screens/Skiller';
+import ListSkillers from '../screens/ListSkillers';
 
 export function AppRoutes() {
   const [initialRoute, setInitialRoute] = useState('');
@@ -31,7 +33,7 @@ export function AppRoutes() {
         console.log('error loading onboarding');
       }
     };
-    checkOnboardingStatus();
+    checkOnboardingStatus().catch(console.error);
   }, []);
 
   if (initialRoute === '') return <Loading />;
@@ -48,6 +50,8 @@ export function AppRoutes() {
       <Screen name='student' component={Student} />
       <Screen name='register' component={Register} />
       <Screen name='professor' component={ProfessorLanding} />
+      <Screen name='skiller' component={Skiller} />
+      <Screen name='skillers' component={ListSkillers} />
     </Navigator>
   );
 }

@@ -52,23 +52,23 @@ export default function ListSkillers() {
             <Divider />
          </View>
 
-         <SafeAreaView className='w-full h-full px-4 bg-[#f0f0f7]'>
+         <SafeAreaView className='w-full h-auto px-4 pb-40 bg-[#f0f0f7]'>
             <FlatList
                data={data}
                renderItem={({ item }) =>
                   <Card className='p-0 w-90 pb-3 bg-white mb-5 mt-2' key={item.id}>
                      <View className='p-5'>
                         <Text className='text-[#32264d] font-PoppinsRegular font-bold text-2xl'>{item.name}</Text>
-                        <Text variant="titleSmall">{item.bio}</Text>
+                        <Text variant="titleSmall">{item.skills}</Text>
                      </View>
                      {/* <Card.Title title="Roberval dos Santos" subtitle="Acadêmico, 3º período - UTFPR"/> */}
                      <Card.Content className='mb-2 mt-5'>
                         <Text className='mb-5' variant="bodyMedium">
-                           {`Manja de : ${item.skills}`}
+                            {item.bio}
                         </Text>
                                     
                         <Text className='mb-5' variant="bodyMedium">
-                           {`Aqui : ${item.link}`}
+                           {`Por aqui : ${item.link}`}
                         </Text>
                         <Divider className='m-2 w-full' />
                         <View className='flex-row justify-center mt-5'>
@@ -97,7 +97,6 @@ export default function ListSkillers() {
                keyExtractor={item => item.id}
             />
          </SafeAreaView>
-
       </View>
    );
 

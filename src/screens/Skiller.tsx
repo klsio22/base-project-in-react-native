@@ -205,6 +205,8 @@ export function Skiller() {
           <TextInput
             className='w-full mt-4 bg-slate-100'
             mode='outlined'
+            multiline
+            numberOfLines={4}
             style={{ backgroundColor: "#FAFAFC" }}
             activeOutlineColor='#7dd3fc'
             outlineColor='#E6E6F0'

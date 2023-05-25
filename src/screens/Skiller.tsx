@@ -10,6 +10,10 @@ import ToStudy from '../assets/svg/to-study.svg';
 // import TextInputMask from 'react-native-text-input-mask';
 
 import { fetchDisciplines } from '../../lib/apiData';
+import useAuth from '../hooks/useAuth';
+import { User } from '../hooks/useDocument';
+import useCollection from '../hooks/useCollection';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Skiller() {
   const { navigate } = useNavigation();
@@ -17,6 +21,8 @@ export function Skiller() {
   const [classLink, setClassLink] = useState('');
   const [zap, setZap] = useState('');
   const [biography, setBio] = useState('');
+  const { data, loading, create, remove, update, all, refreshData } = useCollection<User>('users');
+  const { logout } = useAuth<User>('users');
 
   const [disciplines, setDisciplines] = useState<string[]>([]);
 
@@ -25,10 +31,27 @@ export function Skiller() {
   }
 
   useEffect(() => {
+    
     const listTeacher = async () => {
       try {
+        console.log(await AsyncStorage.getItem('user'));
+
+        // console.log(await update('tmMCvzGdn5TCGtIGVI9uxGxeVYm2', {
+        //   email: 'landerwilker@yahoo.com.br',
+        //   password: '204',
+        //   bio: 'é noix e nada deles', 
+        //   zap: '4002-8922',
+        //   link: 'windwaker',
+        //   price: 'ghost',
+        //   skills: 'programa'
+        // }));
+        
+        // console.log(generatedId);
         const fetchedDisciplines = await fetchDisciplines();
         setDisciplines(fetchedDisciplines);
+        
+        const aux = await all();
+        console.log(aux);
       } catch (error) {
         console.error(error);
       }
@@ -37,8 +60,13 @@ export function Skiller() {
     listTeacher().catch(console.error);
   }, []);
 
+
+  function sair() {
+    logout();
+    navigate('home');
+  }
  
-  console.log(disciplines);
+  // console.log(disciplines);
   return (
     <ScrollView className='h-full bg-sky-400'>
       <View className='flex items-center justify-start h-full flex-1 p-4 '>
@@ -58,7 +86,7 @@ export function Skiller() {
           <TouchableOpacity
             activeOpacity={0.7}
             className='flex w-28 justify-between items-start p-4 rounded-lg bg-[#F27C7C] '
-            onPress={() => navigate('home')}
+            onPress={() => sair()}
           >
             <ToWatch />
 

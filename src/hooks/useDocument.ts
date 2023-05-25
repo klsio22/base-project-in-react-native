@@ -16,6 +16,11 @@ export type User = {
   id?: string;
   email: string;
   password: string;
+  bio?: string;
+  zap?: string;
+  link?: string;
+  price?: string;
+  skills?: string;
 };
 
 /**

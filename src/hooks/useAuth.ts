@@ -26,6 +26,7 @@ export default function useAuth<T extends { [x: string]: any }>(
    * @param email An active user registered in your firebase project.
    * @param password User's password.
    */
+
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
@@ -50,9 +51,14 @@ export default function useAuth<T extends { [x: string]: any }>(
    * Wrapper for logout users.
    */
   const logout = async () => {
+    console.log(await AsyncStorage.getItem('user'));
+    
     await signOut(getAuth());
+    console.log("tamo aeeeee");
+    
     setUser(null);
     await AsyncStorage.removeItem('user');
+    await AsyncStorage.clear()
   };
 
   useEffect(() => {

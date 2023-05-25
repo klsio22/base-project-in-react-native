@@ -21,7 +21,7 @@ import ToStudy from '../assets/svg/to-study.svg';
 
 import { fetchDisciplines } from '../../lib/apiData';
 import useAuth from '../hooks/useAuth';
-import { User } from '../hooks/useDocument';
+import useDocument, { User } from '../hooks/useDocument';
 import useCollection from '../hooks/useCollection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -31,20 +31,79 @@ export function Skiller() {
   const [email, setEmail] = useState('');
   const [zap, setZap] = useState('');
   const [biography, setBio] = useState('');
-  const { data, loading, create, remove, update, all, refreshData } = useCollection<User>('users');
+  const {create, remove, update, all, refreshData } = useCollection<User>('users');
   const { logout } = useAuth<User>('users');
   const [price, setPrice] = useState("0.00");
   const [skills, setSkill] = useState([{}]);
+  const [userData, setUserData] = useState<any>({});
+  
+  // async function getUserData() {
+   
+    // await AsyncStorage.getItem('user').then((userNovo) => {
+    //   if (userNovo) {
+    //       // console.log(userNovo);
+    //       return JSON.parse(userNovo)           
+    //   }
+    // })
+  // }
+
+  // const retrieveData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('user');
+  //     if (value !== null) {
+  //       return value
+  //     }
+  //   } catch (error) {
+  //     // Error retrieving data
+  //   }
+  // };
+  
+// console.log(JSON.parse(retrieveData()));
+
+  // const userData = 
+
+  // You can extract the following properties:
+  async function testee() {
+    const value = await AsyncStorage.getItem('user'); 
+        // console.log(value);
+    const jsonValue = JSON.parse(value!!)
+    // console.log(jsonValue.uid);
+    return jsonValue.uid 
+  }
+
+
+  // const { data, loading, refresh } = useDocument("users", () => {
+  //     const value = await AsyncStorage.getItem('user'); 
+  //     // console.log(value);
+  //     const jsonValue = JSON.parse(value!!)
+  //     // console.log(jsonValue.uid);
+  //     return jsonValue.uid 
+  // })
+
   function onChangedZap(text: string) {
     setZap(text.replace(/[^0-9]/g, ''));
   }
+
+  
 
   useEffect(() => {
     
     const listTeacher = async () => {
       try {
-        console.log(await AsyncStorage.getItem('user'));
-
+        
+      //  setUserData(getUserData());
+        // const value = await AsyncStorage.getItem('user'); 
+        // // console.log(value);
+        // const jsonValue = JSON.parse(value!!)
+        // console.log(jsonValue.uid);
+        
+        
+        // console.log("aaeeeeee");
+        // console.log(data);
+        // 
+        // console.log(userData);
+        
+        
         // console.log(await update('tmMCvzGdn5TCGtIGVI9uxGxeVYm2', {
         //   email: 'landerwilker@yahoo.com.br',
         //   password: '204',
@@ -60,7 +119,7 @@ export function Skiller() {
         setSkill(fetchedDisciplines);
         
         const aux = await all();
-        console.log(aux);
+        // console.log(aux);
       } catch (error) {
         console.error(error);
       }
@@ -86,7 +145,7 @@ export function Skiller() {
             </Text>
             {'\n'}
             <Text className='font-ArchivoBold text-base text-slate-300'>
-              robervin2000@hotmail.com
+              {userData.email}
             </Text>
           </Text>
           <Divider />

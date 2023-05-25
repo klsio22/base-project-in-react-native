@@ -51,7 +51,7 @@ export default function useAuth<T extends { [x: string]: any }>(
    * Wrapper for logout users.
    */
   const logout = async () => {
-    console.log(await AsyncStorage.getItem('user'));
+    // console.log(await AsyncStorage.getItem('user'));
     
     await signOut(getAuth());
     console.log("tamo aeeeee");

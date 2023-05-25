@@ -5,15 +5,20 @@ export const AppContext = createContext({});
 const useApp = () => useContext(AppContext) as any;
 
 const AppProvider = ({ children }: any) => {
-  const [token, setToken] = useState<any>();
-
+  const [userId, setUserId] = useState<any>();
+  export const AppContext = createContext<AppContextProps>({
+    track: 0,
+    prev: () => {},
+    next: () => {},
+    musicTime: 0,
+  });
 
   useEffect(() => {
-  }, [token]);
+  }, [userId]);
 
   return (
     <AppContext.Provider
-      value={{ token, setToken }}
+      value={{ userId, setUserId }}
     >
       {children}
     </AppContext.Provider>

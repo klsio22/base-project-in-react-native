@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "skill-share",
-  "version": "1.0.0",
-=======
-  "name": "project-base-react-native",
   "version": "1.0",
->>>>>>> ea551adaed18cd4327a24e508bef4b37e75dafcf
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

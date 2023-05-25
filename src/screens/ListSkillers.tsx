@@ -6,7 +6,7 @@ import ZapZap from '../assets/svg/Whatsapp.svg';
 import React, { useState } from 'react';
 import { Avatar, Button, Card, Text, Divider } from 'react-native-paper';
 
-export default function ListSkillers() {
+export function ListSkillers() {
   const { navigate } = useNavigation();
   const [filterText, setFilterText] = useState('');
   return ( 

@@ -9,7 +9,7 @@ export declare global {
       enterpriseLanding: undefined;
       student: undefined;
       skiller: undefined;
-      professor: undefined;
+      professorLanding: undefined;
       listSkillers: undefined;
     }
   }

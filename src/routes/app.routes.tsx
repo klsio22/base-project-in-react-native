@@ -12,7 +12,7 @@ import { Register } from '../screens/Register';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { Loading } from '../components/Loading';
-import ListSkillers from '../screens/ListSkillers';
+import { ListSkillers } from '../screens/ListSkillers';
 import { Skiller } from '../screens/Skiller';
 
 export function AppRoutes() {
@@ -49,7 +49,7 @@ export function AppRoutes() {
       <Screen name='enterpriseLanding' component={EnterpriseLanding} />
       <Screen name='student' component={Student} />
       <Screen name='register' component={Register} />
-      <Screen name='professor' component={ProfessorLanding} />
+      <Screen name='professorLanding' component={ProfessorLanding} />
       <Screen name='skiller' component={Skiller} />
       <Screen name='listSkillers' component={ListSkillers} />
     </Navigator>

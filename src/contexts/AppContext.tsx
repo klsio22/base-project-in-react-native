@@ -6,12 +6,12 @@ const useApp = () => useContext(AppContext) as any;
 
 const AppProvider = ({ children }: any) => {
   const [userId, setUserId] = useState<any>();
-  export const AppContext = createContext<AppContextProps>({
-    track: 0,
-    prev: () => {},
-    next: () => {},
-    musicTime: 0,
-  });
+  // export const AppContext = createContext<AppContextProps>({
+  //   track: 0,
+  //   prev: () => {},
+  //   next: () => {},
+  //   musicTime: 0,
+  // });
 
   useEffect(() => {
   }, [userId]);

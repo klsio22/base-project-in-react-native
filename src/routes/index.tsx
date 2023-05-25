@@ -5,13 +5,13 @@ import { AppContext } from '../contexts/AppContext';
 
 export function Routes() {
   return (
-    <AppContext>
+    // <AppContext>
       <View className='flex-1 bg-background'>
         <NavigationContainer>
           <AppRoutes />
         </NavigationContainer>
       </View>
-    </AppContext>
+    // </AppContext>
     
   );
 }

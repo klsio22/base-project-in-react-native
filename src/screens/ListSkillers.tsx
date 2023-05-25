@@ -5,6 +5,7 @@ import Coracao from '../assets/svg/Vector.svg';
 import ZapZap from '../assets/svg/Whatsapp.svg';
 import React, { useState } from 'react';
 import { Avatar, Button, Card, Text, Divider } from 'react-native-paper';
+import { ArrowLeft } from 'phosphor-react-native';
 
 export function ListSkillers() {
   const { navigate } = useNavigation();
@@ -15,9 +16,8 @@ export function ListSkillers() {
       <View className='px-4 py-6'>
         <View className='w-full flex-row justify-start'>
           <TouchableOpacity activeOpacity={0.7}
-            className='rotate-180'
             onPress={() => navigate('home')} >
-            <NextScreen/>
+            <ArrowLeft size={32} color="#f7f7f7" />
           </TouchableOpacity>
         </View>
         <Text className='text-white my-4 w-52 text-3xl leading-8'>

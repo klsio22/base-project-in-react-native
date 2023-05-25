@@ -20,7 +20,7 @@ export function Register() {
   const [error, setError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { register, searchEmail } = useDocument<User>('students');
+  const { register, searchEmail } = useDocument<User>('users');
 
   const errorSingUp = () => {
     setError(!error);

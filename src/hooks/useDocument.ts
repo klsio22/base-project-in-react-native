@@ -47,20 +47,25 @@ export default function useDocument<T extends { [x: string]: any }>(
         email,
         password
       );
-
       const uid = response.user.uid;
       const data = {
         id: uid,
         email,
       };
-
       const newDocRef = doc(collectionRef, uid);
       await setDoc(newDocRef, data);
-      // ...
 
-      // Criar coleção "favorite" dentro da coleção "users"
-      const favoriteCollectionRef = collection(newDocRef, 'favorite');
-      await setDoc(doc(favoriteCollectionRef), {});
+      // Array de nomes de coleção
+      const collectionNames = ['favorite', 'biography', 'classes'];
+
+      // Criar as coleções dinamicamente
+      const createCollections = collectionNames.map(async (collectionName) => {
+        const collectionRef = collection(newDocRef, collectionName);
+        await setDoc(doc(collectionRef), {});
+      });
+
+      // Aguardar todas as criações de coleções
+      await Promise.all(createCollections);
     } catch (error) {
       throw new Error('Ocorreu um erro ao fazer o cadastro');
     }

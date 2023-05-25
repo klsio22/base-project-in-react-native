@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import BackgroundBlue from '../assets/svg/background-blue.svg';
 import React, { useEffect, useState } from 'react';
 import { Divider, TextInput } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
 
 import ToWatch from '../assets/svg/to-watch.svg';
 
@@ -17,8 +18,8 @@ export function Skiller() {
   const [classLink, setClassLink] = useState('');
   const [zap, setZap] = useState('');
   const [biography, setBio] = useState('');
-
   const [disciplines, setDisciplines] = useState<string[]>([]);
+  const [selectedDiscipline, setSelectedDiscipline] = useState();
 
   function onChangedZap(text: string) {
     setZap(text.replace(/[^0-9]/g, ''));
@@ -37,8 +38,6 @@ export function Skiller() {
     listTeacher().catch(console.error);
   }, []);
 
- 
-  console.log(disciplines);
   return (
     <ScrollView className='h-full bg-sky-400'>
       <View className='flex items-center justify-start h-full flex-1 p-4 '>
@@ -46,7 +45,7 @@ export function Skiller() {
           <TouchableOpacity
             activeOpacity={0.7}
             className='flex w-28 justify-between items-start p-4 rounded-lg bg-sky-200 '
-            onPress={() => navigate('skillers')}
+            onPress={() => navigate('listSkillers')}
           >
             <ToStudy />
 
@@ -80,6 +79,23 @@ export function Skiller() {
             value={fullName}
             onChangeText={(text) => setFullName(text)}
           />
+
+          <View className='border rounded border-stone-500 w-full mt-4 bg-white'>
+            <Picker 
+              selectedValue={selectedDiscipline}
+              onValueChange={(itemValue) => setSelectedDiscipline(itemValue)}
+              
+            >
+              <Picker.Item label='Selecione uma disciplina' value='' />
+              {disciplines.map((discipline) => (
+                <Picker.Item
+                  key={discipline}
+                  label={discipline}
+                  value={discipline}
+                />
+              ))}
+            </Picker>
+          </View>
 
           <TextInput
             className='w-full mt-4 focus:border-stone-500'

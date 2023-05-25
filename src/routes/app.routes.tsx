@@ -12,8 +12,8 @@ import { Register } from '../screens/Register';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { Loading } from '../components/Loading';
-import { Skiller } from '../screens/Skiller';
 import ListSkillers from '../screens/ListSkillers';
+import { Skiller } from '../screens/Skiller';
 
 export function AppRoutes() {
   const [initialRoute, setInitialRoute] = useState('');
@@ -51,7 +51,7 @@ export function AppRoutes() {
       <Screen name='register' component={Register} />
       <Screen name='professor' component={ProfessorLanding} />
       <Screen name='skiller' component={Skiller} />
-      <Screen name='skillers' component={ListSkillers} />
+      <Screen name='listSkillers' component={ListSkillers} />
     </Navigator>
   );
 }

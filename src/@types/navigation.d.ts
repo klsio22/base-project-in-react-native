@@ -8,10 +8,9 @@ export declare global {
       onboardingPageTwo: undefined;
       enterpriseLanding: undefined;
       student: undefined;
-      professor: undefined;
       skiller: undefined;
       professor: undefined;
-      skillers: undefined;
+      listSkillers: undefined;
     }
   }
 }

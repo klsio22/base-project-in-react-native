@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View, 
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { EnvelopeSimple, Lock, XCircle } from 'phosphor-react-native';
@@ -13,10 +13,12 @@ import { EnvelopeSimple, Lock, XCircle } from 'phosphor-react-native';
 import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 import ToStudy from '../assets/svg/to-study.svg';
-import { useState } from 'react';
-import { User } from '../hooks/useDocument';
+import { useState, useContext } from 'react';
+import { UserType } from '../hooks/useDocument';
 import { validate } from 'email-validator';
 import useAuth from '../hooks/useAuth';
+import { AppContext } from '../contexts/AppContext';
+import useCollection from '../hooks/useCollection';
 
 export function Home() {
   const { navigate } = useNavigation();
@@ -27,8 +29,8 @@ export function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login, user } = useAuth<User>('users');
-
+  const { login, user, userId } = useAuth();
+  const app = useContext(AppContext)
   const verifyLogin = () => {
     user ? navigate('student') : setModalVisible(!modalVisible);
   };
@@ -55,7 +57,7 @@ export function Home() {
 
       try {
         await login(email, password);
-        console.log('Login com sucesso');
+        console.log('Login com sucesso | id: ', app.id);
         setModalVisible(!modalVisible);
         setError(false);
         clearAll();
@@ -75,7 +77,7 @@ export function Home() {
 
   return (
     <View className='flex items-center justify-center h-full  bg-sky-500 '>
-      <ScrollView className='mt-20 '>
+      <View className='mt-20 '>
         <View className='flex justify-center items-center mx-auto'>
           <BannerHome width={280} />
         </View>
@@ -197,7 +199,7 @@ export function Home() {
             </Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }

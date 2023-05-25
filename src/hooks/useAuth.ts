@@ -9,18 +9,24 @@ import {
 } from 'firebase/auth';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useCollection from './useCollection';
+import { UserType } from './useDocument';
+import { AppContext } from "../contexts/AppContext";
+import { useContext } from "react";
 
 /**
  * Firebase authentication hook.
  * @returns Access to main auth service using email and password strategy, plus user object and loading state flag.
  */
-export default function useAuth<T extends { [x: string]: any }>(
-  collectionName: string,
-  realtime: boolean = true
-) {
+export default function useAuth() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-
+  const [userId, setUserId] = useState('');
+  const { refreshData } = useCollection<User>('users');
+  const {  data  } = useCollection<UserType>('users');
+  const app = useContext(AppContext)
+  
+  
   /**
    * Wrapper for login users with loading state flag for conditional renders.
    * @param email An active user registered in your firebase project.
@@ -32,6 +38,16 @@ export default function useAuth<T extends { [x: string]: any }>(
       setLoading(true);
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
+      const dataObject = data;
+      console.log(data)
+      dataObject.map(e=>{
+        if(e.email == email){
+          //console.log(e)
+          setUserId(e.id)
+          app.id = e.id;
+          console.log(e.id, "<-- userId")
+        }
+      })
     } catch (error) {
       if ((error as { code: string }).code === 'auth/wrong-password') {
         throw new Error('Senha ou email incorreto. Verifique novamente.');
@@ -51,22 +67,26 @@ export default function useAuth<T extends { [x: string]: any }>(
    * Wrapper for logout users.
    */
   const logout = async () => {
-    // console.log(await AsyncStorage.getItem('user'));
+    console.log(await AsyncStorage.getAllKeys());
     
     await signOut(getAuth());
     console.log("tamo aeeeee");
     
     setUser(null);
     await AsyncStorage.removeItem('user');
-    await AsyncStorage.clear()
+    console.log(await AsyncStorage.getAllKeys());
+    
   };
+
 
   useEffect(() => {
     onAuthStateChanged(getAuth(), (user) => {
       if (user) {
         setUser(user);
+        
       } else {
         setUser(null);
+        AsyncStorage.removeItem('user');
       }
       setLoading(false);
     });
@@ -90,6 +110,7 @@ export default function useAuth<T extends { [x: string]: any }>(
         const storedUser = await AsyncStorage.getItem('user');
         if (storedUser) {
           setUser(JSON.parse(storedUser));
+
         }
       } catch (error) {
         console.error('Erro ao restaurar usuário:', error);
@@ -99,5 +120,5 @@ export default function useAuth<T extends { [x: string]: any }>(
     restoreUser().catch(console.error);
   }, []);
 
-  return { loading, user, login, logout };
+  return { loading, user, userId, login, logout };
 }

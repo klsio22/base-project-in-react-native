@@ -1,28 +1,28 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useState } from "react";
 
-export const AppContext = createContext({});
+// Define your context props
+export interface AppContextProps {
+ [x: string]: any;
+ id?:string,
+ email?:string
+}
 
-const useApp = () => useContext(AppContext) as any;
+// Create a new context using default values (they'll be replaced in a moment..)
+export const AppContext = createContext<AppContextProps>({
+  id:'',
+  email:''
+});
 
-const AppProvider = ({ children }: any) => {
-  const [userId, setUserId] = useState<any>();
-  // export const AppContext = createContext<AppContextProps>({
-  //   track: 0,
-  //   prev: () => {},
-  //   next: () => {},
-  //   musicTime: 0,
-  // });
+// Create a custom context provider, so all context data will be self-contained
+export default function AppContextProvider({ children }: PropsWithChildren) {
+  const [userData, setUserData] = useState({  id:'',  email:''});
 
-  useEffect(() => {
-  }, [userId]);
+  const appContext: AppContextProps = {
+    id: userData.id,
+    email: userData.email
+  };
 
   return (
-    <AppContext.Provider
-      value={{ userId, setUserId }}
-    >
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={appContext}>{children}</AppContext.Provider>
   );
-};
-
-export { AppProvider, useApp };
+}

@@ -9,7 +9,7 @@ export function ProfessorLanding() {
   const { navigate } = useNavigation();
 
   return (
-    <ScrollView>
+    <View>
       <View className='flex items-center justify-start  h-full w-full bg-white'>
         <View className='flex-column items-center justify-center h-1/2 w-full bg-red-400'>
           <View className='bg-red-400'>
@@ -46,6 +46,6 @@ export function ProfessorLanding() {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }

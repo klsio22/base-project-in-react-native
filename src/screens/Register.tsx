@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import useDocument, { User } from '../hooks/useDocument';
+import useDocument, { UserType } from '../hooks/useDocument';
 import { validate } from 'email-validator';
 
 export function Register() {
@@ -20,7 +20,7 @@ export function Register() {
   const [error, setError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { register, searchEmail } = useDocument<User>('users');
+  const { register, searchEmail } = useDocument<UserType>('users');
 
   const errorSingUp = () => {
     setError(!error);

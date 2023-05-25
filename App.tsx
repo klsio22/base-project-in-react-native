@@ -17,6 +17,7 @@ import {
 import { Loading } from './src/components/Loading';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './src/screens/config/firebaseConfig-skillShare';
+import AppContext from './src/contexts/AppContext';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -35,7 +36,9 @@ export default function App() {
 
   return (
     <>
-      <Routes />
+      <AppContext>
+        <Routes />
+      </AppContext>
       <StatusBar
         barStyle={'light-content'}
         backgroundColor='transparent'

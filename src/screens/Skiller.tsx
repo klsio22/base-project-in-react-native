@@ -37,9 +37,8 @@ export function Skiller() {
     listTeacher().catch(console.error);
   }, []);
 
-  useEffect(() => {
-    console.log(disciplines);
-  }, []);
+ 
+  console.log(disciplines);
   return (
     <ScrollView className='h-full bg-sky-400'>
       <View className='flex items-center justify-start h-full flex-1 p-4 '>

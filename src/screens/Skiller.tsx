@@ -29,7 +29,7 @@ import { AutoComplete } from "../components/AutoComplete"
 
 export function Skiller() {
   const { navigate } = useNavigation();
-  const { login, user, logout, userId } = useAuth();
+  const { login, user, logout, userId, setUserId} = useAuth();
   const app = useContext(AppContext)
   const { create, remove, update, all, refreshData } = useCollection<UserType>('users');
   const { data, loading, refresh, searchEmail, getDoc } = useDocument("users", app.id)
@@ -47,13 +47,19 @@ export function Skiller() {
   function onChangedZap(text: string) {
     setZap(text.replace(/[^0-9]/g, ''));
   }
-
+  
   useEffect(() => {
-
+    
     updateData()
     const listTeacher = async () => {
       try {
-
+        console.log("aaaaaaaa");
+        let userTeste = await AsyncStorage.getItem('user')
+        setUserId(JSON.parse(userTeste!!).uid)
+        setEmail(JSON.parse(userTeste!!).email)
+        console.log(JSON.parse(userTeste!!).uid);
+        console.log(userId);
+        
         const fetchedDisciplines : string[] = await fetchDisciplines();
         const message: string = JSON.stringify(fetchedDisciplines[Math.floor(Math.random() * fetchedDisciplines.length)]);
         console.log(message)
@@ -70,7 +76,7 @@ export function Skiller() {
 
   async function updateData() {
     const users = await all()
-    var aux = {
+    let aux: UserType = {
       id: userId,
       name: fullName,
       email: email,
@@ -79,28 +85,31 @@ export function Skiller() {
       zap: zap,
       link: link,
       price: price,
-      skills: '',
+      skills: skills,
     };
-
+    console.log("atualizaaa dados");
+    console.log(userId);
+    
     users.map(userData => {
       //  console.log(userData.email, user?.email)
-      if (userData.email === user?.email && userData.id == app.id) {
+      if (userData.id == userId) {
         console.log(userData)
-        aux = JSON.parse(JSON.stringify(userData));
-        console.info(aux)
-
-        setFullName(aux.name);
-        setBio(aux.bio);
-        setEmail(aux.email);
-        setLink(aux.link);
-        setPrice(aux.price)
-        setSkill(aux.skills)
-        setZap(aux.zap)
+        // aux = JSON.parse(JSON.stringify(userData));
+        aux = userData
+        console.log("aux aqui")
+        console.log(aux)
+        console.log("aux aqui")
+        
+        setFullName(aux.name!!);
+        setBio(aux.bio!!);
+        setEmail(user!!.email!!);
+        setLink(aux.link!!);
+        setPrice(aux.price!!)
+        setSkill(aux.skills!!)
+        setZap(aux.zap!!)
 
       }
     })
-
-
   }
 
   function sair() {
@@ -121,9 +130,10 @@ export function Skiller() {
       skills: skills,
     };
     console.log("ID", app.id + " | " + userId)
+
     if (app.id) {
       console.log(aux)
-      console.log(await update(app.id, {
+      console.log(await update(userId, {
         id: app.id,
         name: fullName,
         email: email,
@@ -135,11 +145,7 @@ export function Skiller() {
       }))
 
       updateData();
-    } else {
-      if (userId) {
-        console.log(await update(userId, aux))
-      }
-    }
+    } 
 
   }
 
@@ -150,11 +156,11 @@ export function Skiller() {
         <View className='w-full'>
           <Text className='text-[#57534E] flex items-center px-4 text-center mt-10 mb-4 pt-4 w-full h-auto'>
             <Text className='font-ArchivoBold w-full text-4xl'>
-              {fullName.length > 0 ? fullName : 'Seu nome'}
+              {fullName && fullName.length > 0 ? fullName : 'Seu nome'}
             </Text>
             {'\n'}
             <Text className='font-ArchivoBold text-base text-slate-300'>
-              {email.length > 0 ? email : '...@...'}
+              {email && email.length > 0 ? email : '...@...'}
             </Text>
           </Text>
           <Divider />

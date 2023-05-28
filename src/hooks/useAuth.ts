@@ -120,5 +120,5 @@ export default function useAuth() {
     restoreUser().catch(console.error);
   }, []);
 
-  return { loading, user, userId, login, logout };
+  return { loading, user, userId, login, logout, setUserId };
 }

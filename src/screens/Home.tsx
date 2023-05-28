@@ -19,6 +19,7 @@ import { validate } from 'email-validator';
 import useAuth from '../hooks/useAuth';
 import { AppContext } from '../contexts/AppContext';
 import useCollection from '../hooks/useCollection';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Home() {
   const { navigate } = useNavigation();
@@ -29,7 +30,7 @@ export function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login, user, userId } = useAuth();
+  const { login, user, userId, setUserId } = useAuth();
   const app = useContext(AppContext)
   const verifyLogin = () => {
     user ? navigate('student') : setModalVisible(!modalVisible);
@@ -57,9 +58,12 @@ export function Home() {
 
       try {
         await login(email, password);
+        let userTeste = await AsyncStorage.getItem('user')
         console.log('Login com sucesso | id: ', app.id);
         setModalVisible(!modalVisible);
         setError(false);
+        setUserId(JSON.parse(userTeste!!).uid)
+        console.log(JSON.parse(userTeste!!).uid);
         clearAll();
         navigate('student');
       } catch (error: any) {

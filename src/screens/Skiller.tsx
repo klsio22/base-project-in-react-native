@@ -24,22 +24,21 @@ import useAuth from '../hooks/useAuth';
 import useDocument, { UserType } from '../hooks/useDocument';
 import useCollection from '../hooks/useCollection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AppContext } from "../contexts/AppContext";
-import { AutoComplete } from "../components/AutoComplete"
+import { AppContext } from '../contexts/AppContext';
+import { AutoComplete } from '../components/AutoComplete';
 
 export function Skiller() {
   const { navigate } = useNavigation();
-  const { login, user, logout, userId } = useAuth();
-  const app = useContext(AppContext)
-  const { create, remove, update, all, refreshData } = useCollection<UserType>('users');
-  const { data, loading, refresh, searchEmail, getDoc } = useDocument("users", app.id)
+  const { user, logout, userId, setUserId } = useAuth();
+  const app = useContext(AppContext);
+  const { update, all } = useCollection<UserType>('users');
 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [zap, setZap] = useState('');
   const [biography, setBio] = useState('');
   const [link, setLink] = useState('');
-  const [price, setPrice] = useState("0.00");
+  const [price, setPrice] = useState('0.00');
   const [skills, setSkill] = useState('');
   const [disciplines, setDisciplines] = useState<any>({});
   const [advice, setAdvice] = useState('');
@@ -49,17 +48,25 @@ export function Skiller() {
   }
 
   useEffect(() => {
-
-    updateData()
+    updateData();
     const listTeacher = async () => {
       try {
+        console.log('aaaaaaaa');
+        let userTeste = await AsyncStorage.getItem('user');
+        setUserId(JSON.parse(userTeste!!).uid);
+        setEmail(JSON.parse(userTeste!!).email);
+        console.log(JSON.parse(userTeste!!).uid);
+        console.log(userId);
 
-        const fetchedDisciplines : string[] = await fetchDisciplines();
-        const message: string = JSON.stringify(fetchedDisciplines[Math.floor(Math.random() * fetchedDisciplines.length)]);
-        console.log(message)
-        setAdvice(message)
+        const fetchedDisciplines: string[] = await fetchDisciplines();
+        const message: string = JSON.stringify(
+          fetchedDisciplines[
+            Math.floor(Math.random() * fetchedDisciplines.length)
+          ]
+        );
+        console.log(message);
+        setAdvice(message);
         //setSkill(fetchedDisciplines);
-
       } catch (error) {
         console.error(error);
       }
@@ -69,8 +76,8 @@ export function Skiller() {
   }, []);
 
   async function updateData() {
-    const users = await all()
-    var aux = {
+    const users = await all();
+    let aux: UserType = {
       id: userId,
       name: fullName,
       email: email,
@@ -79,28 +86,30 @@ export function Skiller() {
       zap: zap,
       link: link,
       price: price,
-      skills: '',
+      skills: skills,
     };
+    console.log('atualizaaa dados');
+    console.log(userId);
 
-    users.map(userData => {
+    users.map((userData) => {
       //  console.log(userData.email, user?.email)
-      if (userData.email === user?.email && userData.id == app.id) {
-        console.log(userData)
-        aux = JSON.parse(JSON.stringify(userData));
-        console.info(aux)
+      if (userData.id == userId) {
+        console.log(userData);
+        // aux = JSON.parse(JSON.stringify(userData));
+        aux = userData;
+        console.log('aux aqui');
+        console.log(aux);
+        console.log('aux aqui');
 
-        setFullName(aux.name);
-        setBio(aux.bio);
-        setEmail(aux.email);
-        setLink(aux.link);
-        setPrice(aux.price)
-        setSkill(aux.skills)
-        setZap(aux.zap)
-
+        setFullName(aux.name!!);
+        setBio(aux.bio!!);
+        setEmail(user!!.email!!);
+        setLink(aux.link!!);
+        setPrice(aux.price!!);
+        setSkill(aux.skills!!);
+        setZap(aux.zap!!);
       }
-    })
-
-
+    });
   }
 
   function sair() {
@@ -109,7 +118,6 @@ export function Skiller() {
   }
 
   async function atualizarDados() {
-
     var aux = {
       id: userId,
       name: fullName,
@@ -120,29 +128,26 @@ export function Skiller() {
       price: price,
       skills: skills,
     };
-    console.log("ID", app.id + " | " + userId)
+    console.log('ID', app.id + ' | ' + userId);
+
     if (app.id) {
-      console.log(aux)
-      console.log(await update(app.id, {
-        id: app.id,
-        name: fullName,
-        email: email,
-        bio: biography,
-        zap: zap,
-        link: link,
-        price: price,
-        skills: skills,
-      }))
+      console.log(aux);
+      console.log(
+        await update(userId, {
+          id: app.id,
+          name: fullName,
+          email: email,
+          bio: biography,
+          zap: zap,
+          link: link,
+          price: price,
+          skills: skills,
+        })
+      );
 
       updateData();
-    } else {
-      if (userId) {
-        console.log(await update(userId, aux))
-      }
     }
-
   }
-
 
   return (
     <ScrollView className='h-full'>
@@ -150,11 +155,11 @@ export function Skiller() {
         <View className='w-full'>
           <Text className='text-[#57534E] flex items-center px-4 text-center mt-10 mb-4 pt-4 w-full h-auto'>
             <Text className='font-ArchivoBold w-full text-4xl'>
-              {fullName.length > 0 ? fullName : 'Seu nome'}
+              {fullName && fullName.length > 0 ? fullName : 'Seu nome'}
             </Text>
             {'\n'}
             <Text className='font-ArchivoBold text-base text-slate-300'>
-              {email.length > 0 ? email : '...@...'}
+              {email && email.length > 0 ? email : '...@...'}
             </Text>
           </Text>
           <Divider />
@@ -164,8 +169,8 @@ export function Skiller() {
           <TouchableOpacity
             activeOpacity={0.7}
             className='flex w-28 h-30 w-30 justify-between items-start p-4 rounded-lg bg-sky-400 '
-            onPress={() => navigate('skillers')}>
-
+            onPress={() => navigate('skiller')}
+          >
             <ToStudy />
 
             <Text className='font-semibold text-xl font-ArchivoSemiBold text-stone-600'>
@@ -194,10 +199,10 @@ export function Skiller() {
           <TextInput
             className='w-full mt-4 bg-slate-100'
             mode='outlined'
-            style={{ backgroundColor: "#FAFAFC" }}
+            style={{ backgroundColor: '#FAFAFC' }}
             activeOutlineColor='#7dd3fc'
             outlineColor='#E6E6F0'
-            label="Nome Completo"
+            label='Nome Completo'
             value={fullName}
             onChangeText={(text) => setFullName(text)}
           />
@@ -205,30 +210,32 @@ export function Skiller() {
           <TextInput
             className='w-full mt-4 bg-slate-100'
             mode='outlined'
-            style={{ backgroundColor: "#FAFAFC" }}
+            multiline
+            numberOfLines={4}
+            style={{ backgroundColor: '#FAFAFC' }}
             activeOutlineColor='#7dd3fc'
             outlineColor='#E6E6F0'
-            label="Sobre você (formação/ proffisão)"
+            label='Sobre você (formação/ proffisão)'
             value={biography}
-            onChangeText={text => setBio(text)}
+            onChangeText={(text) => setBio(text)}
           />
 
           <TextInput
             className='w-full mt-4 bg-slate-100'
             mode='outlined'
-            style={{ backgroundColor: "#FAFAFC" }}
+            style={{ backgroundColor: '#FAFAFC' }}
             activeOutlineColor='#7dd3fc'
             outlineColor='#E6E6F0'
-            label="Email"
+            label='Email'
             value={email}
-            onChangeText={text => setEmail(text)}
+            onChangeText={(text) => setEmail(text)}
           />
 
           <TextInput
-            label="Whatsapp (somente números)"
+            label='Whatsapp (somente números)'
             className='w-full mt-4 bg-slate-100'
             mode='outlined'
-            style={{ backgroundColor: "#FAFAFC" }}
+            style={{ backgroundColor: '#FAFAFC' }}
             activeOutlineColor='#7dd3fc'
             outlineColor='#E6E6F0'
             value={zap}
@@ -237,10 +244,10 @@ export function Skiller() {
           />
 
           <TextInput
-            label="Link da aula"
+            label='Link da aula'
             className='w-full mt-4 bg-slate-100'
             mode='outlined'
-            style={{ backgroundColor: "#FAFAFC" }}
+            style={{ backgroundColor: '#FAFAFC' }}
             activeOutlineColor='#7dd3fc'
             outlineColor='#E6E6F0'
             value={link}
@@ -259,11 +266,11 @@ export function Skiller() {
               label={`Tudo menos ${advice}`}
               className='w-full mt-4 bg-slate-100'
               mode='outlined'
-              style={{ backgroundColor: "#FAFAFC" }}
+              style={{ backgroundColor: '#FAFAFC' }}
               activeOutlineColor='#7dd3fc'
               outlineColor='#E6E6F0'
               value={skills}
-              onChangeText={text => setSkill(text)}
+              onChangeText={(text) => setSkill(text)}
             />
           </View>
 
@@ -273,29 +280,37 @@ export function Skiller() {
           </Text>
           <View className='w-full'>
             <TextInput
-              label="(R$) Hora/Aula"
+              label='(R$) Hora/Aula'
               className='w-full mt-4 bg-slate-100'
               mode='outlined'
-              style={{ backgroundColor: "#FAFAFC" }}
+              style={{ backgroundColor: '#FAFAFC' }}
               activeOutlineColor='#7dd3fc'
               outlineColor='#E6E6F0'
               value={price}
-              keyboardType="numeric"
-              onChangeText={text => setPrice(text)}
+              keyboardType='numeric'
+              onChangeText={(text) => setPrice(text)}
             />
           </View>
-
-
         </View>
-        <TouchableOpacity activeOpacity={0.7}
+        <TouchableOpacity
+          activeOpacity={0.7}
           className='flex mt-4 flex-row w-full flex bg-sky-400 rounded-md justify-center'
-          onPress={() => updateData()} >
-          <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'> Atualizar dados</Text>
+          onPress={() => updateData()}
+        >
+          <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
+            {' '}
+            Atualizar dados
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7}
+        <TouchableOpacity
+          activeOpacity={0.7}
           className='flex mt-4 flex-row w-full flex bg-red-400 rounded-md justify-center'
-          onPress={() => atualizarDados()} >
-          <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'> Salvar</Text>
+          onPress={() => atualizarDados()}
+        >
+          <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
+            {' '}
+            Salvar
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

@@ -185,7 +185,9 @@ export function Home() {
             <TouchableOpacity
               activeOpacity={0.7}
               className='flex w-28 justify-between items-start p-4 rounded-lg bg-[#F27C7C] '
-              onPress={() => navigate('professor')}
+              onPress={() => {
+                user ? navigate('professorLanding') : verifyLogin();
+              }}
             >
               <ToWatch />
               <Text className='font-semibold text-xl font-ArchivoSemiBold text-white'>

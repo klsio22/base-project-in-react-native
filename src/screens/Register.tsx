@@ -89,8 +89,8 @@ export function Register() {
                 <TextInput
                   secureTextEntry
                   placeholder='Password'
-                  onChangeText={(text) => setPassword(text)}
                   value={password}
+                  onChangeText={(text) => setPassword(text)}
                   underlineColorAndroid='transparent'
                   autoCapitalize='none'
                   className='w-full'

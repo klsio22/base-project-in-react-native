@@ -30,13 +30,12 @@ export type UserType = {
  */
 export default function useDocument<T extends { [x: string]: any }>(
   collectionName: string,
-  id?:string,
+  id?: string,
   realtime: boolean = true
 ) {
   const db = getFirestore();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<T>();
-
 
   const collectionRef = collection(db, collectionName);
 
@@ -97,5 +96,5 @@ export default function useDocument<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data,  loading, refresh, register, searchEmail, getDoc };
+  return { data, loading, refresh, register, searchEmail, getDoc };
 }

@@ -20,16 +20,30 @@ export default function ListSkillers() {
 
    async function updateData() {
       const aux = await all();
-      console.log(aux)
+      // console.log(aux)
       const suply: Array<UserType> = [];
       aux.map(e => {
          if (e && e.skills?.length) {
             suply.push(e)
          }
       })
-      console.log(aux)
+   
       setData(suply)
    }
+
+   function name(filterValue: string, list: []) {
+      // const filterValue = "Yshagav";
+
+      const filteredAux = list.filter((e: { zap: string | string[]; name: string | string[]; bio: string | string[]; }) => {
+        return e.zap && e.zap.includes(filterValue) ||
+               e.name && e.name.includes(filterValue) ||
+               e.bio && e.bio.includes(filterValue);
+      });
+
+      return filteredAux
+   }
+
+
 
    return (
       <View className='flex-col justify-start h-auto w-full bg-sky-500'>

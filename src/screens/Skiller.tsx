@@ -50,7 +50,6 @@ export function Skiller() {
   
   useEffect(() => {
     
-    updateData()
     const listTeacher = async () => {
       try {
         console.log("aaaaaaaa");
@@ -59,6 +58,7 @@ export function Skiller() {
         setEmail(JSON.parse(userTeste!!).email)
         console.log(JSON.parse(userTeste!!).uid);
         console.log(userId);
+        console.log("estou aqui 61");
         
         const fetchedDisciplines : string[] = await fetchDisciplines();
         const message: string = JSON.stringify(fetchedDisciplines[Math.floor(Math.random() * fetchedDisciplines.length)]);

@@ -11,15 +11,14 @@ import NextScreen from '../assets/svg/next-screen.svg';
 import Coracao from '../assets/svg/Vector.svg';
 import ZapZap from '../assets/svg/Whatsapp.svg';
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Card, Text, Divider } from 'react-native-paper';
+import { Card, Text, Divider } from 'react-native-paper';
 import useCollection from '../hooks/useCollection';
 import { UserType } from '../hooks/useDocument';
 
 export function ListSkillers() {
   const { navigate } = useNavigation();
   const [filterText, setFilterText] = useState('');
-  const { create, remove, update, all, refreshData } =
-    useCollection<UserType>('users');
+  const { allDates } = useCollection<UserType>('users');
   const [data, setData] = useState<any | UserType>([{}]);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export function ListSkillers() {
   }, []);
 
   async function updateData() {
-    const aux = await all();
+    const aux = await allDates();
     console.log(aux);
     const suply: Array<UserType> = [];
     aux.map((e) => {

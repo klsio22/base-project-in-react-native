@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View, 
+  View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { EnvelopeSimple, Lock, XCircle } from 'phosphor-react-native';
@@ -13,7 +13,7 @@ import { EnvelopeSimple, Lock, XCircle } from 'phosphor-react-native';
 import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 import ToStudy from '../assets/svg/to-study.svg';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { UserType } from '../hooks/useDocument';
 import { validate } from 'email-validator';
 import useAuth from '../hooks/useAuth';
@@ -22,15 +22,15 @@ import useCollection from '../hooks/useCollection';
 
 export function Home() {
   const { navigate } = useNavigation();
-
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login, user } = useAuth();
+  const app = useContext(AppContext);
+  const { allDates } = useCollection('users');
 
-  const { login, user, userId } = useAuth();
-  const app = useContext(AppContext)
   const verifyLogin = () => {
     user ? navigate('student') : setModalVisible(!modalVisible);
   };
@@ -74,6 +74,16 @@ export function Home() {
   };
 
   user ? console.log('logado') : console.log('não logado');
+
+  useEffect(() => {
+    const testsUser = async () => {
+      const users = await allDates();
+
+      users.map((userDate) => console.log('user',userDate));
+    };
+
+    testsUser();
+  }, []);
 
   return (
     <View className='flex items-center justify-center h-full  bg-sky-500 '>

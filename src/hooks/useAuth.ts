@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import {
   getAuth,
   onAuthStateChanged,
@@ -7,18 +6,27 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useCollection from './useCollection';
 import { UserType } from './useDocument';
 import { AppContext } from '../contexts/AppContext';
 import { useContext } from 'react';
+import { query } from 'firebase/firestore';
+
+interface UseAuthReturn {
+  loading: boolean;
+  user: User | null;
+  userId: string;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  setUserId: (userId: string) => void;
+}
 
 /**
  * Firebase authentication hook.
  * @returns Access to main auth service using email and password strategy, plus user object and loading state flag.
  */
-export default function useAuth() {
+export default function useAuth(): UseAuthReturn {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState('');
@@ -31,8 +39,7 @@ export default function useAuth() {
    * @param email An active user registered in your firebase project.
    * @param password User's password.
    */
-
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<void> => {
     try {
       setLoading(true);
       const auth = getAuth();
@@ -40,8 +47,7 @@ export default function useAuth() {
       const dataObject = data;
       console.log(data);
       dataObject.map((e) => {
-        if (e.email == email) {
-          //console.log(e)
+        if (e.email === email) {
           setUserId(e.id);
           app.id = e.id;
           console.log(e.id, '<-- userId');
@@ -65,28 +71,14 @@ export default function useAuth() {
   /**
    * Wrapper for logout users.
    */
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     console.log(await AsyncStorage.getAllKeys());
-
     await signOut(getAuth());
     console.log('tamo aeeeee');
-
     setUser(null);
     await AsyncStorage.removeItem('user');
     console.log(await AsyncStorage.getAllKeys());
   };
-
-  useEffect(() => {
-    onAuthStateChanged(getAuth(), (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-        AsyncStorage.removeItem('user');
-      }
-      setLoading(false);
-    });
-  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {

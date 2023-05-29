@@ -1,37 +1,23 @@
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  SafeAreaView,
-  SectionList,
-  StatusBar,
-  FlatList,
-} from 'react-native';
-// import { ScrollView } from 'react-native-virtualized-view'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import BackgroundBlue from '../assets/svg/background-blue.svg';
 import React, { useContext, useEffect, useState } from 'react';
 import { Divider, TextInput } from 'react-native-paper';
 
 import ToWatch from '../assets/svg/to-watch.svg';
-
 import ToStudy from '../assets/svg/to-study.svg';
-// import TextInputMask from 'react-native-text-input-mask';
-
 import { fetchDisciplines } from '../../lib/apiData';
 import useAuth from '../hooks/useAuth';
-import useDocument, { UserType } from '../hooks/useDocument';
 import useCollection from '../hooks/useCollection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '../contexts/AppContext';
-import { AutoComplete } from '../components/AutoComplete';
+import useUserData from '../hooks/useUserData';
 
 export function Skiller() {
   const { navigate } = useNavigation();
-  const { user, logout, userId, setUserId } = useAuth();
+  const { logout, userId, setUserId } = useAuth();
   const app = useContext(AppContext);
-  const { update, all } = useCollection<UserType>('users');
+  const { saveDate } = useUserData('users');
+  const { allDates, update } = useCollection('users');
 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -40,7 +26,6 @@ export function Skiller() {
   const [link, setLink] = useState('');
   const [price, setPrice] = useState('0.00');
   const [skills, setSkill] = useState('');
-  const [disciplines, setDisciplines] = useState<any>({});
   const [advice, setAdvice] = useState('');
 
   function onChangedZap(text: string) {
@@ -48,7 +33,6 @@ export function Skiller() {
   }
 
   useEffect(() => {
-    updateData();
     const listTeacher = async () => {
       try {
         console.log('aaaaaaaa');
@@ -75,79 +59,73 @@ export function Skiller() {
     listTeacher().catch(console.error);
   }, []);
 
-  async function updateData() {
-    const users = await all();
-    let aux: UserType = {
-      id: userId,
-      name: fullName,
-      email: email,
-      password: '',
-      bio: biography,
-      zap: zap,
-      link: link,
-      price: price,
-      skills: skills,
-    };
-    console.log('atualizaaa dados');
-    console.log(userId);
+  const handleSaveDates = async () => {
+    try {
+      const users = await allDates();
 
-    users.map((userData) => {
-      //  console.log(userData.email, user?.email)
-      if (userData.id == userId) {
+      const userToUpdate = {
+        id: userId,
+        name: fullName,
+        email: email,
+        biography: biography,
+        zap: zap,
+        link: link,
+        price: price,
+        skills: skills,
+      };
+
+      users.forEach((userData) => {
         console.log(userData);
-        // aux = JSON.parse(JSON.stringify(userData));
-        aux = userData;
-        console.log('aux aqui');
-        console.log(aux);
-        console.log('aux aqui');
 
-        setFullName(aux.name!!);
-        setBio(aux.bio!!);
-        setEmail(user!!.email!!);
-        setLink(aux.link!!);
-        setPrice(aux.price!!);
-        setSkill(aux.skills!!);
-        setZap(aux.zap!!);
-      }
-    });
-  }
+        if (userData.id === userId) {
+          saveDate(userToUpdate).catch(console.error);
+        }
+      });
+
+      console.log('Dados atualizados com sucesso!');
+    } catch (error) {
+      console.error('Erro ao atualizar os dados:', error);
+    }
+  };
 
   function sair() {
     logout();
     navigate('home');
   }
 
-  async function atualizarDados() {
-    var aux = {
-      id: userId,
-      name: fullName,
-      email: email,
-      bio: biography,
-      zap: zap,
-      link: link,
-      price: price,
-      skills: skills,
-    };
-    console.log('ID', app.id + ' | ' + userId);
+  useEffect(() => {
+    async function atualizarDados() {
+      var aux = {
+        id: userId,
+        name: fullName,
+        email: email,
+        bio: biography,
+        zap: zap,
+        link: link,
+        price: price,
+        skills: skills,
+      };
+      console.log('ID', app.id + ' | ' + userId);
 
-    if (app.id) {
-      console.log(aux);
-      console.log(
-        await update(userId, {
-          id: app.id,
-          name: fullName,
-          email: email,
-          bio: biography,
-          zap: zap,
-          link: link,
-          price: price,
-          skills: skills,
-        })
-      );
-
-      updateData();
+      if (app.id) {
+        console.log('aux',aux);
+        console.log(
+          await update(userId, {
+            id: app.id,
+            name: fullName,
+            email: email,
+            bio: biography,
+            zap: zap,
+            link: link,
+            price: price,
+            skills: skills,
+          })
+        );
+      }
     }
-  }
+
+    atualizarDados();
+  });
 
   return (
     <ScrollView className='h-full'>
@@ -295,7 +273,7 @@ export function Skiller() {
         <TouchableOpacity
           activeOpacity={0.7}
           className='flex mt-4 flex-row w-full flex bg-sky-400 rounded-md justify-center'
-          onPress={() => updateData()}
+          onPress={() => console.log('Atualizar campos')}
         >
           <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
             {' '}
@@ -305,7 +283,7 @@ export function Skiller() {
         <TouchableOpacity
           activeOpacity={0.7}
           className='flex mt-4 flex-row w-full flex bg-red-400 rounded-md justify-center'
-          onPress={() => atualizarDados()}
+          onPress={() => handleSaveDates()}
         >
           <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
             {' '}

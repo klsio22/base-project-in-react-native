@@ -21,7 +21,7 @@ export type UserType = {
   zap?: string;
   link?: string;
   price?: string;
-  skills?: string;
+  skills?: string ;
 };
 
 /**
@@ -30,7 +30,6 @@ export type UserType = {
  */
 export default function useDocument<T extends { [x: string]: any }>(
   collectionName: string,
-  id?: string,
   realtime: boolean = true
 ) {
   const db = getFirestore();
@@ -42,7 +41,6 @@ export default function useDocument<T extends { [x: string]: any }>(
   const searchEmail = async (email: string) => {
     const queryRef = query(collectionRef, where('email', '==', email));
     const querySnapshot = await getDocs(queryRef);
-    // console.log("query ", querySnapshot)
     return !querySnapshot.empty;
   };
 
@@ -67,7 +65,7 @@ export default function useDocument<T extends { [x: string]: any }>(
       throw new Error('Ocorreu um erro ao fazer o cadastro');
     }
   };
-
+  
   /**
    * Refresh data, useful for non-realtime usage.
    * @returns updated data.

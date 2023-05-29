@@ -11,13 +11,15 @@ import useCollection from '../hooks/useCollection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '../contexts/AppContext';
 import useUserData from '../hooks/useUserData';
+import useDocument from '../hooks/useDocument';
 
 export function Skiller() {
   const { navigate } = useNavigation();
   const { logout, userId, setUserId } = useAuth();
+  const { getUserData } = useDocument('users');
   const app = useContext(AppContext);
   const { saveDate } = useUserData('users');
-  const { allDates, update } = useCollection('users');
+  const { allDates } = useCollection('users');
 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,7 +27,7 @@ export function Skiller() {
   const [biography, setBio] = useState('');
   const [link, setLink] = useState('');
   const [price, setPrice] = useState('0.00');
-  const [skills, setSkill] = useState('');
+  const [skills, setSkills] = useState('');
   const [advice, setAdvice] = useState('');
 
   function onChangedZap(text: string) {
@@ -35,13 +37,6 @@ export function Skiller() {
   useEffect(() => {
     const listTeacher = async () => {
       try {
-        console.log('aaaaaaaa');
-        let userTeste = await AsyncStorage.getItem('user');
-        setUserId(JSON.parse(userTeste!!).uid);
-        setEmail(JSON.parse(userTeste!!).email);
-        console.log(JSON.parse(userTeste!!).uid);
-        console.log(userId);
-
         const fetchedDisciplines: string[] = await fetchDisciplines();
         const message: string = JSON.stringify(
           fetchedDisciplines[
@@ -56,7 +51,7 @@ export function Skiller() {
       }
     };
 
-    listTeacher().catch(console.error);
+    listTeacher();
   }, []);
 
   const handleSaveDates = async () => {
@@ -82,9 +77,9 @@ export function Skiller() {
         }
       });
 
-      console.log('Dados atualizados com sucesso!');
+      console.log('Dados salvos com sucesso');
     } catch (error) {
-      console.error('Erro ao atualizar os dados:', error);
+      console.error('Erro ao salvar os dados:', error);
     }
   };
 
@@ -93,38 +88,30 @@ export function Skiller() {
     navigate('home');
   }
 
+  const handleGetDatesUser = async () => {
+    const userTeste = await AsyncStorage.getItem('user');
+    setUserId(JSON.parse(userTeste!!).uid);
+    setEmail(JSON.parse(userTeste!!).email);
+
+    const userData = await getUserData(userId);
+
+    console.log(await getUserData(userId));
+
+    console.log('id', userId);
+     if (userData) {
+      setBio(userData?.bio ?? '');
+      setEmail(userData?.email ?? '');
+      setLink(userData?.link ?? '');
+      setFullName(userData?.name ?? '');
+      setPrice(userData?.price ?? '');
+      setSkills(userData?.skills ?? '');
+      setZap(userData?.zap ?? '');
+    } 
+  };
+
   useEffect(() => {
-    async function atualizarDados() {
-      var aux = {
-        id: userId,
-        name: fullName,
-        email: email,
-        bio: biography,
-        zap: zap,
-        link: link,
-        price: price,
-        skills: skills,
-      };
-      console.log('ID', app.id + ' | ' + userId);
-
-      if (app.id) {
-        console.log('aux',aux);
-        console.log(
-          await update(userId, {
-            id: app.id,
-            name: fullName,
-            email: email,
-            bio: biography,
-            zap: zap,
-            link: link,
-            price: price,
-            skills: skills,
-          })
-        );
-      }
-    }
-
-    atualizarDados();
+    console.log(app.id);
+    handleGetDatesUser().catch(console.error);
   });
 
   return (
@@ -248,7 +235,7 @@ export function Skiller() {
               activeOutlineColor='#7dd3fc'
               outlineColor='#E6E6F0'
               value={skills}
-              onChangeText={(text) => setSkill(text)}
+              onChangeText={(text) => setSkills(text)}
             />
           </View>
 

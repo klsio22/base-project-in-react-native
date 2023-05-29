@@ -14,7 +14,7 @@ import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 import ToStudy from '../assets/svg/to-study.svg';
 import { useState, useContext, useEffect } from 'react';
-import { UserType } from '../hooks/useDocument';
+import useDocument, { UserType } from '../hooks/useDocument';
 import { validate } from 'email-validator';
 import useAuth from '../hooks/useAuth';
 import { AppContext } from '../contexts/AppContext';
@@ -30,6 +30,8 @@ export function Home() {
   const { login, user } = useAuth();
   const app = useContext(AppContext);
   const { allDates } = useCollection('users');
+  const { userId } = useAuth();
+  const { getUserData } = useDocument('users');
 
   const verifyLogin = () => {
     user ? navigate('student') : setModalVisible(!modalVisible);
@@ -75,15 +77,20 @@ export function Home() {
 
   user ? console.log('logado') : console.log('não logado');
 
-  useEffect(() => {
+ /*  useEffect(() => {
     const testsUser = async () => {
       const users = await allDates();
 
-      users.map((userDate) => console.log('user',userDate));
-    };
+      //users.map((userDate) => console.log('user', userDate));
 
+      console.log('id', userId);
+      console.log('id', app.id);
+      console.log(await getUserData('jD6y4xnXzlZIa6ac0bDFTnOstXQ2'));
+    };
     testsUser();
   }, []);
+
+  console.log('id', userId); */
 
   return (
     <View className='flex items-center justify-center h-full  bg-sky-500 '>

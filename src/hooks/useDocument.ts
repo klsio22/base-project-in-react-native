@@ -65,6 +65,24 @@ export default function useDocument<T extends { [x: string]: any }>(
       throw new Error('Ocorreu um erro ao fazer o cadastro');
     }
   };
+
+
+  const getUserData = async (userId: string): Promise<UserType | null> => {
+    try {
+      const userDocRef = doc(collectionRef, userId);
+      const userDocSnapshot = await getDoc(userDocRef);
+  
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data() as UserType;
+        return userData;
+      }
+  
+      return null;
+    } catch (error) {
+      console.error('Erro ao obter os dados do usuário:', error);
+      return null;
+    }
+  };
   
   /**
    * Refresh data, useful for non-realtime usage.
@@ -94,5 +112,5 @@ export default function useDocument<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data, loading, refresh, register, searchEmail, getDoc };
+  return { data, loading, refresh, register, searchEmail, getDoc,getUserData };
 }

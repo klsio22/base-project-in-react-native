@@ -11,7 +11,6 @@ import useCollection from './useCollection';
 import { UserType } from './useDocument';
 import { AppContext } from '../contexts/AppContext';
 import { useContext } from 'react';
-import { query } from 'firebase/firestore';
 
 interface UseAuthReturn {
   loading: boolean;
@@ -81,17 +80,22 @@ export default function useAuth(): UseAuthReturn {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
         setUser(user);
         AsyncStorage.setItem('user', JSON.stringify(user)).catch(console.error);
+        setUserId(user.uid); // Obtendo o ID do usuário logado
+        app.id = user.uid; // Configurando o ID do usuário no contexto (se necessário)
+      } else {
+        setUser(null);
+        setUserId('');
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
-
   useEffect(() => {
     const restoreUser = async (): Promise<void> => {
       try {

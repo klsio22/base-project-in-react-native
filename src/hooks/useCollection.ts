@@ -38,7 +38,7 @@ export default function useCollection<T extends { [x: string]: any }>(
     await updateDoc(doc(db, collectionName, id), newVal);
   };
   
-  const all = async () => {
+  const allDates = async () => {
     setLoading(true);
     const querySnapshot = await getDocs(collection(db, collectionName));
     const dataAsMap = querySnapshot.docs.map((doc) => {
@@ -51,14 +51,14 @@ export default function useCollection<T extends { [x: string]: any }>(
   };
 
   const refreshData = () => {
-    all();
+    allDates();
   };
 
   // Initial call to fill 'data' with all documents when precache is active.
   useEffect(() => {
-    if (precache) all();
+    if (precache) allDates();
     // eslint-disable-next-line
   }, []);
 
-  return { data, loading, create, remove, update, all, refreshData };
+  return { data, loading, create, remove, update, allDates, refreshData };
 }

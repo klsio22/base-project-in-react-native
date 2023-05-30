@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import {
   getAuth,
   onAuthStateChanged,
@@ -7,47 +6,52 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useCollection from './useCollection';
 import { UserType } from './useDocument';
-import { AppContext } from "../contexts/AppContext";
-import { useContext } from "react";
+import { AppContext } from '../contexts/AppContext';
+import { useContext } from 'react';
+
+interface UseAuthReturn {
+  loading: boolean;
+  user: User | null;
+  userId: string;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  setUserId: (userId: string) => void;
+}
 
 /**
  * Firebase authentication hook.
  * @returns Access to main auth service using email and password strategy, plus user object and loading state flag.
  */
-export default function useAuth() {
+export default function useAuth(): UseAuthReturn {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState('');
   const { refreshData } = useCollection<User>('users');
-  const {  data  } = useCollection<UserType>('users');
-  const app = useContext(AppContext)
-  
-  
+  const { data } = useCollection<UserType>('users');
+  const app = useContext(AppContext);
+
   /**
    * Wrapper for login users with loading state flag for conditional renders.
    * @param email An active user registered in your firebase project.
    * @param password User's password.
    */
-
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<void> => {
     try {
       setLoading(true);
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
       const dataObject = data;
-      console.log(data)
-      dataObject.map(e=>{
-        if(e.email == email){
-          //console.log(e)
-          setUserId(e.id)
+      console.log(data);
+      dataObject.map((e) => {
+        if (e.email === email) {
+          setUserId(e.id);
           app.id = e.id;
-          console.log(e.id, "<-- userId")
+          console.log(e.id, '<-- userId');
         }
-      })
+      });
     } catch (error) {
       if ((error as { code: string }).code === 'auth/wrong-password') {
         throw new Error('Senha ou email incorreto. Verifique novamente.');
@@ -66,51 +70,38 @@ export default function useAuth() {
   /**
    * Wrapper for logout users.
    */
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     console.log(await AsyncStorage.getAllKeys());
-    
     await signOut(getAuth());
-    console.log("tamo aeeeee");
-    
+    console.log('tamo aeeeee');
     setUser(null);
     await AsyncStorage.removeItem('user');
     console.log(await AsyncStorage.getAllKeys());
-    
   };
 
-
   useEffect(() => {
-    onAuthStateChanged(getAuth(), (user) => {
-      if (user) {
-        setUser(user);
-        
-      } else {
-        setUser(null);
-        AsyncStorage.removeItem('user');
-      }
-      setLoading(false);
-    });
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
         setUser(user);
         AsyncStorage.setItem('user', JSON.stringify(user)).catch(console.error);
+        setUserId(user.uid); // Obtendo o ID do usuário logado
+        app.id = user.uid; // Configurando o ID do usuário no contexto (se necessário)
+      } else {
+        setUser(null);
+        setUserId('');
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
-
   useEffect(() => {
     const restoreUser = async (): Promise<void> => {
       try {
         const storedUser = await AsyncStorage.getItem('user');
         if (storedUser) {
           setUser(JSON.parse(storedUser));
-
         }
       } catch (error) {
         console.error('Erro ao restaurar usuário:', error);

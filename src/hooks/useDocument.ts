@@ -21,7 +21,7 @@ export type UserType = {
   zap?: string;
   link?: string;
   price?: string;
-  skills?: string;
+  skills?: string ;
 };
 
 /**
@@ -30,20 +30,17 @@ export type UserType = {
  */
 export default function useDocument<T extends { [x: string]: any }>(
   collectionName: string,
-  id?:string,
   realtime: boolean = true
 ) {
   const db = getFirestore();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<T>();
 
-
   const collectionRef = collection(db, collectionName);
 
   const searchEmail = async (email: string) => {
     const queryRef = query(collectionRef, where('email', '==', email));
     const querySnapshot = await getDocs(queryRef);
-    // console.log("query ", querySnapshot)
     return !querySnapshot.empty;
   };
 
@@ -69,6 +66,24 @@ export default function useDocument<T extends { [x: string]: any }>(
     }
   };
 
+
+  const getUserData = async (userId: string): Promise<UserType | null> => {
+    try {
+      const userDocRef = doc(collectionRef, userId);
+      const userDocSnapshot = await getDoc(userDocRef);
+  
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data() as UserType;
+        return userData;
+      }
+  
+      return null;
+    } catch (error) {
+      console.error('Erro ao obter os dados do usuário:', error);
+      return null;
+    }
+  };
+  
   /**
    * Refresh data, useful for non-realtime usage.
    * @returns updated data.
@@ -97,5 +112,5 @@ export default function useDocument<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data,  loading, refresh, register, searchEmail, getDoc };
+  return { data, loading, refresh, register, searchEmail, getDoc,getUserData };
 }

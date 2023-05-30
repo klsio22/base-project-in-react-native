@@ -76,6 +76,7 @@ export default function useAuth(): UseAuthReturn {
     console.log('tamo aeeeee');
     setUser(null);
     await AsyncStorage.removeItem('user');
+    await AsyncStorage.clear();
     console.log(await AsyncStorage.getAllKeys());
   };
 

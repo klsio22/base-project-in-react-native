@@ -28,7 +28,7 @@ export function Home() {
   const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, user } = useAuth();
+  const { login, user, setUserId } = useAuth();
   const app = useContext(AppContext);
   const { allDates } = useCollection('users');
   const { userId } = useAuth();
@@ -62,12 +62,15 @@ export function Home() {
 
       try {
         await login(email, password);
-        let userTeste = await AsyncStorage.getItem('user')
-        console.log('Login com sucesso | id: ', app.id);
+        const userTeste = await AsyncStorage.getItem('user');
+        setUserId(app.id!!);
+        setEmail(JSON.parse(userTeste!!).email);
+        app.email = email
+        console.log('Login com sucesso | app id: ', app.id);
         setModalVisible(!modalVisible);
         setError(false);
         // setUserId(JSON.parse(userTeste!!).uid)
-        console.log(JSON.parse(userTeste!!).uid);
+        // console.log(JSON.parse(userTeste!!).uid);
         clearAll();
         navigate('student');
       } catch (error: any) {

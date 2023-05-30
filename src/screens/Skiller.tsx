@@ -59,7 +59,7 @@ export function Skiller() {
       const users = await allDates();
 
       const userToUpdate = {
-        id: userId,
+        id: app.id!!,
         name: fullName,
         email: email,
         biography: biography,
@@ -71,8 +71,8 @@ export function Skiller() {
 
       users.forEach((userData) => {
         console.log(userData);
-
-        if (userData.id === userId) {
+        console.log("testando");
+        if (userData.id === app.id) {
           saveDate(userToUpdate).catch(console.error);
         }
       });
@@ -90,15 +90,16 @@ export function Skiller() {
 
   const handleGetDatesUser = async () => {
     const userTeste = await AsyncStorage.getItem('user');
-    setUserId(JSON.parse(userTeste!!).uid);
+    // setUserId(JSON.parse(userTeste!!).uid);
     setEmail(JSON.parse(userTeste!!).email);
 
-    const userData = await getUserData(userId);
+    const userData = await getUserData(app.id!!);
 
-    console.log(await getUserData(userId));
+    // console.log(await getUserData(userId));
 
     console.log('id', userId);
-     if (userData) {
+    console.log('teste');
+    if (userData) {
       setBio(userData?.bio ?? '');
       setEmail(userData?.email ?? '');
       setLink(userData?.link ?? '');
@@ -110,9 +111,9 @@ export function Skiller() {
   };
 
   useEffect(() => {
-    console.log(app.id);
+    // console.log(app.id);
     handleGetDatesUser().catch(console.error);
-  });
+  }, []);
 
   return (
     <ScrollView className='h-full'>
@@ -134,7 +135,7 @@ export function Skiller() {
           <TouchableOpacity
             activeOpacity={0.7}
             className='flex w-28 h-30 w-30 justify-between items-start p-4 rounded-lg bg-sky-400 '
-            onPress={() => navigate('skiller')}
+            onPress={() => navigate('listSkillers')}
           >
             <ToStudy />
 
@@ -260,7 +261,7 @@ export function Skiller() {
         <TouchableOpacity
           activeOpacity={0.7}
           className='flex mt-4 flex-row w-full flex bg-sky-400 rounded-md justify-center'
-          onPress={() => console.log('Atualizar campos')}
+          onPress={() => handleGetDatesUser()}
         >
           <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
             {' '}

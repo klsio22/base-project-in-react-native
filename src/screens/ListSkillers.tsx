@@ -5,42 +5,68 @@ import {
   SafeAreaView,
   ScrollView,
   FlatList,
+  LogBox,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import NextScreen from '../assets/svg/next-screen.svg';
 import Coracao from '../assets/svg/Vector.svg';
 import ZapZap from '../assets/svg/Whatsapp.svg';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Card, Text, Divider } from 'react-native-paper';
 import useCollection from '../hooks/useCollection';
-import { UserType } from '../hooks/useDocument';
+import useDocument, { UserType } from '../hooks/useDocument';
+import {AppContext} from '../contexts/AppContext';
+
 
 export function ListSkillers() {
   const { navigate } = useNavigation();
   const [filterText, setFilterText] = useState('');
   const { allDates } = useCollection<UserType>('users');
   const [data, setData] = useState<any | UserType>([{}]);
+  const [filteredData, setFilteredData] = useState(data)
+  const { getUserData } = useDocument('users');
+  const app = useContext(AppContext);
 
   useEffect(() => {
     updateData();
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
   }, []);
 
   async function updateData() {
     const aux = await allDates();
-    console.log(aux);
+    // console.log(aux);
     const suply: Array<UserType> = [];
     aux.map((e) => {
       if (e && e.skills?.length) {
         suply.push(e);
       }
     });
-    console.log(aux);
+    setFilteredData(suply)
     setData(suply);
+    let testeUser = await getUserData(app.id!!)
+    console.log(testeUser);
+    
   }
 
+  function handleFilter() {
+    console.log("filterText:", filterText);
+    
+    if (filterText.length > 1) {
+      const filteredAux = data.filter((e: UserType) => {
+        return e.zap && e.zap.includes(filterText) ||
+               e.name && e.name.includes(filterText) ||
+               e.bio && e.bio.includes(filterText);
+      });  
+      setFilteredData(filteredAux);
+    } else {
+      console.log("log do else aquiiiiiii");
+      setFilteredData(data);
+    }
+ }
+
   return (
-    <View className='flex-col justify-start h-auto w-full bg-sky-500'>
-      <View className='px-4 py-6'>
+    <View className='flex-col h-auto w-full bg-sky-500'>
+      <View className='px-4 py-6 h-1/3'>
         <View className='w-full flex-row justify-start'>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -56,19 +82,23 @@ export function ListSkillers() {
           </Text>
         </Text>
         <TextInput
+          editable
           className='m-5'
           value={filterText}
           placeholder='Filtrar por dia, matéria'
           placeholderTextColor='#fff'
           keyboardType='default'
-          onChangeText={setFilterText}
+          onChangeText={newValue => {
+            setFilterText(newValue);
+            handleFilter();
+          }}
         />
         <Divider />
       </View>
 
-      <SafeAreaView className='w-full h-auto px-4 pb-40 bg-[#f0f0f7]'>
+      <ScrollView className='w-full h-2/3 px-4 pb-40 bg-[#f0f0f7]'>
         <FlatList
-          data={data}
+          data={filteredData}
           renderItem={({ item }) => (
             <Card className='p-0 w-90 pb-3 bg-white mb-5 mt-2' key={item.id}>
               <View className='p-5'>
@@ -117,7 +147,7 @@ export function ListSkillers() {
           )}
           keyExtractor={(item) => item.id}
         />
-      </SafeAreaView>
+      </ScrollView>
     </View>
   );
 }

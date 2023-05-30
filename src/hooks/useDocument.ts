@@ -69,6 +69,8 @@ export default function useDocument<T extends { [x: string]: any }>(
 
   const getUserData = async (userId: string): Promise<UserType | null> => {
     try {
+      console.log("use doc id:", userId);
+      
       const userDocRef = doc(collectionRef, userId);
       const userDocSnapshot = await getDoc(userDocRef);
   
@@ -79,7 +81,8 @@ export default function useDocument<T extends { [x: string]: any }>(
   
       return null;
     } catch (error) {
-      console.error('Erro ao obter os dados do usuário:', error);
+      // console.error('Erro ao obter os dados do usuário:', error);
+      console.info('Erro ao obter os dados do usuário:', error)
       return null;
     }
   };

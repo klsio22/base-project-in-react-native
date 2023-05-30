@@ -21,7 +21,8 @@ export type UserType = {
   zap?: string;
   link?: string;
   price?: string;
-  skills?: string ;
+  skills?: string;
+  favorite?: Array<string>;
 };
 
 /**

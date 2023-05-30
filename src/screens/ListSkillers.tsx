@@ -16,6 +16,7 @@ import { Card, Text, Divider } from 'react-native-paper';
 import useCollection from '../hooks/useCollection';
 import useDocument, { UserType } from '../hooks/useDocument';
 import {AppContext} from '../contexts/AppContext';
+import useUserData from '../hooks/useUserData';
 
 
 export function ListSkillers() {
@@ -26,6 +27,8 @@ export function ListSkillers() {
   const [filteredData, setFilteredData] = useState(data)
   const { getUserData } = useDocument('users');
   const app = useContext(AppContext);
+  const [userData, setUserData] = useState<any | UserType>({})
+  const { saveDate } = useUserData('users');
 
   useEffect(() => {
     updateData();
@@ -41,11 +44,29 @@ export function ListSkillers() {
         suply.push(e);
       }
     });
-    setFilteredData(suply)
+    setFilteredData(suply);
     setData(suply);
-    let testeUser = await getUserData(app.id!!)
-    console.log(testeUser);
-    
+    let userDataGet = await getUserData(app.id!!);
+    setUserData(userDataGet);
+    console.log(userDataGet);
+  }
+
+  function handleAddFavorite(favId: string) {
+    let array = userData.favorite ? userData.favorite : []  
+    array.push(favId);
+
+    const userToUpdate = {
+      id: app.id!!,
+      name:userData.name,
+      email:userData.email,
+      biography:userData.bio,
+      zap:userData.zap,
+      link:userData.link,
+      price:userData.price,
+      skills:userData.skills,
+      favorite: array
+    };
+    saveDate(userToUpdate).catch(console.error);
   }
 
   function handleFilter() {
@@ -97,7 +118,7 @@ export function ListSkillers() {
       </View>
 
       <ScrollView className='w-full h-2/3 px-4 pb-40 bg-[#f0f0f7]'>
-        <FlatList
+        {filteredData.length > 0 ? <FlatList
           data={filteredData}
           renderItem={({ item }) => (
             <Card className='p-0 w-90 pb-3 bg-white mb-5 mt-2' key={item.id}>
@@ -128,7 +149,7 @@ export function ListSkillers() {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   className='flex w-18 bg-sky-300 rounded-md justify-center p-3.5'
-                  onPress={() => navigate('home')}
+                  onPress={() => handleAddFavorite(item.id)}
                 >
                   <Coracao />
                 </TouchableOpacity>
@@ -146,7 +167,21 @@ export function ListSkillers() {
             </Card>
           )}
           keyExtractor={(item) => item.id}
-        />
+        /> : <View className='flex items-center justify-center h-full w-full bg-white'>
+              <Text className='text-[#57534E] my-10 p-4 w-full h-auto'>
+                <Text className='font-ArchivoBold  text-2xl'>
+                  Os melhores skillers 
+                </Text>
+                {'\n'}
+                <Text className='font-ArchivoBold text-2xl '>
+                  aparecerão
+                </Text>
+                {'\n'}
+                <Text className='font-ArchivoBold text-2xl '>aqui!!</Text>
+              </Text>
+            </View>
+          }
+        
       </ScrollView>
     </View>
   );

@@ -29,6 +29,7 @@ export function Skiller() {
   const [price, setPrice] = useState('0.00');
   const [skills, setSkills] = useState('');
   const [advice, setAdvice] = useState('');
+  const [favorite, setFavorite] = useState<any>([]);
 
   function onChangedZap(text: string) {
     setZap(text.replace(/[^0-9]/g, ''));
@@ -67,6 +68,7 @@ export function Skiller() {
         link: link,
         price: price,
         skills: skills,
+        favorite: favorite ? favorite : []
       };
 
       users.forEach((userData) => {
@@ -107,6 +109,7 @@ export function Skiller() {
       setPrice(userData?.price ?? '');
       setSkills(userData?.skills ?? '');
       setZap(userData?.zap ?? '');
+      setFavorite(userData.favorite)
     } 
   };
 

@@ -19,6 +19,7 @@ export type UserType = {
   link?: string;
   price?: string;
   skills?: string;
+  favorite?: Array<string>
 };
 
 export default function useUserData<T extends { [x: string]: any }>(
@@ -39,9 +40,10 @@ export default function useUserData<T extends { [x: string]: any }>(
     link: string;
     price: string;
     skills: string;
+    favorite?: Array<string>
   }): Promise<void> {
     try {
-      const { id, name, email, biography, zap, link, price, skills } = user;
+      const { id, name, email, biography, zap, link, price, skills, favorite } = user;
 
       const q = query(
         collectionRef,
@@ -59,6 +61,7 @@ export default function useUserData<T extends { [x: string]: any }>(
           link,
           price,
           skills,
+          favorite
         };
 
         await create(newUser);
@@ -72,6 +75,7 @@ export default function useUserData<T extends { [x: string]: any }>(
           link,
           price,
           skills,
+          favorite
         });
       }
       console.log('Dados atualizados com sucesso!');

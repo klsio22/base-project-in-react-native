@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import useAuth from './useAuth';
+import { useState } from 'react';
 import useCollection from './useCollection';
 import {
   collection,
@@ -19,17 +18,17 @@ export type UserType = {
   link?: string;
   price?: string;
   skills?: string;
-  favorite?: Array<string>
+  favorite?: Array<string>;
 };
 
 export default function useUserData<T extends { [x: string]: any }>(
-  collectionName: string,
-  realtime: boolean = true
+  collectionName: string
 ) {
   const db = getFirestore();
   const collectionRef = collection(db, collectionName);
 
   const { create } = useCollection<UserType>(collectionName);
+  const [loading, setLoading] = useState(true);
 
   async function saveDate(user: {
     id: string;
@@ -40,10 +39,12 @@ export default function useUserData<T extends { [x: string]: any }>(
     link: string;
     price: string;
     skills: string;
-    favorite?: Array<string>
+    favorite?: Array<string>;
   }): Promise<void> {
     try {
-      const { id, name, email, biography, zap, link, price, skills, favorite } = user;
+      setLoading(true);
+      const { id, name, email, biography, zap, link, price, skills, favorite } =
+        user;
 
       const q = query(
         collectionRef,
@@ -61,7 +62,7 @@ export default function useUserData<T extends { [x: string]: any }>(
           link,
           price,
           skills,
-          favorite
+          favorite,
         };
 
         await create(newUser);
@@ -75,16 +76,19 @@ export default function useUserData<T extends { [x: string]: any }>(
           link,
           price,
           skills,
-          favorite
+          favorite,
         });
       }
       console.log('Dados atualizados com sucesso!');
     } catch (error) {
       console.error('Erro ao atualizar os dados:', error);
+    } finally {
+      setLoading(false);
     }
   }
 
   return {
+    loading,
     saveDate,
   };
 }

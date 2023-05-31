@@ -1,7 +1,6 @@
 import {
   Alert,
   Modal,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -13,12 +12,9 @@ import { EnvelopeSimple, Lock, XCircle } from 'phosphor-react-native';
 import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 import ToStudy from '../assets/svg/to-study.svg';
-import { useState, useContext, useEffect } from 'react';
-import useDocument, { UserType } from '../hooks/useDocument';
+import { useState } from 'react';
 import { validate } from 'email-validator';
 import useAuth from '../hooks/useAuth';
-import { AppContext } from '../contexts/AppContext';
-import useCollection from '../hooks/useCollection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Home() {

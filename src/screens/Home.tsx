@@ -28,14 +28,7 @@ export function Home() {
   const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, user, setUserId } = useAuth();
-  const app = useContext(AppContext);
-  const { allDates } = useCollection('users');
-  const { userId } = useAuth();
-  const { getUserData } = useDocument('users');
-
-  // const { login, user, userId, setUserId } = useAuth();
-  // const app = useContext(AppContext)
+  const { login, user } = useAuth();
   const verifyLogin = () => {
     user ? navigate('student') : setModalVisible(!modalVisible);
   };
@@ -63,14 +56,10 @@ export function Home() {
       try {
         await login(email, password);
         const userTeste = await AsyncStorage.getItem('user');
-        setUserId(app.id!!);
         setEmail(JSON.parse(userTeste!!).email);
-        app.email = email
-        console.log('Login com sucesso | app id: ', app.id);
+        console.log('Login com sucesso | app id: ');
         setModalVisible(!modalVisible);
         setError(false);
-        // setUserId(JSON.parse(userTeste!!).uid)
-        // console.log(JSON.parse(userTeste!!).uid);
         clearAll();
         navigate('student');
       } catch (error: any) {
@@ -85,21 +74,6 @@ export function Home() {
   };
 
   user ? console.log('logado') : console.log('não logado');
-
- /*  useEffect(() => {
-    const testsUser = async () => {
-      const users = await allDates();
-
-      //users.map((userDate) => console.log('user', userDate));
-
-      console.log('id', userId);
-      console.log('id', app.id);
-      console.log(await getUserData('jD6y4xnXzlZIa6ac0bDFTnOstXQ2'));
-    };
-    testsUser();
-  }, []);
-
-  console.log('id', userId); */
 
   return (
     <View className='flex items-center justify-center h-full  bg-sky-500 '>

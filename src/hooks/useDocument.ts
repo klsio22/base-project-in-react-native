@@ -67,27 +67,28 @@ export default function useDocument<T extends { [x: string]: any }>(
     }
   };
 
-
   const getUserData = async (userId: string): Promise<UserType | null> => {
     try {
-      console.log("use doc id:", userId);
-      
+      setLoading(true);
+      console.log('use doc id:', userId);
+
       const userDocRef = doc(collectionRef, userId);
       const userDocSnapshot = await getDoc(userDocRef);
-  
+
       if (userDocSnapshot.exists()) {
         const userData = userDocSnapshot.data() as UserType;
         return userData;
       }
-  
+
       return null;
     } catch (error) {
-      // console.error('Erro ao obter os dados do usuário:', error);
-      console.info('Erro ao obter os dados do usuário:', error)
+      console.info('Erro ao obter os dados do usuário:', error);
       return null;
+    } finally {
+      setLoading(false);
     }
   };
-  
+
   /**
    * Refresh data, useful for non-realtime usage.
    * @returns updated data.
@@ -116,5 +117,5 @@ export default function useDocument<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data, loading, refresh, register, searchEmail, getDoc,getUserData };
+  return { data, loading, refresh, register, searchEmail, getDoc, getUserData };
 }

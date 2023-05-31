@@ -1,4 +1,3 @@
-
 import {
   addDoc,
   collection,
@@ -7,8 +6,8 @@ import {
   getDocs,
   getFirestore,
   updateDoc,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
+} from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 
 /**
  * Hook to access and manage a firestore collection.
@@ -24,7 +23,6 @@ export default function useCollection<T extends { [x: string]: any }>(
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Array<T>>([]);
 
-
   const create = async (newVal: T) => {
     const docRef = await addDoc(collection(db, collectionName), newVal);
     return docRef.id;
@@ -37,7 +35,7 @@ export default function useCollection<T extends { [x: string]: any }>(
     if (newVal.id) delete newVal.id;
     await updateDoc(doc(db, collectionName, id), newVal);
   };
-  
+
   const allDates = async () => {
     setLoading(true);
     const querySnapshot = await getDocs(collection(db, collectionName));

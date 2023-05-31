@@ -15,10 +15,8 @@ import { useContext } from 'react';
 interface UseAuthReturn {
   loading: boolean;
   user: User | null;
-  userId: string;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  setUserId: (userId: string) => void;
 }
 
 /**
@@ -28,10 +26,8 @@ interface UseAuthReturn {
 export default function useAuth(): UseAuthReturn {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-  const [userId, setUserId] = useState('');
   const { refreshData } = useCollection<User>('users');
   const { data } = useCollection<UserType>('users');
-  const app = useContext(AppContext);
 
   /**
    * Wrapper for login users with loading state flag for conditional renders.
@@ -43,15 +39,6 @@ export default function useAuth(): UseAuthReturn {
       setLoading(true);
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
-      const dataObject = data;
-      console.log(data);
-      dataObject.map((e) => {
-        if (e.email === email) {
-          setUserId(e.id);
-          app.id = e.id;
-          console.log(e.id, '<-- userId');
-        }
-      });
     } catch (error) {
       if ((error as { code: string }).code === 'auth/wrong-password') {
         throw new Error('Senha ou email incorreto. Verifique novamente.');
@@ -64,6 +51,8 @@ export default function useAuth(): UseAuthReturn {
       } else {
         throw new Error('Email ou usuário não existe cadastrado');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,17 +75,15 @@ export default function useAuth(): UseAuthReturn {
       if (user) {
         setUser(user);
         AsyncStorage.setItem('user', JSON.stringify(user)).catch(console.error);
-        setUserId(user.uid); // Obtendo o ID do usuário logado
-        app.id = user.uid; // Configurando o ID do usuário no contexto (se necessário)
       } else {
         setUser(null);
-        setUserId('');
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
+
   useEffect(() => {
     const restoreUser = async (): Promise<void> => {
       try {
@@ -112,5 +99,5 @@ export default function useAuth(): UseAuthReturn {
     restoreUser().catch(console.error);
   }, []);
 
-  return { loading, user, userId, login, logout, setUserId };
+  return { loading, user, login, logout };
 }

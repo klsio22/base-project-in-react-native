@@ -8,16 +8,13 @@ import ToStudy from '../assets/svg/to-study.svg';
 import { fetchDisciplines } from '../../lib/apiData';
 import useAuth from '../hooks/useAuth';
 import useCollection from '../hooks/useCollection';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AppContext } from '../contexts/AppContext';
 import useUserData from '../hooks/useUserData';
 import useDocument from '../hooks/useDocument';
 
 export function Skiller() {
   const { navigate } = useNavigation();
-  const { logout, userId, setUserId } = useAuth();
+  const { logout, user } = useAuth();
   const { getUserData } = useDocument('users');
-  const app = useContext(AppContext);
   const { saveDate } = useUserData('users');
   const { allDates } = useCollection('users');
 
@@ -34,7 +31,7 @@ export function Skiller() {
   function onChangedZap(text: string) {
     setZap(text.replace(/[^0-9]/g, ''));
   }
-  
+
   useEffect(() => {
     const listTeacher = async () => {
       try {
@@ -46,7 +43,6 @@ export function Skiller() {
         );
         console.log(message);
         setAdvice(message);
-        //setSkill(fetchedDisciplines);
       } catch (error) {
         console.error(error);
       }
@@ -60,7 +56,7 @@ export function Skiller() {
       const users = await allDates();
 
       const userToUpdate = {
-        id: app.id!!,
+        id: user?.uid!!,
         name: fullName,
         email: email,
         biography: biography,
@@ -68,13 +64,13 @@ export function Skiller() {
         link: link,
         price: price,
         skills: skills,
-        favorite: favorite ? favorite : []
+        favorite: favorite ? favorite : [],
       };
 
       users.forEach((userData) => {
         console.log(userData);
-        console.log("testando");
-        if (userData.id === app.id) {
+        console.log('testando');
+        if (user?.uid) {
           saveDate(userToUpdate).catch(console.error);
         }
       });
@@ -91,16 +87,10 @@ export function Skiller() {
   }
 
   const handleGetDatesUser = async () => {
-    const userTeste = await AsyncStorage.getItem('user');
-    // setUserId(JSON.parse(userTeste!!).uid);
-    setEmail(JSON.parse(userTeste!!).email);
+    const userData = await getUserData(user?.uid!!);
 
-    const userData = await getUserData(app.id!!);
-
-    // console.log(await getUserData(userId));
-
-    console.log('id', userId);
-    console.log('teste');
+    console.log('id', user?.uid);
+    console.log('data', userData);
     if (userData) {
       setBio(userData?.bio ?? '');
       setEmail(userData?.email ?? '');
@@ -109,14 +99,15 @@ export function Skiller() {
       setPrice(userData?.price ?? '');
       setSkills(userData?.skills ?? '');
       setZap(userData?.zap ?? '');
-      setFavorite(userData.favorite)
-    } 
+      setFavorite(userData.favorite);
+    }
   };
-
+  
   useEffect(() => {
-    // console.log(app.id);
     handleGetDatesUser().catch(console.error);
-  }, []);
+  }, [user]);
+
+  console.log('id skiller', user?.uid);
 
   return (
     <ScrollView className='h-full'>

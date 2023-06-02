@@ -10,7 +10,7 @@ import CoracaoBarrado from '../assets/svg/coracao_barras.svg';
 import ZapZap from '../assets/svg/Whatsapp.svg';
 import React, { useContext, useEffect, useState } from 'react';
 import { Card, Text, Divider } from 'react-native-paper';
-import { ArrowLeft } from 'phosphor-react-native';
+import { ArrowBendUpLeft, ArrowLeft, House } from 'phosphor-react-native';
 import useDocument, { UserType } from '../hooks/useDocument';
 import useUserData from '../hooks/useUserData';
 import useCollection from '../hooks/useCollection';
@@ -76,20 +76,23 @@ export default function Favorite() {
 
   return (
     <View className='flex-col justify-start h-full w-full bg-sky-500'>
-      <View className='px-4 py-6'>
+      <View className='p-4'>
         <View className='w-full flex-row justify-start'>
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => navigate('home')}
           >
-            <ArrowLeft size={32} color='#f7f7f7' />
+            <House size={32} color='#f7f7f7' />
           </TouchableOpacity>
         </View>
-        <Text className='text-white my-4 w-52 text-3xl leading-8'>
-          <Text className='font-ArchivoBold text-white'>
-            Meus Skillers {'\n'} Favoritos
+        <View className='my-4 w-52 text-3xl leading-8 flex-col '>
+          <Text className='font-ArchivoBold text-white text-3xl'>
+            Meus Skillers
           </Text>
-        </Text>
+          <Text className='font-ArchivoBold text-white text-3xl'>
+            Favoritos
+          </Text>
+        </View>
       </View>
 
       <SafeAreaView>

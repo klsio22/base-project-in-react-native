@@ -5,6 +5,8 @@ import {
   FlatList,
   LogBox,
   SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import NextScreen from '../assets/svg/next-screen.svg';
@@ -16,6 +18,7 @@ import useCollection from '../hooks/useCollection';
 import useDocument, { UserType } from '../hooks/useDocument';
 import useUserData from '../hooks/useUserData';
 import useAuth from '../hooks/useAuth';
+import { ArrowBendUpLeft, ArrowLeft, House } from 'phosphor-react-native';
 
 export function ListSkillers() {
   const { navigate } = useNavigation();
@@ -91,33 +94,39 @@ export function ListSkillers() {
 
   return (
     <View className='flex-col h-auto w-full bg-sky-500'>
-      <View className='px-4 py-6 h-1/3'>
+      <View className='p-4 h-auto '>
         <View className='w-full flex-row justify-start'>
           <TouchableOpacity
             activeOpacity={0.7}
-            className='rotate-180'
             onPress={() => navigate('home')}
           >
-            <NextScreen />
+            <House size={32} color='#f7f7f7' />
           </TouchableOpacity>
         </View>
-        <Text className='text-white my-4 w-52 text-3xl leading-8'>
-          <Text className='font-ArchivoBold text-white'>
-            Skillers {'\n'} Disponíveis
+        <View className='my-4 w-52 text-3xl leading-8 flex-col '>
+          <Text className='font-ArchivoBold text-white text-3xl'>Skillers</Text>
+          <Text className='font-ArchivoBold text-white text-3xl'>
+            Disponíveis
           </Text>
-        </Text>
-        <TextInput
-          editable
-          className='m-5'
-          value={filterText}
-          placeholder='Filtrar por dia, matéria'
-          placeholderTextColor='#fff'
-          keyboardType='default'
-          onChangeText={(newValue) => {
-            setFilterText(newValue);
-            handleFilter();
-          }}
-        />
+        </View>
+        <KeyboardAvoidingView
+          className='flex-col m-2 border-b-gray-400'
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Ajuste esse valor conforme necessário
+        >
+          <TextInput
+            editable
+            value={filterText}
+            placeholder='Filtrar por dia, matéria'
+            placeholderTextColor='#fff'
+            keyboardType='default'
+            className='opacity-90 text-white decoration-'
+            onChangeText={(newValue) => {
+              setFilterText(newValue);
+              handleFilter();
+            }}
+          />
+        </KeyboardAvoidingView>
         <Divider />
       </View>
 

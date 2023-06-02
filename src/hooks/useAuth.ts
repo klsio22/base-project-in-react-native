@@ -60,6 +60,7 @@ export default function useAuth(): UseAuthReturn {
     console.log('Saindo');
     setUser(null);
     await AsyncStorage.removeItem('user');
+    await AsyncStorage.getAllKeys();
   };
 
   useEffect(() => {

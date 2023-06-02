@@ -1,21 +1,17 @@
 import {
-  TextInput,
   TouchableOpacity,
   View,
   SafeAreaView,
-  ScrollView,
   LogBox,
   FlatList,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import NextScreen from '../assets/svg/next-screen.svg';
 import CoracaoBarrado from '../assets/svg/coracao_barras.svg';
 import ZapZap from '../assets/svg/Whatsapp.svg';
 import React, { useContext, useEffect, useState } from 'react';
-import { Avatar, Button, Card, Text, Divider } from 'react-native-paper';
+import { Card, Text, Divider } from 'react-native-paper';
 import { ArrowLeft } from 'phosphor-react-native';
 import useDocument, { UserType } from '../hooks/useDocument';
-import { AppContext } from '../contexts/AppContext';
 import useUserData from '../hooks/useUserData';
 import useCollection from '../hooks/useCollection';
 import useAuth from '../hooks/useAuth';
@@ -35,7 +31,6 @@ export default function Favorite() {
     let userDataGet = await getUserData(user?.uid!!);
     setUserData(userDataGet);
     console.log(userDataGet);
-    // console.log(aux);
     const suply: Array<UserType> = [];
     aux.map((e) => {
       if (userDataGet && userDataGet.favorite!!.includes(e.id)) {
@@ -46,13 +41,6 @@ export default function Favorite() {
   }
 
   function handleRemoveFavorite(favId: string) {
-    // let array = data.filter((e: UserType) => {
-    //   return function (skiller: UserType) {
-    //     if (skiller.id && skiller.id != favId) {
-    //         skiller.id
-    //     }
-    //   }
-    // });
     let array: Array<string> = [];
 
     data.map((data: UserType) => {
@@ -102,12 +90,12 @@ export default function Favorite() {
         </Text>
       </View>
 
-      <ScrollView className='w-full h-2/3 px-4 pb-40 bg-[#f0f0f7]'>
+      <SafeAreaView className='w-full h-2/3 px-4 pb-40 bg-[#f0f0f7]'>
         {data.length > 0 ? (
           <FlatList
             data={data}
-            renderItem={({ item }) => (
-              <Card className='p-0 w-90 pb-3 bg-white mb-5 mt-2' key={item.id}>
+            renderItem={({ item, index }) => (
+              <Card className='p-0 w-90 pb-3 bg-white mb-5 mt-2' key={index}>
                 <View className='p-5'>
                   <Text className='text-[#32264d] font-PoppinsRegular font-bold text-2xl'>
                     {item.name}
@@ -140,7 +128,6 @@ export default function Favorite() {
                     <CoracaoBarrado />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    activeOpacity={0.7}
                     className='flex-1 flex-row flex bg-green-900 rounded-md justify-center'
                     onPress={() => navigate('home')}
                   >
@@ -152,7 +139,7 @@ export default function Favorite() {
                 </Card.Actions>
               </Card>
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item, index) => index.toString()}
           />
         ) : (
           <View className='flex items-center justify-center h-full w-full bg-white'>
@@ -165,7 +152,7 @@ export default function Favorite() {
             </Text>
           </View>
         )}
-      </ScrollView>
+      </SafeAreaView>
     </View>
   );
 }

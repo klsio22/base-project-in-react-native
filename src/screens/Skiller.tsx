@@ -88,6 +88,7 @@ export function Skiller() {
 
   const handleGetDatesUser = async () => {
     if (user?.uid) {
+      console.log('id skiller', user.uid);
       const userData = await getUserData(user.uid);
 
       console.log('id', user?.uid);
@@ -108,8 +109,6 @@ export function Skiller() {
   useEffect(() => {
     handleGetDatesUser().catch(console.error);
   }, [user]);
-
-  console.log('id skiller', user?.uid);
 
   return (
     <ScrollView className='h-full'>

@@ -7,8 +7,6 @@ import {
   User,
 } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useCollection from './useCollection';
-import { UserType } from './useDocument';
 
 interface UseAuthReturn {
   loading: boolean;
@@ -24,8 +22,8 @@ interface UseAuthReturn {
 export default function useAuth(): UseAuthReturn {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-  const { refreshData } = useCollection<User>('users');
-  const { data } = useCollection<UserType>('users');
+  /*   const { refreshData } = useCollection<User>('users');
+  const { data } = useCollection<UserType>('users'); */
 
   /**
    * Wrapper for login users with loading state flag for conditional renders.
@@ -60,10 +58,9 @@ export default function useAuth(): UseAuthReturn {
   const logout = async (): Promise<void> => {
     console.log(await AsyncStorage.getAllKeys());
     await signOut(getAuth());
-    console.log('tamo aeeeee');
+    console.log('Saindo');
     setUser(null);
     await AsyncStorage.removeItem('user');
-    await AsyncStorage.clear();
     console.log(await AsyncStorage.getAllKeys());
   };
 

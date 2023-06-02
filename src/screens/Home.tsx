@@ -53,7 +53,6 @@ export function Home() {
         await login(email, password);
         const userTeste = await AsyncStorage.getItem('user');
         setEmail(JSON.parse(userTeste!!).email);
-        console.log('Login com sucesso | app id: ');
         setModalVisible(!modalVisible);
         setError(false);
         clearAll();
@@ -184,7 +183,7 @@ export function Home() {
               activeOpacity={0.7}
               className='flex w-28 justify-between items-start p-4 rounded-lg bg-[#F27C7C] '
               onPress={() => {
-                user ? navigate('professorLanding') : verifyLogin();
+                user!! ? navigate('professorLanding') : verifyLogin();
               }}
             >
               <ToWatch />

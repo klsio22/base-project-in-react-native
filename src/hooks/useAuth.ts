@@ -9,8 +9,6 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useCollection from './useCollection';
 import { UserType } from './useDocument';
-import { AppContext } from '../contexts/AppContext';
-import { useContext } from 'react';
 
 interface UseAuthReturn {
   loading: boolean;

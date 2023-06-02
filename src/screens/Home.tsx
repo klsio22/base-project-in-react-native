@@ -12,7 +12,7 @@ import { EnvelopeSimple, Lock, XCircle } from 'phosphor-react-native';
 import BannerHome from '../assets/svg/banner-home.svg';
 import ToWatch from '../assets/svg/to-watch.svg';
 import ToStudy from '../assets/svg/to-study.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { validate } from 'email-validator';
 import useAuth from '../hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -69,7 +69,9 @@ export function Home() {
     }
   };
 
-  user ? console.log('logado') : console.log('não logado');
+  useEffect(() => {
+    user ? console.log('logado') : console.log('não logado');
+  }, [user]);
 
   return (
     <View className='flex items-center justify-center h-full  bg-sky-500 '>

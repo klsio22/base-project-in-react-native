@@ -30,18 +30,17 @@ export function ListSkillers() {
 
   async function updateData() {
     const data = await allDates();
-    // console.log(aux);
-    const suply: Array<UserType> = [];
-    data.map((value) => {
-      if (value && value.skills?.length) {
-        suply.push(value);
-      }
-    });
-    setFilteredData(suply);
-    setData(suply);
-    let userDataGet = await getUserData(user?.uid!!);
-    setUserData(userDataGet);
-    console.log(userDataGet);
+    const supply: Array<UserType> = data.filter(
+      (value) => value.skills?.length
+    );
+    setFilteredData(supply);
+    setData(supply);
+
+    if (user?.uid) {
+      const userDataGet = await getUserData(user.uid);
+      setUserData(userDataGet);
+      console.log('user data', userDataGet);
+    }
   }
 
   function handleAddFavorite(favoriteID: string) {

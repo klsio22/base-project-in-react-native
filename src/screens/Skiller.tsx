@@ -81,28 +81,30 @@ export function Skiller() {
     }
   };
 
-  function sair() {
-    logout();
+  async function sair() {
+    await logout();
     navigate('home');
   }
 
   const handleGetDatesUser = async () => {
-    const userData = await getUserData(user?.uid!!);
+    if (user?.uid) {
+      const userData = await getUserData(user.uid);
 
-    console.log('id', user?.uid);
-    console.log('data', userData);
-    if (userData) {
-      setBio(userData?.bio ?? '');
-      setEmail(userData?.email ?? '');
-      setLink(userData?.link ?? '');
-      setFullName(userData?.name ?? '');
-      setPrice(userData?.price ?? '');
-      setSkills(userData?.skills ?? '');
-      setZap(userData?.zap ?? '');
-      setFavorite(userData.favorite);
+      console.log('id', user?.uid);
+      console.log('data', userData);
+      if (userData) {
+        setBio(userData?.bio ?? '');
+        setEmail(userData?.email ?? '');
+        setLink(userData?.link ?? '');
+        setFullName(userData?.name ?? '');
+        setPrice(userData?.price ?? '');
+        setSkills(userData?.skills ?? '');
+        setZap(userData?.zap ?? '');
+        setFavorite(userData.favorite);
+      }
     }
   };
-  
+
   useEffect(() => {
     handleGetDatesUser().catch(console.error);
   }, [user]);
@@ -141,7 +143,7 @@ export function Skiller() {
           <TouchableOpacity
             activeOpacity={0.7}
             className='flex w-28 h-30 w-30 justify-between items-start p-4 rounded-lg bg-[#F27C7C] '
-            onPress={() => sair()}
+            onPress={() => sair().catch}
           >
             <ToWatch />
 

@@ -30,7 +30,6 @@ export function Skiller() {
   const [advice, setAdvice] = useState('');
   const [favorite, setFavorite] = useState<any>([]);
 
-
   function onChangedZap(text: string) {
     setZap(text.replace(/[^0-9]/g, ''));
   }
@@ -266,17 +265,16 @@ export function Skiller() {
               className='flex mt-4 flex-row w-full bg-sky-400 rounded-md justify-center'
               onPress={handleGetDatesUser}
             >
-              <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
-                {' '}
+              <Text className='text-white p-3 text-base font-PoppinsRegular'>
                 Atualizar dados
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
-              className='flex mt-4 flex-row w-full bg-red-400 rounded-md justify-center'
+              className='mt-4 flex-row w-full bg-red-400 rounded-md justify-center'
               onPress={handleSaveDates}
             >
-              <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
+              <Text className='text-white p-3 text-base font-PoppinsRegular'>
                 Salvar
               </Text>
             </TouchableOpacity>

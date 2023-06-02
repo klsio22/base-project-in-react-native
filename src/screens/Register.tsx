@@ -100,7 +100,7 @@ export function Register() {
 
             <TouchableOpacity
               className='items-center rounded-sm justify-center w-full h-10 bg-blue-200'
-              onPress={() => handleSaveEmail()}
+              onPress={handleSaveEmail}
             >
               <Text className='text-stone-800 font-ArchivoSemiBold'>
                 Cadastrar

@@ -56,12 +56,10 @@ export default function useAuth(): UseAuthReturn {
    * Wrapper for logout users.
    */
   const logout = async (): Promise<void> => {
-    console.log(await AsyncStorage.getAllKeys());
     await signOut(getAuth());
     console.log('Saindo');
     setUser(null);
     await AsyncStorage.removeItem('user');
-    console.log(await AsyncStorage.getAllKeys());
   };
 
   useEffect(() => {

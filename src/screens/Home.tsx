@@ -1,6 +1,9 @@
 import {
   Alert,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -35,7 +38,7 @@ export function Home() {
     setErrorMessage('');
   };
 
-  const handleLoginUser = async () => {
+  const handleLoginUser = async (): Promise<void> => {
     try {
       if (!validate(email)) {
         setError(true);
@@ -73,8 +76,8 @@ export function Home() {
   }, [user]);
 
   return (
-    <View className='flex items-center justify-center h-full  bg-sky-500 '>
-      <View className='mt-20 '>
+    <View className='flex items-center justify-center h-full bg-sky-500 '>
+      <ScrollView className='mt-20'>
         <View className='flex justify-center items-center mx-auto'>
           <BannerHome width={280} />
         </View>
@@ -113,14 +116,14 @@ export function Home() {
                     </View>
                   </View>
 
-                  <View className='flex justify-center items-center gap-3 mt-1'>
-                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48 h-8'>
+                  <View className='flex justify-center items-center gap-3 mt-1 '>
+                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48 h-8 '>
                       <EnvelopeSimple size={20} />
                       <TextInput
                         placeholder='Digite seu e-mail'
                         value={email}
                         onChangeText={setEmail}
-                        className='w-full'
+                        className='w-36'
                       ></TextInput>
                     </View>
 
@@ -134,12 +137,12 @@ export function Home() {
                         value={password}
                         underlineColorAndroid='transparent'
                         autoCapitalize='none'
-                        className='w-full'
+                        className='w-36'
                       />
                     </View>
 
                     <TouchableOpacity
-                      onPress={() => handleLoginUser()}
+                      onPress={handleLoginUser}
                       className='w-48 h-8 border rounded-md items-center justify-center'
                     >
                       <Text className=' '>Entrar</Text>
@@ -192,13 +195,14 @@ export function Home() {
               </Text>
             </TouchableOpacity>
           </View>
+
           <TouchableOpacity onPress={() => navigate('enterpriseLanding')}>
             <Text className='my-5 text-white leading-4 font-bold'>
               <Text>Seja parceiro SkillShare</Text>
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }

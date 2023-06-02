@@ -1,9 +1,7 @@
-import { View, Text, useWindowDimensions } from 'react-native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import React from 'react';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { ListSkillers } from '../screens/ListSkillers';
 import Favorite from '../screens/Favorite';
-import { TabView, SceneMap } from 'react-native-tab-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createMaterialBottomTabNavigator();

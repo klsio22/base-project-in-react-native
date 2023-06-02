@@ -255,8 +255,8 @@ export function Skiller() {
         </View>
         <TouchableOpacity
           activeOpacity={0.7}
-          className='flex mt-4 flex-row w-full flex bg-sky-400 rounded-md justify-center'
-          onPress={() => handleGetDatesUser()}
+          className='flex mt-4 flex-row w-full bg-sky-400 rounded-md justify-center'
+          onPress={handleGetDatesUser}
         >
           <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
             {' '}
@@ -265,8 +265,8 @@ export function Skiller() {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.7}
-          className='flex mt-4 flex-row w-full flex bg-red-400 rounded-md justify-center'
-          onPress={() => handleSaveDates()}
+          className='flex mt-4 flex-row w-full bg-red-400 rounded-md justify-center'
+          onPress={handleSaveDates}
         >
           <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
             {' '}

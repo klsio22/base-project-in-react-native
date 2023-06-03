@@ -43,7 +43,7 @@ export function ListSkillers() {
     if (user?.uid) {
       const userDataGet = await getUserData(user.uid);
       setUserData(userDataGet);
-      console.log('user data', userDataGet);
+      //console.log('user data', userDataGet);
     }
     setLoading(false);
   }

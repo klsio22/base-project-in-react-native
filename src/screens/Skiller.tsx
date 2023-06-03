@@ -1,6 +1,5 @@
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, TextInput } from 'react-native-paper';
 
 import ToWatch from '../assets/svg/to-watch.svg';
@@ -11,9 +10,11 @@ import useCollection from '../hooks/useCollection';
 import useUserData from '../hooks/useUserData';
 import useDocument from '../hooks/useDocument';
 import { Loading } from '../components/Loading';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 
 export function Skiller() {
   const { navigate } = useNavigation();
+  const navigation = useNavigation();
   const { logout, user } = useAuth();
   const [loading, setLoading] = useState(true);
   const { getUserData } = useDocument('users');
@@ -50,7 +51,9 @@ export function Skiller() {
       }
     };
 
-    listTeacher();
+    listTeacher().catch((error) => {
+      console.error(error);
+    });
   }, []);
 
   const handleSaveDates = async () => {
@@ -83,9 +86,13 @@ export function Skiller() {
     }
   };
 
-  async function sair() {
+  async function exitApp() {
     await logout();
-    navigate('home');
+    navigation.dispatch(
+      CommonActions.reset({
+        routes: [{ name: 'home' }],
+      })
+    );
   }
 
   const handleGetDatesUser = async () => {
@@ -149,7 +156,7 @@ export function Skiller() {
               <TouchableOpacity
                 activeOpacity={0.7}
                 className='flex w-28 h-30 w-30 justify-between items-start p-4 rounded-lg bg-[#F27C7C] '
-                onPress={() => sair().catch}
+                onPress={exitApp}
               >
                 <ToWatch />
 

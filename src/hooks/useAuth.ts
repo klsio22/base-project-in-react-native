@@ -22,8 +22,6 @@ interface UseAuthReturn {
 export default function useAuth(): UseAuthReturn {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-  /*   const { refreshData } = useCollection<User>('users');
-  const { data } = useCollection<UserType>('users'); */
 
   /**
    * Wrapper for login users with loading state flag for conditional renders.
@@ -56,14 +54,15 @@ export default function useAuth(): UseAuthReturn {
    * Wrapper for logout users.
    */
   const logout = async (): Promise<void> => {
-    await signOut(getAuth());
-    console.log('Saindo');
-    setUser(null);
     await AsyncStorage.removeItem('user');
-    await AsyncStorage.getAllKeys();
+    const auth = getAuth();
+    await signOut(auth);
+    setUser(null);
+    console.log('Saindo');
   };
 
   useEffect(() => {
+    setLoading(true);
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
@@ -72,9 +71,8 @@ export default function useAuth(): UseAuthReturn {
       } else {
         setUser(null);
       }
-      setLoading(false);
     });
-
+    setLoading(false);
     return () => unsubscribe();
   }, []);
 

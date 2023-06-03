@@ -1,8 +1,6 @@
 import {
   Alert,
-  KeyboardAvoidingView,
   Modal,
-  Platform,
   ScrollView,
   Text,
   TextInput,
@@ -27,9 +25,17 @@ export function Home() {
   const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [redirect, setRedirect] = useState<any>();
   const { login, user } = useAuth();
-  const verifyLogin = () => {
+
+  const verifyLoginStudent = () => {
+    setRedirect('student');
     user ? navigate('student') : setModalVisible(!modalVisible);
+  };
+
+  const verifyLoginSkiller = () => {
+    setRedirect('professorLanding');
+    user ? navigate('professorLanding') : setModalVisible(!modalVisible);
   };
 
   const clearAll = () => {
@@ -59,7 +65,7 @@ export function Home() {
         setModalVisible(!modalVisible);
         setError(false);
         clearAll();
-        navigate('student');
+        navigate(redirect);
       } catch (error: any) {
         setError(true);
         console.log(error.message);
@@ -174,7 +180,7 @@ export function Home() {
             <TouchableOpacity
               activeOpacity={0.7}
               className='flex w-28 justify-between items-start p-4 rounded-lg bg-sky-200 '
-              onPress={() => verifyLogin()}
+              onPress={() => verifyLoginStudent()}
             >
               <ToStudy />
               <Text className='font-semibold text-xl font-ArchivoSemiBold text-stone-600 '>
@@ -185,9 +191,7 @@ export function Home() {
             <TouchableOpacity
               activeOpacity={0.7}
               className='flex w-28 justify-between items-start p-4 rounded-lg bg-[#F27C7C] '
-              onPress={() => {
-                user!! ? navigate('professorLanding') : verifyLogin();
-              }}
+              onPress={() => verifyLoginSkiller()}
             >
               <ToWatch />
               <Text className='font-semibold text-xl font-ArchivoSemiBold text-white'>

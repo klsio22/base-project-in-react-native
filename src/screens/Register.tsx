@@ -51,16 +51,15 @@ export function Register() {
       <ScrollView>
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => {
-            setIsSubmitted(true); // Set isSubmitted to true when the form is submitted
-            handleSaveEmail(values.email, values.password);
+          onSubmit={async (values) => {
+            setIsSubmitted(true);
+            await handleSaveEmail(values.email, values.password);
           }}
           validationSchema={validationSchema}
           validate={async (values) => {
             const errors: { email?: string; password?: string } = {};
 
-            if (!validate && await searchEmail(values.email)) {
-              console.log('E-mail inválido');
+            if (!validate && (await searchEmail(values.email))) {
               errors.email = 'E-mail inválido ou já existente';
             }
 
@@ -128,7 +127,7 @@ export function Register() {
                 <TouchableOpacity
                   className='items-center rounded-sm justify-center w-full h-10 bg-blue-200'
                   onPress={() => {
-                    setIsSubmitted(true); // Set isSubmitted to true when the button is clicked
+                    setIsSubmitted(true);
                     formikProps.handleSubmit();
                   }}
                 >

@@ -28,7 +28,7 @@ export function ListSkillers() {
   const [filteredData, setFilteredData] = useState(data);
   const { getUserData } = useDocument('users');
   const [userData, setUserData] = useState<any | UserType>({});
-  const { saveDate } = useUserData('users');
+  const { saveFavorites } = useUserData('users');
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   async function updateData() {
@@ -53,22 +53,10 @@ export function ListSkillers() {
       return; // Retorna se userData for nulo
     }
 
-    const array = userData.favorite || [];
-    array.push(favoriteID);
+    const favorites = userData.favorite || [];
+    const newFavorites = [...favorites, favoriteID];
 
-    const userToUpdate = {
-      id: user?.uid!!,
-      name: userData.name,
-      email: userData.email,
-      biography: userData.bio,
-      zap: userData.zap,
-      link: userData.link,
-      price: userData.price,
-      skills: userData.skills,
-      favorite: array,
-    };
-
-    saveDate(userToUpdate).catch(console.error);
+    saveFavorites(user?.uid, newFavorites).catch(console.error);
   }
 
   function handleFilter() {

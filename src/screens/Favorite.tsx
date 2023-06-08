@@ -8,7 +8,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import CoracaoBarrado from '../assets/svg/coracao_barras.svg';
 import ZapZap from '../assets/svg/Whatsapp.svg';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Text, Divider } from 'react-native-paper';
 import { House } from 'phosphor-react-native';
 import useDocument, { UserType } from '../hooks/useDocument';
@@ -24,19 +24,20 @@ export default function Favorite() {
   const { getUserData } = useDocument('users');
 
   const [userData, setUserData] = useState<any | UserType>({});
-  const { saveDate } = useUserData('users');
+  const { removeFavorite } = useUserData('users');
   const { allDates } = useCollection<UserType>('users');
   const { user } = useAuth();
 
   async function updateData() {
     const data = await allDates();
+    console.log(data);
     setLoading(true);
     if (user?.uid) {
       const userDataGet = await getUserData(user.uid);
       setUserData(userDataGet);
       console.log(userDataGet);
       const supply: Array<UserType> = data.filter((item) =>
-        userDataGet?.favorite?.includes(item.id)
+        userDataGet?.favorites?.includes(item.id)
       );
       setData(supply);
     }
@@ -44,36 +45,15 @@ export default function Favorite() {
   }
 
   async function handleRemoveFavorite(favId: string) {
-    let array: Array<string> = [];
-
-    data.map((data: UserType) => {
-      if (data.id != favId) {
-        array.push(data.id);
-      }
-    });
-
-    const userToUpdate = {
-      id: user?.uid!!,
-      name: userData.name,
-      email: userData.email,
-      biography: userData.bio,
-      zap: userData.zap,
-      link: userData.link,
-      price: userData.price,
-      skills: userData.skills,
-      favorite: array,
-    };
-
-    console.log(array);
-
-    saveDate(userToUpdate).catch(console.error);
+    await removeFavorite(user?.uid, favId).catch(console.error);
     await updateData();
   }
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await updateData();
       LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+      await updateData();
       setLoading(false);
     };
 

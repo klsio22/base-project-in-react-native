@@ -7,6 +7,9 @@ import {
   where,
   getDocs,
   updateDoc,
+  doc,
+  setDoc,
+  getDoc,
 } from 'firebase/firestore';
 
 export type UserType = {
@@ -18,7 +21,7 @@ export type UserType = {
   link?: string;
   price?: string;
   skills?: string;
-  favorite?: Array<string>;
+  favorites?: Array<string>;
 };
 
 export default function useUserData<T extends { [x: string]: any }>(
@@ -34,17 +37,27 @@ export default function useUserData<T extends { [x: string]: any }>(
     id: string;
     name: string;
     email: string;
-    biography: string;
-    zap: string;
-    link: string;
-    price: string;
-    skills: string;
-    favorite?: Array<string>;
+    biography?: string;
+    zap?: string;
+    link?: string;
+    price?: string;
+    skills?: string;
+    favorites?: Array<string>;
   }): Promise<void> {
     try {
       setLoading(true);
-      const { id, name, email, biography, zap, link, price, skills, favorite } =
-        user;
+
+      const {
+        id,
+        name,
+        email,
+        biography,
+        zap,
+        link,
+        price,
+        skills,
+        favorites,
+      } = user;
 
       const q = query(
         collectionRef,
@@ -52,6 +65,7 @@ export default function useUserData<T extends { [x: string]: any }>(
         where('id', '==', id)
       );
       const querySnapshot = await getDocs(q);
+
       if (querySnapshot.empty) {
         const newUser: UserType = {
           id,
@@ -62,9 +76,8 @@ export default function useUserData<T extends { [x: string]: any }>(
           link,
           price,
           skills,
-          favorite,
+          favorites,
         };
-
         await create(newUser);
       } else {
         const docRef = querySnapshot.docs[0].ref;
@@ -76,7 +89,7 @@ export default function useUserData<T extends { [x: string]: any }>(
           link,
           price,
           skills,
-          favorite,
+          favorites,
         });
       }
       console.log('Dados atualizados com sucesso!');
@@ -87,7 +100,79 @@ export default function useUserData<T extends { [x: string]: any }>(
     }
   }
 
+  async function saveFavorites(
+    userId?: string,
+    favorites?: Array<string>
+  ): Promise<void> {
+    try {
+      setLoading(true);
+
+      const userDocRef = doc(collectionRef, userId);
+      const userDocSnapshot = await getDoc(userDocRef);
+
+      if (userDocSnapshot.exists()) {
+        const userDocData = userDocSnapshot.data();
+        const existingFavorites = userDocData?.favorites || [];
+
+        favorites?.forEach((favorite) => {
+          if (!existingFavorites.includes(favorite)) {
+            existingFavorites.push(favorite);
+          }
+        });
+
+        await updateDoc(userDocRef, {
+          favorites: existingFavorites,
+        });
+      } else {
+        const userData = {
+          id: userId,
+          favorites: favorites,
+        };
+        await setDoc(userDocRef, userData);
+      }
+
+      console.log('Favoritos salvos com sucesso!');
+    } catch (error) {
+      console.error('Erro ao salvar os favoritos:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function removeFavorite(
+    userId?: string,
+    favoriteId?: string
+  ): Promise<void> {
+    try {
+      setLoading(true);
+
+      const userDocRef = doc(collectionRef, userId);
+      const userDocSnapshot = await getDoc(userDocRef);
+
+      if (userDocSnapshot.exists()) {
+        const userDocData = userDocSnapshot.data();
+        const existingFavorites = userDocData?.favorites || [];
+
+        const updatedFavorites = existingFavorites.filter(
+          (favorite: string) => favorite !== favoriteId
+        );
+
+        await updateDoc(userDocRef, {
+          favorites: updatedFavorites,
+        });
+
+        console.log('Favoritado removido com sucesso!');
+      }
+    } catch (error) {
+      console.error('Erro ao remover o favoritado:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return {
+    removeFavorite,
+    saveFavorites,
     loading,
     saveDate,
   };

@@ -54,8 +54,8 @@ export function Register() {
     <View className='items-center justify-center h-full w-screen bg-sky-500'>
       <ScrollView>
         {isLoading ? (
-          <View className='absolute z-50 bg-white opacity-50 rounded-xl h-full w-full '>
-            <View className='w-40 h-40 justify-center relative top-1/3 left-1/4'>
+          <View className='absolute z-50 bg-white opacity-60 rounded-xl h-full w-full '>
+            <View className='w-40 h-40 justify-center relative top-1/3 left-32'>
               <ActivityIndicator size='large' color='#000000' />
             </View>
           </View>
@@ -155,7 +155,7 @@ export function Register() {
                       navigate('home');
                     }}
                   >
-                    <Text className='text-white font-ArchivoBold'>
+                    <Text className='text-white font-ArchivoBold text-lg'>
                       já tem conta ? entre como estudante
                     </Text>
                   </TouchableOpacity>

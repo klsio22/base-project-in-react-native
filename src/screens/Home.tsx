@@ -82,20 +82,22 @@ export function Home() {
   }, [user]);
 
   return (
-    <View className='flex items-center justify-center h-full bg-sky-500 '>
-      <ScrollView className='mt-20'>
-        <View className='flex justify-center items-center mx-auto'>
-          <BannerHome width={280} />
+    <View className='flex items-center h-full bg-sky-500 '>
+      <ScrollView className='mt-24'>
+        <View className='flex justify-center items-center mx-auto mb-16'>
+          <BannerHome />
         </View>
 
-        <View className='mx-4'>
-          <Text className='text-white my-4 w-52 text-xl leading-8'>
-            <Text className=''>Seja bem-vindo !</Text>
+        <View className='mx-5 gap-y-8'>
+          <Text className='text-white my-4 text-xl leading-8'>
+            <Text className='text-3xl'>Seja bem-vindo !</Text>
             {'\n'}
-            <Text className='font-ArchivoBold '>O que deseja fazer ?</Text>
+            <Text className='font-ArchivoBold text-3xl'>
+              O que deseja fazer ?
+            </Text>
           </Text>
 
-          <View className='flex-row justify-between h-32 font-PoppinsSemiBold text-xl '>
+          <View className='flex-row justify-between font-PoppinsSemiBold text-xl gap-8'>
             <Modal
               animationType='fade'
               transparent={true}
@@ -105,11 +107,11 @@ export function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View className='flex items-center justify-start h-screen mt-6'>
-                <View className=' flex bg-white w-60 h-auto rounded-lg '>
+              <View className='flex items-center justify-start h-screen mt-16 '>
+                <View className='flex bg-white w-auto h-auto rounded-lg'>
                   <View className='mt-2 mr-3'>
                     <View className='flex-row items-center justify-center'>
-                      <Text className='font-PoppinsMedium text-xl'>Login</Text>
+                      <Text className='font-PoppinsMedium text-2xl'>Login</Text>
                       <TouchableOpacity
                         className='absolute right-0'
                         onPress={() => {
@@ -117,61 +119,62 @@ export function Home() {
                           clearAll();
                         }}
                       >
-                        <XCircle size={24} />
+                        <XCircle size={32} />
                       </TouchableOpacity>
                     </View>
                   </View>
+                  <View className='p-8'>
+                    <View className='flex justify-center items-center gap-3 mt-1 '>
+                      <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-60 h-12 '>
+                        <EnvelopeSimple size={20} />
+                        <TextInput
+                          placeholder='Digite seu e-mail'
+                          value={email}
+                          onChangeText={setEmail}
+                          className='w-48'
+                        ></TextInput>
+                      </View>
 
-                  <View className='flex justify-center items-center gap-3 mt-1 '>
-                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48 h-8 '>
-                      <EnvelopeSimple size={20} />
-                      <TextInput
-                        placeholder='Digite seu e-mail'
-                        value={email}
-                        onChangeText={setEmail}
-                        className='w-36'
-                      ></TextInput>
+                      <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-60 h-12'>
+                        <Lock size={20} />
+
+                        <TextInput
+                          secureTextEntry
+                          placeholder='*****************'
+                          onChangeText={(text) => setPassword(text)}
+                          value={password}
+                          underlineColorAndroid='transparent'
+                          autoCapitalize='none'
+                          className='w-48'
+                        />
+                      </View>
+
+                      <TouchableOpacity
+                        onPress={handleLoginUser}
+                        className='w-60 h-12 border rounded-md items-center justify-center'
+                      >
+                        <Text className=' '>Entrar</Text>
+                      </TouchableOpacity>
+
+                      {error && (
+                        <Text className='text-[#EF3333] text-base text-center font-medium'>
+                          {errorMessage}
+                        </Text>
+                      )}
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigate('register');
+                          setModalVisible(!modalVisible);
+                          clearAll();
+                        }}
+                        className='p-2'
+                      >
+                        <Text className='text-sky-500 font-ArchivoBold'>
+                          Não possui conta ? Crie uma agora!
+                        </Text>
+                      </TouchableOpacity>
                     </View>
-
-                    <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-48 h-8'>
-                      <Lock size={20} />
-
-                      <TextInput
-                        secureTextEntry
-                        placeholder='*****************'
-                        onChangeText={(text) => setPassword(text)}
-                        value={password}
-                        underlineColorAndroid='transparent'
-                        autoCapitalize='none'
-                        className='w-36'
-                      />
-                    </View>
-
-                    <TouchableOpacity
-                      onPress={handleLoginUser}
-                      className='w-48 h-8 border rounded-md items-center justify-center'
-                    >
-                      <Text className=' '>Entrar</Text>
-                    </TouchableOpacity>
-
-                    {error && (
-                      <Text className='text-[#EF3333] text-base text-center font-medium'>
-                        {errorMessage}
-                      </Text>
-                    )}
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigate('register');
-                        setModalVisible(!modalVisible);
-                        clearAll();
-                      }}
-                      className='p-2'
-                    >
-                      <Text className='text-sky-500 font-ArchivoBold'>
-                        Não possui conta ? Crie uma agora!
-                      </Text>
-                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
@@ -179,7 +182,7 @@ export function Home() {
 
             <TouchableOpacity
               activeOpacity={0.7}
-              className='flex w-28 justify-between items-start p-4 rounded-lg bg-sky-200 '
+              className='flex w-36 h-40  justify-between items-start p-5 rounded-lg bg-sky-200 '
               onPress={() => verifyLoginStudent()}
             >
               <ToStudy />
@@ -190,7 +193,7 @@ export function Home() {
 
             <TouchableOpacity
               activeOpacity={0.7}
-              className='flex w-28 justify-between items-start p-4 rounded-lg bg-[#F27C7C] '
+              className='flex w-36 h-40 justify-between items-start p-5 rounded-lg bg-[#F27C7C] '
               onPress={() => verifyLoginSkiller()}
             >
               <ToWatch />
@@ -202,7 +205,7 @@ export function Home() {
 
           <TouchableOpacity onPress={() => navigate('enterpriseLanding')}>
             <Text className='my-5 text-white leading-4 font-bold'>
-              <Text>Seja parceiro SkillShare</Text>
+              <Text className='text-lg'>Seja parceiro SkillShare</Text>
             </Text>
           </TouchableOpacity>
         </View>

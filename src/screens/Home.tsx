@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Alert,
   Modal,
   ScrollView,
@@ -27,6 +28,8 @@ export function Home() {
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState<any>();
   const { login, user } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const verifyLoginStudent = () => {
     setRedirect('student');
@@ -57,6 +60,7 @@ export function Home() {
         setErrorMessage('Email ou senhas estão incorretos');
         return;
       }
+      setIsLoading(true);
 
       try {
         await login(email, password);
@@ -71,6 +75,7 @@ export function Home() {
         console.log(error.message);
         setErrorMessage(error.message);
       }
+      setIsLoading(false);
     } catch (error: any) {
       console.log(error.message);
       setErrorMessage(error.message);
@@ -83,7 +88,7 @@ export function Home() {
 
   return (
     <View className='flex items-center h-full bg-sky-500 '>
-      <ScrollView className='mt-24'>
+      <ScrollView className='mt-24 h-screen'>
         <View className='flex justify-center items-center mx-auto mb-16'>
           <BannerHome />
         </View>
@@ -107,9 +112,19 @@ export function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
+              {isLoading ? (
+                <View className='absolute z-20 bg-white opacity-60 rounded-xl h-full w-full '>
+                  <View className='w-40 h-40 justify-center relative top-1/3 left-32'>
+                    <ActivityIndicator size='large' color='#000000' />
+                  </View>
+                </View>
+              ) : (
+                ''
+              )}
+
               <View className='flex items-center justify-start h-screen mt-16 '>
                 <View className='flex bg-white w-auto h-auto rounded-lg'>
-                  <View className='mt-2 mr-3'>
+                  <View className='mt-5 mr-3'>
                     <View className='flex-row items-center justify-center'>
                       <Text className='font-PoppinsMedium text-2xl'>Login</Text>
                       <TouchableOpacity
@@ -123,54 +138,55 @@ export function Home() {
                       </TouchableOpacity>
                     </View>
                   </View>
-                  <View className='p-8'>
-                    <View className='flex justify-center items-center gap-3 mt-1 '>
-                      <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-60 h-12 '>
-                        <EnvelopeSimple size={20} />
-                        <TextInput
-                          placeholder='Digite seu e-mail'
-                          value={email}
-                          onChangeText={setEmail}
-                          className='w-48'
-                        ></TextInput>
+                  <View className='py-8 px-6 items-center'>
+                    <View className='items-center'>
+                      <View className='gap-5  items-center'>
+                        <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-64 h-12'>
+                          <EnvelopeSimple size={20} />
+                          <TextInput
+                            placeholder='Digite seu e-mail'
+                            value={email}
+                            onChangeText={setEmail}
+                            className='w-52'
+                          ></TextInput>
+                        </View>
+
+                        <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-64 h-12'>
+                          <Lock size={20} />
+
+                          <TextInput
+                            secureTextEntry
+                            placeholder='*****************'
+                            onChangeText={(text) => setPassword(text)}
+                            value={password}
+                            underlineColorAndroid='transparent'
+                            autoCapitalize='none'
+                            className='w-52'
+                          />
+                        </View>
+
+                        <TouchableOpacity
+                          onPress={handleLoginUser}
+                          className='w-64 h-12 border rounded-md items-center justify-center'
+                        >
+                          <Text>Entrar</Text>
+                        </TouchableOpacity>
+
+                        {error && (
+                          <Text className='text-[#EF3333] text-base text-center font-medium mb-5'>
+                            {errorMessage}
+                          </Text>
+                        )}
                       </View>
-
-                      <View className='flex-row items-center gap-x-2 border rounded-md border-dark-50 w-60 h-12'>
-                        <Lock size={20} />
-
-                        <TextInput
-                          secureTextEntry
-                          placeholder='*****************'
-                          onChangeText={(text) => setPassword(text)}
-                          value={password}
-                          underlineColorAndroid='transparent'
-                          autoCapitalize='none'
-                          className='w-48'
-                        />
-                      </View>
-
-                      <TouchableOpacity
-                        onPress={handleLoginUser}
-                        className='w-60 h-12 border rounded-md items-center justify-center'
-                      >
-                        <Text className=' '>Entrar</Text>
-                      </TouchableOpacity>
-
-                      {error && (
-                        <Text className='text-[#EF3333] text-base text-center font-medium'>
-                          {errorMessage}
-                        </Text>
-                      )}
-
                       <TouchableOpacity
                         onPress={() => {
                           navigate('register');
                           setModalVisible(!modalVisible);
                           clearAll();
                         }}
-                        className='p-2'
+                        className='mt-3'
                       >
-                        <Text className='text-sky-500 font-ArchivoBold'>
+                        <Text className='text-sky-500 text-base font-ArchivoBold'>
                           Não possui conta ? Crie uma agora!
                         </Text>
                       </TouchableOpacity>

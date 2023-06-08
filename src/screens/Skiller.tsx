@@ -29,7 +29,7 @@ export function Skiller() {
   const [price, setPrice] = useState('0.00');
   const [skills, setSkills] = useState('');
   const [advice, setAdvice] = useState('');
-  const [favorite, setFavorite] = useState<any>([]);
+  
 
   function onChangedZap(text: string) {
     setZap(text.replace(/[^0-9]/g, ''));
@@ -68,8 +68,7 @@ export function Skiller() {
           zap: zap,
           link: link,
           price: price,
-          skills: skills,
-          favorite: favorite ? favorite : [],
+          skills: skills
         };
 
         users.forEach((userData) => {
@@ -98,7 +97,7 @@ export function Skiller() {
   const handleGetDatesUser = async () => {
     setLoading(true);
     if (user?.uid) {
-      // console.log('id skiller', user.uid);
+      console.log('id skiller', user.uid);
       const userData = await getUserData(user.uid);
 
       console.log('data', userData);
@@ -110,7 +109,6 @@ export function Skiller() {
         setPrice(userData?.price ?? '');
         setSkills(userData?.skills ?? '');
         setZap(userData?.zap ?? '');
-        setFavorite(userData.favorite);
       }
     }
     setLoading(false);

@@ -48,14 +48,17 @@ export default function useCollection<T extends { [x: string]: any }>(
     return dataAsMap;
   };
 
-  const refreshData = () => {
-    allDates();
+  const refreshData = async () => {
+    await allDates();
   };
 
   // Initial call to fill 'data' with all documents when precache is active.
   useEffect(() => {
-    if (precache) allDates();
-    // eslint-disable-next-line
+    const loadDates = async () => {
+      if (precache) await allDates();
+    };
+
+    loadDates().catch(console.error);
   }, []);
 
   return { data, loading, create, remove, update, allDates, refreshData };

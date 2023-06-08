@@ -5,12 +5,12 @@ import {
   getDoc,
   getDocs,
   getFirestore,
-  onSnapshot,
   query,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export type UserType = {
   id: string;
@@ -22,7 +22,7 @@ export type UserType = {
   link?: string;
   price?: string;
   skills?: string;
-  favorite?: Array<string>;
+  favorites?: Array<string>;
 };
 
 /**
@@ -35,8 +35,6 @@ export default function useDocument<T extends { [x: string]: any }>(
 ) {
   const db = getFirestore();
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<T>();
-
   const collectionRef = collection(db, collectionName);
 
   const searchEmail = async (email: string) => {
@@ -62,6 +60,9 @@ export default function useDocument<T extends { [x: string]: any }>(
 
       const newDocRef = doc(collectionRef, uid);
       await setDoc(newDocRef, data);
+      await updateDoc(newDocRef, {
+        favorites: [],
+      });
     } catch (error) {
       throw new Error('Ocorreu um erro ao fazer o cadastro');
     }
@@ -89,33 +90,5 @@ export default function useDocument<T extends { [x: string]: any }>(
     }
   };
 
-  /**
-   * Refresh data, useful for non-realtime usage.
-   * @returns updated data.
-   */
-  const refresh = async () => {
-    setLoading(true);
-    const docSnap = await getDoc(doc(collectionRef));
-    const data = docSnap.data() as T;
-    setData(data);
-    setLoading(false);
-    return data;
-  };
-
-  // Initial call to fill 'data' with the document when precache is active.
-  useEffect(() => {
-    refresh();
-
-    const unsub = realtime
-      ? onSnapshot(doc(collectionRef), (docSnap) => {
-          const data = docSnap.data() as T;
-          setData(data);
-        })
-      : () => {};
-
-    return unsub;
-    // eslint-disable-next-line
-  }, []);
-
-  return { data, loading, refresh, register, searchEmail, getDoc, getUserData };
+  return { loading, register, searchEmail, getDoc, getUserData };
 }

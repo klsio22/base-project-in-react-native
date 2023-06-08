@@ -47,17 +47,7 @@ export default function useUserData<T extends { [x: string]: any }>(
     try {
       setLoading(true);
 
-      const {
-        id,
-        name,
-        email,
-        biography,
-        zap,
-        link,
-        price,
-        skills,
-        favorites,
-      } = user;
+      const { id, name, email, biography, zap, link, price, skills } = user;
 
       const q = query(
         collectionRef,
@@ -76,7 +66,6 @@ export default function useUserData<T extends { [x: string]: any }>(
           link,
           price,
           skills,
-          favorites,
         };
         await create(newUser);
       } else {
@@ -89,7 +78,6 @@ export default function useUserData<T extends { [x: string]: any }>(
           link,
           price,
           skills,
-          favorites,
         });
       }
       console.log('Dados atualizados com sucesso!');
